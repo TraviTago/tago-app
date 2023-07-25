@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   static String get routeName => 'splash';
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // 4초 뒤에 '/root_tab' 페이지로 이동
+    Future.delayed(const Duration(seconds: 2), () {
+      context.go('/form1');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +46,7 @@ class SlideTransitionExample extends StatefulWidget {
 class _SlideTransitionExampleState extends State<SlideTransitionExample>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 4),
+    duration: const Duration(seconds: 2),
     vsync: this,
   )..repeat(reverse: true);
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
