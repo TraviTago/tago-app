@@ -8,6 +8,8 @@ class ButtonGroup extends StatefulWidget {
   final int crossAxisCount;
   final double childAspectRatio;
   final bool isMultipleSelection;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
 
   const ButtonGroup({
     Key? key,
@@ -17,6 +19,8 @@ class ButtonGroup extends StatefulWidget {
     required this.childAspectRatio,
     this.buttonImgs,
     this.isMultipleSelection = false,
+    this.mainAxisSpacing = 10,
+    this.crossAxisSpacing = 10,
   }) : super(key: key);
 
   @override
@@ -31,8 +35,8 @@ class _ButtonGroupState extends State<ButtonGroup> {
     return GridView.count(
       crossAxisCount: widget.crossAxisCount,
       childAspectRatio: widget.childAspectRatio,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
+      mainAxisSpacing: widget.mainAxisSpacing,
+      crossAxisSpacing: widget.crossAxisSpacing,
       children: List.generate(
         widget.buttonCount,
         (index) {
@@ -50,6 +54,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                   child: Text(
                     widget.buttonTexts[index],
                     style: TextStyle(
+                      fontSize: 12,
                       fontWeight: selectedButtons.contains(index)
                           ? FontWeight.w700
                           : FontWeight.w500,

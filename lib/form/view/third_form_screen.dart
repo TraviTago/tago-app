@@ -65,7 +65,7 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                     backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () => context.go('/form3'),
+                  onPressed: () => context.go('/form4'),
                   child: const Text(
                     '다음',
                     style: TextStyle(
