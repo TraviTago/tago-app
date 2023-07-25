@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/form/component/button_group.dart';
 import 'package:tago_app/form/component/progress_bar.dart';
@@ -41,50 +42,12 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
               const SizedBox(
                 height: 50.0,
               ),
-              const Expanded(
+              Expanded(
                 child: ButtonGroup(
                   isMultipleSelection: true,
                   buttonCount: 18,
-                  buttonTexts: [
-                    '인스타그램',
-                    '유튜브',
-                    '사진촬영',
-                    '맛집탐방',
-                    '핫플',
-                    '산책',
-                    '미술 / 예술',
-                    '독서',
-                    '영화',
-                    '레저 / 엑티비티',
-                    '동물',
-                    '자연',
-                    '역사',
-                    '전통시장',
-                    '바다',
-                    '지역축제',
-                    '커피',
-                    '쇼핑',
-                  ],
-                  buttonImgs: [
-                    'instagram',
-                    'youtube',
-                    'photo',
-                    'food',
-                    'hot-place',
-                    'walk',
-                    'art',
-                    'book',
-                    'movie',
-                    'lesuire',
-                    'animal',
-                    'forest',
-                    'history',
-                    'market',
-                    'sea-waves',
-                    'fireworks',
-                    'cafe',
-                    'shopping',
-                  ],
+                  buttonTexts: buttonData.keys.toList(),
+                  buttonImgs: buttonData.values.toList(),
                   crossAxisCount: 3,
                   childAspectRatio: 1,
                 ),
