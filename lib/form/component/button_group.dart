@@ -4,8 +4,10 @@ import 'package:tago_app/common/const/colors.dart';
 class ButtonGroup extends StatefulWidget {
   final int buttonCount;
   final List<String> buttonTexts;
+  final List<String>? buttonImgs;
   final int crossAxisCount;
   final double childAspectRatio;
+  final bool isMultipleSelection;
 
   const ButtonGroup({
     Key? key,
@@ -13,6 +15,8 @@ class ButtonGroup extends StatefulWidget {
     required this.buttonTexts,
     required this.crossAxisCount,
     required this.childAspectRatio,
+    this.buttonImgs,
+    this.isMultipleSelection = false,
   }) : super(key: key);
 
   @override
@@ -20,7 +24,7 @@ class ButtonGroup extends StatefulWidget {
 }
 
 class _ButtonGroupState extends State<ButtonGroup> {
-  int selectedButton = -1;
+  List<int> selectedButtons = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +33,104 @@ class _ButtonGroupState extends State<ButtonGroup> {
       childAspectRatio: widget.childAspectRatio,
       mainAxisSpacing: 10,
       crossAxisSpacing: 10,
-      children: List.generate(widget.buttonCount, (index) {
-        return ElevatedButton(
-          style: ButtonStyle(
-            elevation: MaterialStateProperty.all(0.0),
-            backgroundColor: MaterialStateProperty.all(
-              selectedButton == index ? PRIMARY_COLOR : LABEL_BG_COLOR,
-            ),
-            foregroundColor: MaterialStateProperty.all(Colors.white),
-          ),
-          child: Text(
-            widget.buttonTexts[index],
-            style: TextStyle(
-              fontWeight:
-                  selectedButton == index ? FontWeight.w700 : FontWeight.w500,
-              color: selectedButton == index ? Colors.white : LABEL_TEXT_COLOR,
-            ),
-          ),
-          onPressed: () {
-            setState(() {
-              selectedButton = index;
-            });
-          },
-        );
-      }),
+      children: List.generate(
+        widget.buttonCount,
+        (index) {
+          return widget.buttonImgs == null
+              ? ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0.0),
+                    backgroundColor: MaterialStateProperty.all(
+                      selectedButtons.contains(index)
+                          ? PRIMARY_COLOR
+                          : LABEL_BG_COLOR,
+                    ),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: Text(
+                    widget.buttonTexts[index],
+                    style: TextStyle(
+                      fontWeight: selectedButtons.contains(index)
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                      color: selectedButtons.contains(index)
+                          ? Colors.white
+                          : LABEL_TEXT_COLOR,
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (widget.isMultipleSelection) {
+                        if (selectedButtons.contains(index)) {
+                          selectedButtons.remove(index);
+                        } else {
+                          selectedButtons.add(index);
+                        }
+                      } else {
+                        selectedButtons = [index];
+                      }
+                    });
+                  },
+                )
+              : OutlinedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      selectedButtons.contains(index)
+                          ? Colors.white
+                          : LABEL_BG_COLOR,
+                    ),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    side: MaterialStateProperty.resolveWith((states) {
+                      if (selectedButtons.contains(index)) {
+                        return const BorderSide(color: PRIMARY_COLOR, width: 3);
+                      } else {
+                        return const BorderSide(color: Colors.transparent);
+                      }
+                    }),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (widget.isMultipleSelection) {
+                        if (selectedButtons.contains(index)) {
+                          selectedButtons.remove(index);
+                        } else {
+                          selectedButtons.add(index);
+                        }
+                      } else {
+                        selectedButtons = [index];
+                      }
+                    });
+                  },
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Opacity(
+                          opacity: selectedButtons.contains(index) ? 1.0 : 0.5,
+                          child: Image.asset(
+                            'asset/img/${widget.buttonImgs![index]}.png',
+                            width: 45.0,
+                            height: 45.0,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          widget.buttonTexts[index],
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: selectedButtons.contains(index)
+                                ? FontWeight.w500
+                                : FontWeight.w500,
+                            color: selectedButtons.contains(index)
+                                ? const Color(0xFF595959)
+                                : LABEL_TEXT_COLOR,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ));
+        },
+      ),
     );
   }
 }
