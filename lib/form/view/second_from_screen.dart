@@ -67,8 +67,8 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ProgressBar(
-                begin_percentage: 0.25,
-                end_percentage: 0.5,
+                beginPercentage: 0.25,
+                endPercentage: 0.5,
               ),
               const SizedBox(
                 height: 60.0,

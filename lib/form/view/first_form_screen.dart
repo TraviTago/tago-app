@@ -23,8 +23,8 @@ class FirstFormScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ProgressBar(
-                begin_percentage: 0,
-                end_percentage: 0.25,
+                beginPercentage: 0,
+                endPercentage: 0.25,
               ),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

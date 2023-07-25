@@ -3,12 +3,10 @@ import 'package:tago_app/common/const/colors.dart';
 
 class ProgressBar extends StatefulWidget {
   const ProgressBar(
-      {super.key,
-      required this.begin_percentage,
-      required this.end_percentage});
+      {super.key, required this.beginPercentage, required this.endPercentage});
 
-  final double begin_percentage;
-  final double end_percentage;
+  final double beginPercentage;
+  final double endPercentage;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -25,12 +23,12 @@ class _ProgressBarState extends State<ProgressBar>
     super.initState();
     _controller =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
-    _animation = Tween<double>(
-            begin: widget.begin_percentage, end: widget.end_percentage)
-        .animate(_controller)
-      ..addListener(() {
-        setState(() {});
-      });
+    _animation =
+        Tween<double>(begin: widget.beginPercentage, end: widget.endPercentage)
+            .animate(_controller)
+          ..addListener(() {
+            setState(() {});
+          });
     _controller.forward();
   }
 
