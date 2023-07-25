@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/form/component/button_group.dart';
+import 'package:tago_app/form/component/progress_bar.dart';
 
 class FirstFormScreen extends StatelessWidget {
   static String get routeName => 'form1';
@@ -10,16 +13,103 @@ class FirstFormScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('first_form_page'),
-            ElevatedButton(
-              onPressed: () => context.go('/form2'),
-              child: const Text('다음'),
-            )
-          ],
+      child: SafeArea(
+        top: true,
+        bottom: true,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ProgressBar(
+                begin_percentage: 0,
+                end_percentage: 0.25,
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '반가워요!',
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    '딱 맞는 코스를 추천해드릴게요!',
+                    style:
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '내 나이대는',
+                    style:
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: ButtonGroup(
+                      buttonCount: 6,
+                      buttonTexts: ['10대', '20대', '30대', '40대', '50대', '60대'],
+                      crossAxisCount: 3,
+                      childAspectRatio: 2.5,
+                    ),
+                  ),
+                ],
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '내 성별은',
+                    style:
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: ButtonGroup(
+                      buttonCount: 2,
+                      buttonTexts: ['남성', '여성'],
+                      crossAxisCount: 2,
+                      childAspectRatio: 4,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width, 45)),
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  onPressed: () => context.go('/form2'),
+                  child: const Text(
+                    '다음',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.0),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
