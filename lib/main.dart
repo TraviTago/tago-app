@@ -7,6 +7,7 @@ import 'package:tago_app/form/view/first_form_screen.dart';
 import 'package:tago_app/form/view/last_form_screen.dart';
 import 'package:tago_app/form/view/second_from_screen.dart';
 import 'package:tago_app/form/view/third_form_screen.dart';
+import 'package:tago_app/party/view/form/party_first_form_screen.dart';
 import 'package:tago_app/user/view/login_screen.dart';
 
 void main() {
@@ -54,10 +55,16 @@ class _App extends StatelessWidget {
         builder: (_, __) => const LastFormScreen(),
       ),
       GoRoute(
-        path: '/',
-        name: RootTab.routeName,
-        builder: (_, __) => const RootTab(),
-      ),
+          path: '/',
+          name: RootTab.routeName,
+          builder: (_, __) => const RootTab(),
+          routes: [
+            GoRoute(
+              path: 'partyForm1',
+              name: PartyFirstFormScreen.routeName,
+              builder: (_, __) => const PartyFirstFormScreen(),
+            ),
+          ]),
     ],
   );
 

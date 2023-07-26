@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/form/component/progress_bar.dart';
+import 'package:tago_app/common/component/progress_bar.dart';
 
 class SecondFormScreen extends StatefulWidget {
   static String get routeName => 'form2';

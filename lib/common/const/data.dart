@@ -45,11 +45,11 @@ PartyModel partyData = PartyModel(
 
 PartyModel partyCardData = PartyModel(
   id: '1',
-  name: '낭만적인 밤바다 코스',
-  imgUrl: 'https://picsum.photos/id/1/200/200',
-  tags: ['해운대', '광안리', '국제시장', '요기저기', '저리저리', '저쪽 저쪽', '룰루랄라'],
+  name: '아름다운 숲 코스',
+  imgUrl: 'https://picsum.photos/id/28/200/200',
+  tags: ['광안리', '해안사', '요기저기', '저쪽 저쪽', '룰루랄라'],
   maxNum: 4,
   curNum: 2,
-  duration: 270,
+  duration: 200,
   startDate: 1656140400,
 );

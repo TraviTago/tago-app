@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // 4초 뒤에 '/root_tab' 페이지로 이동
     Future.delayed(const Duration(seconds: 2), () {
-      context.go('/login');
+      context.go('/');
     });
   }
 

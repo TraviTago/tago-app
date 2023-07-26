@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/party/component/party_card.dart';
 import 'package:tago_app/party/component/party_recommend_card.dart';
 
-class HomseListScreen extends StatelessWidget {
-  const HomseListScreen({super.key});
+class PartyListScreen extends StatelessWidget {
+  const PartyListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,9 @@ class HomseListScreen extends StatelessWidget {
               Icons.add,
               size: 45,
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.go('/partyForm1');
+            },
             backgroundColor: PRIMARY_COLOR,
           ),
         ),

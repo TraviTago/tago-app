@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/form/component/button_group.dart';
-import 'package:tago_app/form/component/progress_bar.dart';
+import 'package:tago_app/common/component/button_group.dart';
+import 'package:tago_app/common/component/progress_bar.dart';
 
 class ThirdFormScreen extends StatefulWidget {
   static String get routeName => 'form3';
