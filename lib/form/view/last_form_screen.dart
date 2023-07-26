@@ -17,8 +17,6 @@ class LastFormScreen extends StatefulWidget {
 class _LastFormScreenState extends State<LastFormScreen> {
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return DefaultLayout(
       child: SafeArea(
         top: true,

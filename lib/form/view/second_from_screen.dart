@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
@@ -14,48 +15,71 @@ class SecondFormScreen extends StatefulWidget {
 }
 
 class _SecondFormScreenState extends State<SecondFormScreen> {
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (_) => TextEditingController(),
-  );
+  String? selectedEI;
+  String? selectedNS;
+  String? selectedTF;
+  String? selectedJP;
 
-  @override
-  void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  Future<void> _showOptions(int index, List<String> options) async {
-    final selected = await showModalBottomSheet<String>(
+  void _showPicker(String title, List<String> options, String? currentValue,
+      Function(String) onChanged) {
+    int selectedIndex =
+        currentValue != null ? options.indexOf(currentValue) : 0;
+    onChanged(options[selectedIndex]);
+    showCupertinoModalPopup(
       context: context,
-      builder: (context) => ListView(
-        children: options.map((option) {
-          return ListTile(
-            title: Text(option),
-            onTap: () {
-              Navigator.pop(context, option);
-            },
-          );
-        }).toList(),
-      ),
+      builder: (BuildContext context) {
+        return Container(
+          alignment: Alignment.center,
+          height: 250,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0, vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Text('확인'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 100,
+                child: CupertinoPicker(
+                  backgroundColor: Colors.white,
+                  itemExtent: 50.0,
+                  scrollController:
+                      FixedExtentScrollController(initialItem: selectedIndex),
+                  onSelectedItemChanged: (index) {
+                    onChanged(options[index]);
+                  },
+                  children: options
+                      .map((option) => Center(child: Text(option)))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
-
-    if (selected != null) {
-      _controllers[index].text = selected;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final options = [
-      ['E', 'I'],
-      ['N', 'S'],
-      ['T', 'F'],
-      ['P', 'J'],
-    ];
-
     return DefaultLayout(
       child: SafeArea(
         top: true,
@@ -63,7 +87,6 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ProgressBar(
@@ -71,53 +94,41 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
                 endPercentage: 0.5,
               ),
               const SizedBox(
-                height: 60.0,
+                height: 50.0,
               ),
               const Text(
                 'MBTI가 무엇인가요?',
                 style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w700),
               ),
-              Expanded(
-                child: Row(
-                  children: List.generate(
-                    _controllers.length,
-                    (index) => Flexible(
-                      child: TextField(
-                        controller: _controllers[index],
-                        readOnly: true,
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: _controllers[index].text.isNotEmpty
-                                  ? PRIMARY_COLOR
-                                  : LABEL_BG_COLOR,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: _controllers[index].text.isNotEmpty
-                                  ? PRIMARY_COLOR
-                                  : LABEL_BG_COLOR,
-                            ),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: _controllers[index].text.isNotEmpty
-                              ? PRIMARY_COLOR
-                              : LABEL_TEXT_COLOR,
-                        ),
-                        onTap: () {
-                          _showOptions(index, options[index]);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 100.0,
+                height: 150,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildPickerButton("E/I", ["E", "I"], selectedEI, (value) {
+                    setState(() {
+                      selectedEI = value;
+                    });
+                  }),
+                  _buildPickerButton("N/S", ["N", "S"], selectedNS, (value) {
+                    setState(() {
+                      selectedNS = value;
+                    });
+                  }),
+                  _buildPickerButton("T/F", ["T", "F"], selectedTF, (value) {
+                    setState(() {
+                      selectedTF = value;
+                    });
+                  }),
+                  _buildPickerButton("J/P", ["J", "P"], selectedJP, (value) {
+                    setState(() {
+                      selectedJP = value;
+                    });
+                  }),
+                ],
+              ),
+              const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: ElevatedButton(
@@ -137,10 +148,39 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
                         fontSize: 16.0),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPickerButton(String title, List<String> options,
+      String? currentValue, Function(String) onChanged) {
+    Color underlineColor =
+        currentValue != null ? PRIMARY_COLOR : const Color(0xFFDADADA);
+    return InkWell(
+      onTap: () => _showPicker(title, options, currentValue, onChanged),
+      child: Column(
+        children: [
+          Text(currentValue ?? "",
+              style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w700,
+                  color: underlineColor)),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: 53,
+            height: 4,
+            decoration: BoxDecoration(
+              color: underlineColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+          ),
+        ],
       ),
     );
   }
