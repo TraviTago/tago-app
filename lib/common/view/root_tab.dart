@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/party/view/home_screen.dart';
+import 'package:tago_app/common/view/home_screen.dart';
 
 class RootTab extends StatefulWidget {
   const RootTab({Key? key}) : super(key: key);
@@ -62,22 +62,67 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
           controller.animateTo(index);
         },
         currentIndex: index,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/home.png',
+                width: 28,
+                height: 28,
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/home.png',
+                width: 28,
+                height: 28,
+                color: Colors.black,
+              ),
             ),
             label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.map_outlined,
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/map.png',
+                width: 28,
+                height: 28,
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/map.png',
+                width: 28,
+                height: 28,
+                color: Colors.black,
+              ),
             ),
             label: '내여행',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.sentiment_satisfied_alt_outlined,
+            activeIcon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/my.png',
+                width: 28,
+                height: 28,
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Image.asset(
+                'asset/img/menu/my.png',
+                width: 28,
+                height: 28,
+                color: Colors.black,
+              ),
             ),
             label: '마이페이지',
           ),
