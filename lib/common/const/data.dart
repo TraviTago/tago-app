@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:tago_app/party/model/party_model.dart';
+
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
 
@@ -29,3 +31,25 @@ final Map<String, String> buttonData = {
   '커피': 'cafe',
   '쇼핑': 'shopping',
 };
+
+PartyModel partyData = PartyModel(
+  id: '1',
+  name: '낭만적인 밤바다 코스',
+  imgUrl: 'https://picsum.photos/id/421/200/200',
+  tags: ['해운대', '광안리', '국제시장', '요기저기', '저리저리', '저쪽 저쪽', '룰루랄라'],
+  maxNum: 4,
+  curNum: 2,
+  duration: 270,
+  startDate: 1656140400,
+);
+
+PartyModel partyCardData = PartyModel(
+  id: '1',
+  name: '낭만적인 밤바다 코스',
+  imgUrl: 'https://picsum.photos/id/1/200/200',
+  tags: ['해운대', '광안리', '국제시장', '요기저기', '저리저리', '저쪽 저쪽', '룰루랄라'],
+  maxNum: 4,
+  curNum: 2,
+  duration: 270,
+  startDate: 1656140400,
+);
