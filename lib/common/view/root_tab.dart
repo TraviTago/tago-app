@@ -86,20 +86,20 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
           ),
           BottomNavigationBarItem(
             activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              padding: const EdgeInsets.only(top: 15.0, bottom: 7.0),
               child: Image.asset(
                 'asset/img/menu/map.png',
-                width: 28,
-                height: 28,
+                width: 26,
+                height: 26,
                 color: PRIMARY_COLOR,
               ),
             ),
             icon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              padding: const EdgeInsets.only(top: 15.0, bottom: 7.0),
               child: Image.asset(
                 'asset/img/menu/map.png',
-                width: 28,
-                height: 28,
+                width: 26,
+                height: 26,
                 color: Colors.black,
               ),
             ),
