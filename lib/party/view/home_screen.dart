@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tago_app/party/view/home_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class _HomeState extends State<HomeScreen> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Center(child: Container(child: const Text('참여하기'))),
+                  const HomseListScreen(),
                   Center(child: Container(child: const Text('둘러보기'))),
                 ],
               ),
