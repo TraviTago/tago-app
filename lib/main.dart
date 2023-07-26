@@ -7,6 +7,7 @@ import 'package:tago_app/form/view/first_form_screen.dart';
 import 'package:tago_app/form/view/last_form_screen.dart';
 import 'package:tago_app/form/view/second_from_screen.dart';
 import 'package:tago_app/form/view/third_form_screen.dart';
+import 'package:tago_app/user/view/login_screen.dart';
 
 void main() {
   runApp(
@@ -26,6 +27,11 @@ class _App extends StatelessWidget {
         path: '/splash',
         name: SplashScreen.routeName,
         builder: (_, __) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        name: LoginScreen.routeName,
+        builder: (_, __) => const LoginScreen(),
       ),
       GoRoute(
         path: '/form1',
