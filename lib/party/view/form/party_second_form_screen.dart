@@ -154,7 +154,7 @@ class _PartySecondFormScreenState extends State<PartySecondFormScreen> {
                         print(isPrivateParty);
                         print(counter);
                         print(selectedButtons);
-                        context.go('/partyForm3');
+                        context.goNamed('partyForm3');
                       },
                 child: const Text(
                   '다음',

@@ -9,6 +9,7 @@ import 'package:tago_app/form/view/second_from_screen.dart';
 import 'package:tago_app/form/view/third_form_screen.dart';
 import 'package:tago_app/party/view/form/party_first_form_screen.dart';
 import 'package:tago_app/party/view/form/party_second_form_screen.dart';
+import 'package:tago_app/party/view/form/party_third_form_screen.dart';
 import 'package:tago_app/user/view/login_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -70,6 +71,13 @@ class _App extends StatelessWidget {
                 path: 'partyForm2',
                 name: PartySecondFormScreen.routeName,
                 builder: (_, __) => const PartySecondFormScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'partyForm3',
+                    name: PartyThirdFormScreen.routeName,
+                    builder: (_, __) => const PartyThirdFormScreen(),
+                  ),
+                ],
               ),
             ],
           ),
