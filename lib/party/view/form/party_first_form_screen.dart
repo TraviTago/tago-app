@@ -75,13 +75,13 @@ class _PartyFirstFormScreenState extends State<PartyFirstFormScreen> {
                     return isSameDay(_selectedDay, day);
                   },
                   onDaySelected: (selectedDay, focusedDay) {
-                    if (selectedDay.isBefore(DateTime.now())) {
-                      // 오늘 날짜 이전의 날짜를 선택하지 못하게 함
+                    // 만약 특정 시간 이후로 파티 생성을 막는다면 해당 줄에 조건을 추가한다.
+                    if (selectedDay.isBefore(DateTime(DateTime.now().year,
+                        DateTime.now().month, DateTime.now().day))) {
                       return;
                     }
                     setState(() {
                       _selectedDay = selectedDay;
-                      print(_selectedDay);
                       _focusedDay = focusedDay;
                     });
                   },
@@ -143,7 +143,10 @@ class _PartyFirstFormScreenState extends State<PartyFirstFormScreen> {
                   backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                onPressed: () => context.go('/form2'),
+                onPressed: () {
+                  print(_selectedDay);
+                  context.goNamed('partyForm2');
+                },
                 child: const Text(
                   '다음',
                   style: TextStyle(

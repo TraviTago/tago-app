@@ -44,46 +44,61 @@ class FirstFormScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     '내 나이대는',
                     style:
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   SizedBox(
                     height: 150,
                     child: ButtonGroup(
                       buttonCount: 6,
-                      buttonTexts: ['10대', '20대', '30대', '40대', '50대', '60대'],
+                      buttonTexts: const [
+                        '10대',
+                        '20대',
+                        '30대',
+                        '40대',
+                        '50대',
+                        '60대'
+                      ],
                       crossAxisCount: 3,
                       childAspectRatio: 2.5,
+                      onButtonSelected: (selectedButtons) {
+                        // 콜백 구현
+                        print('Selected buttons: $selectedButtons');
+                      },
                     ),
                   ),
                 ],
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     '내 성별은',
                     style:
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   SizedBox(
                     height: 150,
                     child: ButtonGroup(
                       buttonCount: 2,
-                      buttonTexts: ['남성', '여성'],
+                      buttonTexts: const ['남성', '여성'],
                       crossAxisCount: 2,
                       childAspectRatio: 4,
+                      onButtonSelected: (selectedButtons) {
+                        // 콜백 구현
+                        print('Selected buttons: $selectedButtons');
+                      },
                     ),
                   ),
                 ],

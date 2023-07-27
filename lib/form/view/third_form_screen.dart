@@ -50,6 +50,10 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                   buttonImgs: buttonData.values.toList(),
                   crossAxisCount: 3,
                   childAspectRatio: 1,
+                  onButtonSelected: (selectedButtons) {
+                    // 콜백 구현
+                    print('Selected buttons: $selectedButtons');
+                  },
                 ),
               ),
               const SizedBox(

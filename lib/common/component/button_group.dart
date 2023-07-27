@@ -10,6 +10,7 @@ class ButtonGroup extends StatefulWidget {
   final bool isMultipleSelection;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
+  final Function(List<int>) onButtonSelected; // 콜백 함수 추가
 
   const ButtonGroup({
     Key? key,
@@ -21,6 +22,7 @@ class ButtonGroup extends StatefulWidget {
     this.isMultipleSelection = false,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 10,
+    required this.onButtonSelected, // 콜백 함수 필요
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                         selectedButtons = [index];
                       }
                     });
+                    widget.onButtonSelected(selectedButtons);
                   },
                 )
               : OutlinedButton(
@@ -105,6 +108,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                         selectedButtons = [index];
                       }
                     });
+                    widget.onButtonSelected(selectedButtons);
                   },
                   child: Center(
                     child: Column(

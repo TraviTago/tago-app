@@ -41,13 +41,13 @@ class _LastFormScreenState extends State<LastFormScreen> {
               const SizedBox(
                 height: 100.0,
               ),
-              const Expanded(
+              Expanded(
                 child: ButtonGroup(
                   isMultipleSelection: true,
                   buttonCount: 6,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
-                  buttonTexts: [
+                  buttonTexts: const [
                     '느긋 하고 여유롭게',
                     '부지런히 이곳저곳!',
                     '최신유행은 가봐야지',
@@ -57,6 +57,10 @@ class _LastFormScreenState extends State<LastFormScreen> {
                   ],
                   crossAxisCount: 2,
                   childAspectRatio: 3,
+                  onButtonSelected: (selectedButtons) {
+                    // 콜백 구현
+                    print('Selected buttons: $selectedButtons');
+                  },
                 ),
               ),
               Padding(
