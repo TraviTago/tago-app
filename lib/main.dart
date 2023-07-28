@@ -8,6 +8,7 @@ import 'package:tago_app/form/view/last_form_screen.dart';
 import 'package:tago_app/form/view/second_from_screen.dart';
 import 'package:tago_app/form/view/third_form_screen.dart';
 import 'package:tago_app/party/view/form/party_first_form_screen.dart';
+import 'package:tago_app/party/view/form/party_fourth_from_screen.dart';
 import 'package:tago_app/party/view/form/party_second_form_screen.dart';
 import 'package:tago_app/party/view/form/party_third_form_screen.dart';
 import 'package:tago_app/user/view/login_screen.dart';
@@ -76,6 +77,13 @@ class _App extends StatelessWidget {
                     path: 'partyForm3',
                     name: PartyThirdFormScreen.routeName,
                     builder: (_, __) => const PartyThirdFormScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'partyForm4',
+                        name: PartyFourthFormScreen.routeName,
+                        builder: (_, __) => const PartyFourthFormScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),

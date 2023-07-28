@@ -180,7 +180,7 @@ class _PartyThirdFormScreenState extends State<PartyThirdFormScreen> {
                               'Selected gender buttons: $selectedGenderButtons');
                           print('Selected age buttons: $selectedAgeButtons');
                           print('Selected pet buttons: $selectedPetButtons');
-                          context.goNamed('partyForm3');
+                          context.goNamed('partyForm4');
                         },
                   child: const Text(
                     '다음',
