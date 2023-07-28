@@ -11,6 +11,8 @@ class ButtonGroup extends StatefulWidget {
   final double mainAxisSpacing;
   final double crossAxisSpacing;
   final Function(List<int>) onButtonSelected; // 콜백 함수 추가
+  final bool isModal;
+  final List<int>? initialSelectedIndexes;
 
   const ButtonGroup({
     Key? key,
@@ -22,6 +24,8 @@ class ButtonGroup extends StatefulWidget {
     this.isMultipleSelection = false,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 10,
+    this.isModal = false,
+    this.initialSelectedIndexes,
     required this.onButtonSelected, // 콜백 함수 필요
   }) : super(key: key);
 
@@ -30,7 +34,14 @@ class ButtonGroup extends StatefulWidget {
 }
 
 class _ButtonGroupState extends State<ButtonGroup> {
-  List<int> selectedButtons = [];
+  late List<int> selectedButtons;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedButtons = widget.initialSelectedIndexes ??
+        []; // Initialize with selected indexes if they exist, else initialize with an empty list.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,20 +60,29 @@ class _ButtonGroupState extends State<ButtonGroup> {
                     backgroundColor: MaterialStateProperty.all(
                       selectedButtons.contains(index)
                           ? PRIMARY_COLOR
-                          : LABEL_BG_COLOR,
+                          : widget.isModal
+                              ? Colors.white
+                              : LABEL_BG_COLOR,
                     ),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      // borderRadius 설정
+                      borderRadius:
+                          BorderRadius.circular(widget.isModal ? 10.0 : 5.0),
+                    )),
                   ),
                   child: Text(
                     widget.buttonTexts[index],
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: widget.isModal ? 14 : 12,
                       fontWeight: selectedButtons.contains(index)
                           ? FontWeight.w700
                           : FontWeight.w500,
                       color: selectedButtons.contains(index)
                           ? Colors.white
-                          : LABEL_TEXT_COLOR,
+                          : widget.isModal
+                              ? const Color(0xFF747474)
+                              : LABEL_TEXT_COLOR,
                     ),
                   ),
                   onPressed: () {
