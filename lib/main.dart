@@ -10,17 +10,20 @@ import 'package:tago_app/form/view/third_form_screen.dart';
 import 'package:tago_app/party/view/form/party_fifth_form_screen.dart';
 import 'package:tago_app/party/view/form/party_first_form_screen.dart';
 import 'package:tago_app/party/view/form/party_fourth_from_screen.dart';
+import 'package:tago_app/party/view/form/party_last_form_screen.dart';
 import 'package:tago_app/party/view/form/party_second_form_screen.dart';
 import 'package:tago_app/party/view/form/party_third_form_screen.dart';
 import 'package:tago_app/user/view/login_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  initializeDateFormatting().then((_) => runApp(
-        ProviderScope(
-          child: _App(),
-        ),
-      ));
+  initializeDateFormatting().then(
+    (_) => runApp(
+      ProviderScope(
+        child: _App(),
+      ),
+    ),
+  );
 }
 
 class _App extends StatelessWidget {
@@ -80,16 +83,24 @@ class _App extends StatelessWidget {
                     builder: (_, __) => const PartyThirdFormScreen(),
                     routes: [
                       GoRoute(
-                          path: 'partyForm4',
-                          name: PartyFourthFormScreen.routeName,
-                          builder: (_, __) => const PartyFourthFormScreen(),
-                          routes: [
-                            GoRoute(
-                              path: 'partyForm5',
-                              name: PartyFifthFormScreen.routeName,
-                              builder: (_, __) => const PartyFifthFormScreen(),
-                            ),
-                          ]),
+                        path: 'partyForm4',
+                        name: PartyFourthFormScreen.routeName,
+                        builder: (_, __) => const PartyFourthFormScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'partyForm5',
+                            name: PartyFifthFormScreen.routeName,
+                            builder: (_, __) => const PartyFifthFormScreen(),
+                            routes: [
+                              GoRoute(
+                                path: 'partyForm6',
+                                name: PartyLastFormScreen.routeName,
+                                builder: (_, __) => const PartyLastFormScreen(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],

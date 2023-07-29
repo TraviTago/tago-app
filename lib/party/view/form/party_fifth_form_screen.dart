@@ -78,7 +78,7 @@ class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
                     ? null
                     : () {
                         print('Selected like Place : $likes');
-                        context.goNamed('partyForm5');
+                        context.goNamed('partyForm6');
                       },
                 child: const Text(
                   '다음',
