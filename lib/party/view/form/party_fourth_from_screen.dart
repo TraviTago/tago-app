@@ -435,7 +435,7 @@ class _PartyFourthFormScreenState extends State<PartyFourthFormScreen> {
                         print('Selected Start Date: $selectedDateTime');
                         print(
                             'Selected Mus places: ${allPlaces.entries.where((entry) => entry.value == true).map((entry) => entry.key).join(', ')}');
-                        context.goNamed('partyForm4');
+                        context.goNamed('partyForm5');
                       },
                 child: const Text(
                   '다음',
