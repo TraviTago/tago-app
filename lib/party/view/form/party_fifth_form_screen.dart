@@ -15,6 +15,8 @@ class PartyFifthFormScreen extends StatefulWidget {
 }
 
 class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
+  List<int> likes = [];
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -51,6 +53,9 @@ class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
                   childAspectRatio: 1,
                   onButtonSelected: (selectedButtons) {
                     // 콜백 구현
+                    setState(() {
+                      likes = selectedButtons;
+                    });
                     print('Selected buttons: $selectedButtons');
                   },
                 ),
@@ -63,10 +68,18 @@ class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
                   minimumSize: MaterialStateProperty.all<Size>(
                       Size(MediaQuery.of(context).size.width, 45)),
                   elevation: MaterialStateProperty.all(0),
-                  backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                  backgroundColor: likes.isEmpty
+                      ? MaterialStateProperty.all(
+                          BUTTON_BG_COLOR.withOpacity(0.5))
+                      : MaterialStateProperty.all(BUTTON_BG_COLOR),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                onPressed: () => context.go('/form6'),
+                onPressed: likes.isEmpty
+                    ? null
+                    : () {
+                        print('Selected like Place : $likes');
+                        context.goNamed('partyForm5');
+                      },
                 child: const Text(
                   '다음',
                   style: TextStyle(
@@ -74,7 +87,7 @@ class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
                       fontWeight: FontWeight.w700,
                       fontSize: 16.0),
                 ),
-              )
+              ),
             ],
           ),
         ),
