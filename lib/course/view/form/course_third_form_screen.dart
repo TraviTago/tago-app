@@ -5,16 +5,16 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class PartyThirdFormScreen extends StatefulWidget {
-  const PartyThirdFormScreen({super.key});
+class CourseThirdFormScreen extends StatefulWidget {
+  const CourseThirdFormScreen({super.key});
 
-  static String get routeName => 'partyForm3';
+  static String get routeName => 'courseForm3';
 
   @override
-  State<PartyThirdFormScreen> createState() => _PartyThirdFormScreenState();
+  State<CourseThirdFormScreen> createState() => _CourseThirdFormScreenState();
 }
 
-class _PartyThirdFormScreenState extends State<PartyThirdFormScreen> {
+class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
   List<int> selectedGenderButtons = [];
   List<int> selectedAgeButtons = [];
   List<int> selectedPetButtons = [];
@@ -180,7 +180,7 @@ class _PartyThirdFormScreenState extends State<PartyThirdFormScreen> {
                               'Selected gender buttons: $selectedGenderButtons');
                           print('Selected age buttons: $selectedAgeButtons');
                           print('Selected pet buttons: $selectedPetButtons');
-                          context.goNamed('partyForm4');
+                          context.goNamed('courseForm4');
                         },
                   child: const Text(
                     '다음',

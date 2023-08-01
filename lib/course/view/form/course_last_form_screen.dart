@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class PartyLastFormScreen extends StatefulWidget {
-  const PartyLastFormScreen({super.key});
-  static String get routeName => 'partyForm6';
+class CourseLastFormScreen extends StatefulWidget {
+  const CourseLastFormScreen({super.key});
+  static String get routeName => 'courseForm6';
 
   @override
-  State<PartyLastFormScreen> createState() => _PartyLastFormScreenState();
+  State<CourseLastFormScreen> createState() => _CourseLastFormScreenState();
 }
 
-class _PartyLastFormScreenState extends State<PartyLastFormScreen> {
+class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
   int courseNameCount = 0;
   final textController = TextEditingController();
 
@@ -129,7 +127,7 @@ class _PartyLastFormScreenState extends State<PartyLastFormScreen> {
                     ? null
                     : () {
                         print('Selected like Place : $textController.text');
-                        context.goNamed('partyForm6');
+                        context.goNamed('courseForm6');
                       },
                 child: const Text(
                   '완료',

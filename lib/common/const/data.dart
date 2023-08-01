@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:tago_app/party/model/party_model.dart';
+import 'package:tago_app/course/model/course_model.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
@@ -32,7 +32,7 @@ final Map<String, String> buttonData = {
   '쇼핑': 'shopping',
 };
 
-PartyModel partyData = PartyModel(
+CourseModel courseData = CourseModel(
   id: '1',
   name: '낭만적인 밤바다 코스',
   imgUrl: 'https://picsum.photos/id/421/200/200',
@@ -43,7 +43,7 @@ PartyModel partyData = PartyModel(
   startDate: 1656140400,
 );
 
-PartyModel partyCardData = PartyModel(
+CourseModel courseCardData = CourseModel(
   id: '1',
   name: '아름다운 숲 코스',
   imgUrl: 'https://picsum.photos/id/28/200/200',

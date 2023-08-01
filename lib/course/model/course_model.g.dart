@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'party_model.dart';
+part of 'course_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PartyModel _$PartyModelFromJson(Map<String, dynamic> json) => PartyModel(
+CourseModel _$CourseModelFromJson(Map<String, dynamic> json) => CourseModel(
       id: json['id'] as String,
       name: json['name'] as String,
       imgUrl: json['imgUrl'] as String,
@@ -17,7 +17,7 @@ PartyModel _$PartyModelFromJson(Map<String, dynamic> json) => PartyModel(
       startDate: json['startDate'] as int,
     );
 
-Map<String, dynamic> _$PartyModelToJson(PartyModel instance) =>
+Map<String, dynamic> _$CourseModelToJson(CourseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

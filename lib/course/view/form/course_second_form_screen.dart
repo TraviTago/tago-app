@@ -4,20 +4,20 @@ import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/party/component/form/person_counter.dart';
+import 'package:tago_app/course/component/form/person_counter.dart';
 
-class PartySecondFormScreen extends StatefulWidget {
-  const PartySecondFormScreen({Key? key}) : super(key: key);
-  static String get routeName => 'partyForm2';
+class CourseSecondFormScreen extends StatefulWidget {
+  const CourseSecondFormScreen({Key? key}) : super(key: key);
+  static String get routeName => 'courseForm2';
 
   @override
-  _PartySecondFormScreenState createState() => _PartySecondFormScreenState();
+  _CourseSecondFormScreenState createState() => _CourseSecondFormScreenState();
 }
 
-class _PartySecondFormScreenState extends State<PartySecondFormScreen> {
+class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
   List<int> selectedButtons = [];
   int counter = 1;
-  bool isPrivateParty = false;
+  bool isPrivateCourse = false;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
@@ -116,10 +116,10 @@ class _PartySecondFormScreenState extends State<PartySecondFormScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              value: isPrivateParty,
+                              value: isPrivateCourse,
                               onChanged: (bool? newValue) {
                                 setState(() {
-                                  isPrivateParty = newValue ?? false;
+                                  isPrivateCourse = newValue ?? false;
                                 });
                               },
                             ),
@@ -151,10 +151,10 @@ class _PartySecondFormScreenState extends State<PartySecondFormScreen> {
                 onPressed: selectedButtons.isEmpty
                     ? null
                     : () {
-                        print(isPrivateParty);
+                        print(isPrivateCourse);
                         print(counter);
                         print(selectedButtons);
-                        context.goNamed('partyForm3');
+                        context.goNamed('courseForm3');
                       },
                 child: const Text(
                   '다음',

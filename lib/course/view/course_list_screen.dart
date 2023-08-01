@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
-import 'package:tago_app/party/component/party_card.dart';
-import 'package:tago_app/party/component/party_recommend_card.dart';
+import 'package:tago_app/course/component/course_card.dart';
+import 'package:tago_app/course/component/course_recommend_card.dart';
 
-class PartyListScreen extends StatelessWidget {
-  const PartyListScreen({super.key});
+class CourseListScreen extends StatelessWidget {
+  const CourseListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class PartyListScreen extends StatelessWidget {
               size: 45,
             ),
             onPressed: () {
-              context.go('/partyForm1');
+              context.go('/courseForm1');
             },
             backgroundColor: PRIMARY_COLOR,
           ),
@@ -46,8 +46,8 @@ class PartyListScreen extends StatelessWidget {
             const SizedBox(
               height: 10.0,
             ),
-            PartyRecommendCard.fromModel(model: partyData),
-            PartyCard.fromModel(model: partyCardData),
+            CourseRecommendCard.fromModel(model: courseData),
+            CourseCard.fromModel(model: courseCardData),
           ],
         ),
       ),

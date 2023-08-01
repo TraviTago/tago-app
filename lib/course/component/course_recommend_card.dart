@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/party/model/party_model.dart';
+import 'package:tago_app/course/model/course_model.dart';
 
-class PartyRecommendCard extends StatelessWidget {
+class CourseRecommendCard extends StatelessWidget {
   final String id;
   final String name;
   final String imgUrl;
@@ -13,7 +13,7 @@ class PartyRecommendCard extends StatelessWidget {
   final int duration;
   final int startDate;
 
-  const PartyRecommendCard({
+  const CourseRecommendCard({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -25,10 +25,10 @@ class PartyRecommendCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory PartyRecommendCard.fromModel({
-    required PartyModel model,
+  factory CourseRecommendCard.fromModel({
+    required CourseModel model,
   }) {
-    return PartyRecommendCard(
+    return CourseRecommendCard(
       id: model.id,
       name: model.name,
       imgUrl: model.imgUrl,

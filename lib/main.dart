@@ -7,12 +7,12 @@ import 'package:tago_app/form/view/first_form_screen.dart';
 import 'package:tago_app/form/view/last_form_screen.dart';
 import 'package:tago_app/form/view/second_from_screen.dart';
 import 'package:tago_app/form/view/third_form_screen.dart';
-import 'package:tago_app/party/view/form/party_fifth_form_screen.dart';
-import 'package:tago_app/party/view/form/party_first_form_screen.dart';
-import 'package:tago_app/party/view/form/party_fourth_from_screen.dart';
-import 'package:tago_app/party/view/form/party_last_form_screen.dart';
-import 'package:tago_app/party/view/form/party_second_form_screen.dart';
-import 'package:tago_app/party/view/form/party_third_form_screen.dart';
+import 'package:tago_app/course/view/form/course_fifth_form_screen.dart';
+import 'package:tago_app/course/view/form/course_first_form_screen.dart';
+import 'package:tago_app/course/view/form/course_fourth_from_screen.dart';
+import 'package:tago_app/course/view/form/course_last_form_screen.dart';
+import 'package:tago_app/course/view/form/course_second_form_screen.dart';
+import 'package:tago_app/course/view/form/course_third_form_screen.dart';
 import 'package:tago_app/user/view/login_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -68,34 +68,35 @@ class _App extends StatelessWidget {
         builder: (_, __) => const RootTab(),
         routes: [
           GoRoute(
-            path: 'partyForm1',
-            name: PartyFirstFormScreen.routeName,
-            builder: (_, __) => const PartyFirstFormScreen(),
+            path: 'courseForm1',
+            name: CourseFirstFormScreen.routeName,
+            builder: (_, __) => const CourseFirstFormScreen(),
             routes: [
               GoRoute(
-                path: 'partyForm2',
-                name: PartySecondFormScreen.routeName,
-                builder: (_, __) => const PartySecondFormScreen(),
+                path: 'courseForm2',
+                name: CourseSecondFormScreen.routeName,
+                builder: (_, __) => const CourseSecondFormScreen(),
                 routes: [
                   GoRoute(
-                    path: 'partyForm3',
-                    name: PartyThirdFormScreen.routeName,
-                    builder: (_, __) => const PartyThirdFormScreen(),
+                    path: 'courseForm3',
+                    name: CourseThirdFormScreen.routeName,
+                    builder: (_, __) => const CourseThirdFormScreen(),
                     routes: [
                       GoRoute(
-                        path: 'partyForm4',
-                        name: PartyFourthFormScreen.routeName,
-                        builder: (_, __) => const PartyFourthFormScreen(),
+                        path: 'courseForm4',
+                        name: CourseFourthFormScreen.routeName,
+                        builder: (_, __) => const CourseFourthFormScreen(),
                         routes: [
                           GoRoute(
-                            path: 'partyForm5',
-                            name: PartyFifthFormScreen.routeName,
-                            builder: (_, __) => const PartyFifthFormScreen(),
+                            path: 'courseForm5',
+                            name: CourseFifthFormScreen.routeName,
+                            builder: (_, __) => const CourseFifthFormScreen(),
                             routes: [
                               GoRoute(
-                                path: 'partyForm6',
-                                name: PartyLastFormScreen.routeName,
-                                builder: (_, __) => const PartyLastFormScreen(),
+                                path: 'courseForm6',
+                                name: CourseLastFormScreen.routeName,
+                                builder: (_, __) =>
+                                    const CourseLastFormScreen(),
                               ),
                             ],
                           ),

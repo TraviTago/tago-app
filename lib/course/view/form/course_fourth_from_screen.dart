@@ -7,16 +7,16 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class PartyFourthFormScreen extends StatefulWidget {
-  const PartyFourthFormScreen({super.key});
+class CourseFourthFormScreen extends StatefulWidget {
+  const CourseFourthFormScreen({super.key});
 
-  static String get routeName => 'partyForm4';
+  static String get routeName => 'courseForm4';
 
   @override
-  State<PartyFourthFormScreen> createState() => _PartyFourthFormScreenState();
+  State<CourseFourthFormScreen> createState() => _CourseFourthFormScreenState();
 }
 
-class _PartyFourthFormScreenState extends State<PartyFourthFormScreen> {
+class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
   final TextEditingController _controller = TextEditingController();
   final GlobalKey _buttonkey = GlobalKey();
   final GlobalKey _timekey = GlobalKey();
@@ -435,7 +435,7 @@ class _PartyFourthFormScreenState extends State<PartyFourthFormScreen> {
                         print('Selected Start Date: $selectedDateTime');
                         print(
                             'Selected Mus places: ${allPlaces.entries.where((entry) => entry.value == true).map((entry) => entry.key).join(', ')}');
-                        context.goNamed('partyForm5');
+                        context.goNamed('courseForm5');
                       },
                 child: const Text(
                   '다음',

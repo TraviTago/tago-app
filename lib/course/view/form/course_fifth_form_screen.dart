@@ -6,15 +6,15 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class PartyFifthFormScreen extends StatefulWidget {
-  const PartyFifthFormScreen({super.key});
-  static String get routeName => 'partyForm5';
+class CourseFifthFormScreen extends StatefulWidget {
+  const CourseFifthFormScreen({super.key});
+  static String get routeName => 'courseForm5';
 
   @override
-  State<PartyFifthFormScreen> createState() => _PartyFifthFormScreenState();
+  State<CourseFifthFormScreen> createState() => _CourseFifthFormScreenState();
 }
 
-class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
+class _CourseFifthFormScreenState extends State<CourseFifthFormScreen> {
   List<int> likes = [];
 
   @override
@@ -78,7 +78,7 @@ class _PartyFifthFormScreenState extends State<PartyFifthFormScreen> {
                     ? null
                     : () {
                         print('Selected like Place : $likes');
-                        context.goNamed('partyForm6');
+                        context.goNamed('courseForm6');
                       },
                 child: const Text(
                   '다음',

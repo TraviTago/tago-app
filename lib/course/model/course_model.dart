@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'party_model.g.dart';
+part 'course_model.g.dart';
 
 @JsonSerializable()
-class PartyModel {
+class CourseModel {
   final String id;
   final String name;
   final String imgUrl;
@@ -13,7 +13,7 @@ class PartyModel {
   final int duration;
   final int startDate;
 
-  PartyModel({
+  CourseModel({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -24,10 +24,10 @@ class PartyModel {
     required this.startDate,
   });
 
-  factory PartyModel.fromJson(Map<String, dynamic> json) =>
-      _$PartyModelFromJson(json);
+  factory CourseModel.fromJson(Map<String, dynamic> json) =>
+      _$CourseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PartyModelToJson(this);
+  Map<String, dynamic> toJson() => _$CourseModelToJson(this);
 
   // factory RestaurantModel.fromJson({
   //   required Map<String, dynamic> json,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tago_app/party/view/party_list_screen.dart';
+import 'package:tago_app/course/view/course_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,7 +69,7 @@ class _HomeState extends State<HomeScreen> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  const PartyListScreen(),
+                  const CourseListScreen(),
                   Center(child: Container(child: const Text('둘러보기'))),
                 ],
               ),
