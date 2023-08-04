@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/form/view/first_form_screen.dart';
@@ -17,6 +18,9 @@ import 'package:tago_app/user/view/login_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
+  KakaoSdk.init(
+    nativeAppKey: 'b92e829b2b66cfaa229d26508ab56230',
+  );
   initializeDateFormatting().then(
     (_) => runApp(
       ProviderScope(

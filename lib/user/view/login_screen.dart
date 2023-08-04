@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/user/model/kako_login_model.dart';
+import 'package:tago_app/user/model/social_login_model.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -45,7 +46,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       const _LoginSubTitle(),
                       const SizedBox(height: 15.0),
                       GestureDetector(
-                        onTap: () => {context.go('/form1')},
+                        onTap: () async {
+                          final loginModel = KakaoLoginModel();
+                          final bool success = await loginModel.login();
+                          if (success) {
+                            print("로그인에 성공하였습니다.");
+                          } else {
+                            print("로그인에 실패하였습니다.");
+                          }
+                        },
                         child: Image.asset(
                           'asset/img/kakao_login.png',
                         ),

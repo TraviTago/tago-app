@@ -1,33 +1,23 @@
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:tago_app/user/model/social_login_model.dart';
 
-class KakaoLoginModel {
+class KakaoLoginModel implements SocialLogin {
+  @override
   Future<bool> login() async {
     try {
-      bool isInstalled = await isKakaoTalkInstalled();
-      // 카카오톡이 설치 되어 있다면
-      if (!isInstalled) {
-        try {
-          await UserApi.instance.loginWithKakaoTalk();
-          return true;
-        } catch (e) {
-          print(e);
-          return false;
-        }
-      }
-      // 카카오톡이 설치 안되어 있다면
-      else {
-        try {
-          await UserApi.instance.loginWithKakaoAccount();
-          return true;
-        } catch (e) {
-          return false;
-        }
+      try {
+        await UserApi.instance.loginWithKakaoAccount();
+        return true;
+      } catch (e) {
+        return false;
       }
     } catch (e) {
+      print(e);
       return false;
     }
   }
 
+  @override
   Future<bool> logout() async {
     try {
       await UserApi.instance.unlink();
