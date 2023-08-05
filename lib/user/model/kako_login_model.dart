@@ -1,19 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/user/model/social_login_model.dart';
+import 'package:tago_app/user/model/user_model.dart';
 
 class KakaoLoginModel implements SocialLogin {
   @override
-  Future<bool> login() async {
+  Future<UserModelBase> login() async {
     try {
-      try {
-        await UserApi.instance.loginWithKakaoAccount();
-        return true;
-      } catch (e) {
-        return false;
-      }
+      await UserApi.instance.loginWithKakaoAccount();
+      final user = await UserApi.instance.me();
+
+      return UserModel(
+        //TO FIX
+        sns: describeEnum(SNSPlatform.KAKAO),
+        email: "njs05053@naver.com",
+        nickName: user.kakaoAccount!.profile!.nickname,
+      );
     } catch (e) {
-      print(e);
-      return false;
+      return UserModelError();
     }
   }
 
