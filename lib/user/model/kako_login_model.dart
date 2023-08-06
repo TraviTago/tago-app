@@ -12,9 +12,9 @@ class KakaoLoginModel implements SocialLogin {
 
       return UserModel(
         //TO FIX
-        sns: describeEnum(SNSPlatform.KAKAO),
+        oauthProvider: describeEnum(SNSPlatform.KAKAO),
         email: "njs05053@naver.com",
-        nickName: user.kakaoAccount!.profile!.nickname,
+        name: user.kakaoAccount!.profile!.nickname,
       );
     } catch (e) {
       return UserModelError();

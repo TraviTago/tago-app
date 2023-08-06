@@ -15,14 +15,14 @@ class UserModelLoading extends UserModelBase {}
 //유저 로딩 성공
 @JsonSerializable()
 class UserModel extends UserModelBase {
-  final String sns;
+  final String oauthProvider;
   final String email;
-  final String? nickName;
+  final String? name;
 
   UserModel({
-    required this.sns,
+    required this.oauthProvider,
     required this.email,
-    required this.nickName,
+    required this.name,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
