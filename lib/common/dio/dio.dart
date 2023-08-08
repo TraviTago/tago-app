@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
+import 'package:tago_app/user/provider/auth_provider.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
@@ -37,9 +38,9 @@ class CustomInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     print('[REQ] [${options.method}] ${options.uri}');
 
-    if (options.headers['access_token'] == 'true') {
+    if (options.headers['accessToken'] == 'true') {
       // 헤더 삭제
-      options.headers.remove('access_token');
+      options.headers.remove('accessToken');
 
       final token = await storage.read(key: ACCESS_TOKEN_KEY);
 
@@ -49,9 +50,9 @@ class CustomInterceptor extends Interceptor {
       });
     }
 
-    if (options.headers['refresh_token'] == 'true') {
+    if (options.headers['refreshToken'] == 'true') {
       // 헤더 삭제
-      options.headers.remove('refresh_token');
+      options.headers.remove('refreshToken');
 
       final token = await storage.read(key: REFRESH_TOKEN_KEY);
 
@@ -91,14 +92,15 @@ class CustomInterceptor extends Interceptor {
     }
 
     final isStatus401 = err.response?.statusCode == 401;
-    final isPathRefresh = err.requestOptions.path == '/auth/token';
+    final isPathRefresh =
+        err.requestOptions.path == 'api/v1/auth/token/reissue';
 
     if (isStatus401 && !isPathRefresh) {
       final dio = Dio();
 
       try {
         final resp = await dio.post(
-          'http://$ip/auth/token',
+          'http://$ip/api/v1/auth/token/reissue',
           options: Options(
             headers: {
               'authorization': 'Bearer $refreshToken',
@@ -106,7 +108,7 @@ class CustomInterceptor extends Interceptor {
           ),
         );
 
-        final accessToken = resp.data['access_token'];
+        final accessToken = resp.data['accessToken'];
 
         final options = err.requestOptions;
 
@@ -122,7 +124,7 @@ class CustomInterceptor extends Interceptor {
 
         return handler.resolve(response);
       } on DioError catch (e) {
-        // ref.read(authProvider.notifier).logout();
+        ref.read(authProvider.notifier).logout();
         return handler.reject(e);
       }
     }
