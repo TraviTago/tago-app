@@ -146,7 +146,9 @@ class AuthProvider extends ChangeNotifier {
       return logginIn ? null : '/login';
     }
     if (user is UserModel) {
-      return logginIn || state.location == '/splash' ? '/' : null;
+      return logginIn || state.location == '/splash'
+          ? (user.signedUp! ? '/' : '/form1')
+          : null;
     }
     if (user is UserModelError) {
       return !logginIn ? '/login' : null;
