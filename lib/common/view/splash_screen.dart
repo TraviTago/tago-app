@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:go_router/go_router.dart';
 
-class SplashScreen extends StatefulWidget {
+final splashScreenTimerProvider = StateProvider<bool>((ref) => false);
+
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   static String get routeName => 'splash';
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // 4초 뒤에 '/root_tab' 페이지로 이동
-    Future.delayed(const Duration(seconds: 2), () {
-      context.go('/login');
-    });
+    _setTimerCompletedAfterDelay();
+  }
+
+  void _setTimerCompletedAfterDelay() async {
+    await Future.delayed(const Duration(seconds: 2));
+    ref.read(splashScreenTimerProvider.notifier).state = true;
   }
 
   @override
