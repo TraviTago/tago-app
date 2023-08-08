@@ -1,9 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/user/model/kako_login_model.dart';
-import 'package:tago_app/user/model/social_login_model.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -18,6 +17,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final loginModel = KakaoLoginModel();
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(userProvider);
+
     return DefaultLayout(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -47,13 +48,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       const SizedBox(height: 15.0),
                       GestureDetector(
                         onTap: () async {
-                          final loginModel = KakaoLoginModel();
-                          final bool success = await loginModel.login();
-                          if (success) {
-                            print("로그인에 성공하였습니다.");
-                          } else {
-                            print("로그인에 실패하였습니다.");
-                          }
+                          // 카카오 로그인 성공 여부
+                          await ref
+                              .read(userProvider.notifier)
+                              .login(loginModel: loginModel);
                         },
                         child: Image.asset(
                           'asset/img/kakao_login.png',
