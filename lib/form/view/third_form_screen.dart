@@ -16,6 +16,8 @@ class ThirdFormScreen extends StatefulWidget {
 }
 
 class _ThirdFormScreenState extends State<ThirdFormScreen> {
+  List<String> _selectedFavorites = [];
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -52,7 +54,9 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                   childAspectRatio: 1,
                   onButtonSelected: (selectedButtons) {
                     // 콜백 구현
-                    print('Selected buttons: $selectedButtons');
+                    setState(() {
+                      _selectedFavorites = selectedButtons;
+                    });
                   },
                 ),
               ),
@@ -66,10 +70,28 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                    backgroundColor: _selectedFavorites.isEmpty
+                        ? MaterialStateProperty.all(
+                            BUTTON_BG_COLOR.withOpacity(0.5))
+                        : MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () => context.go('/form4'),
+                  onPressed: _selectedFavorites.isEmpty
+                      ? null
+                      : () => context.push(
+                            Uri(
+                              path: '/form4',
+                              queryParameters: {
+                                'ageRange': GoRouterState.of(context)
+                                    .queryParameters['ageRange'],
+                                'gender': GoRouterState.of(context)
+                                    .queryParameters['gender'],
+                                'mbti': GoRouterState.of(context)
+                                    .queryParameters['mbti'],
+                                'favorites': _selectedFavorites.toString(),
+                              },
+                            ).toString(),
+                          ),
                   child: const Text(
                     '다음',
                     style: TextStyle(

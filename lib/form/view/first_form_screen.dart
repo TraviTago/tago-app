@@ -5,10 +5,28 @@ import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 
-class FirstFormScreen extends StatelessWidget {
+class FirstFormScreen extends StatefulWidget {
   static String get routeName => 'form1';
 
   const FirstFormScreen({super.key});
+
+  @override
+  State<FirstFormScreen> createState() => _FirstFormScreenState();
+}
+
+class _FirstFormScreenState extends State<FirstFormScreen> {
+  int? _selectedAgeRange;
+  String? _selectedGender;
+
+  int? _getAgeRangeFromString(String ageString) {
+    if (ageString == '10대') return 10;
+    if (ageString == '20대') return 20;
+    if (ageString == '30대') return 30;
+    if (ageString == '40대') return 40;
+    if (ageString == '50대') return 50;
+    if (ageString == '60대') return 60;
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +89,10 @@ class FirstFormScreen extends StatelessWidget {
                       childAspectRatio: 2.5,
                       onButtonSelected: (selectedButtons) {
                         // 콜백 구현
-                        print('Selected buttons: $selectedButtons');
+                        setState(() {
+                          _selectedAgeRange =
+                              _getAgeRangeFromString(selectedButtons[0]);
+                        });
                       },
                     ),
                   ),
@@ -97,7 +118,9 @@ class FirstFormScreen extends StatelessWidget {
                       childAspectRatio: 4,
                       onButtonSelected: (selectedButtons) {
                         // 콜백 구현
-                        print('Selected buttons: $selectedButtons');
+                        setState(() {
+                          _selectedGender = selectedButtons[0];
+                        });
                       },
                     ),
                   ),
@@ -110,10 +133,27 @@ class FirstFormScreen extends StatelessWidget {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                    backgroundColor:
+                        _selectedAgeRange == null || _selectedGender == null
+                            ? MaterialStateProperty.all(
+                                BUTTON_BG_COLOR.withOpacity(0.5))
+                            : MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () => context.go('/form2'),
+                  onPressed:
+                      _selectedAgeRange == null || _selectedGender == null
+                          ? null
+                          : () {
+                              context.push(
+                                Uri(
+                                  path: '/form2',
+                                  queryParameters: {
+                                    'ageRange': _selectedAgeRange.toString(),
+                                    'gender': _selectedGender,
+                                  },
+                                ).toString(),
+                              );
+                            },
                   child: const Text(
                     '다음',
                     style: TextStyle(

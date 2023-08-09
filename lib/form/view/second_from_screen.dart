@@ -136,10 +136,37 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                    backgroundColor: selectedEI == null ||
+                            selectedNS == null ||
+                            selectedTF == null ||
+                            selectedJP == null
+                        ? MaterialStateProperty.all(
+                            BUTTON_BG_COLOR.withOpacity(0.5))
+                        : MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () => context.go('/form3'),
+                  onPressed: selectedEI == null ||
+                          selectedNS == null ||
+                          selectedTF == null ||
+                          selectedJP == null
+                      ? null
+                      : () {
+                          final mbti =
+                              '${selectedEI ?? ''}${selectedNS ?? ''}${selectedTF ?? ''}${selectedJP ?? ''}';
+
+                          context.push(
+                            Uri(
+                              path: '/form3',
+                              queryParameters: {
+                                'ageRange': GoRouterState.of(context)
+                                    .queryParameters['ageRange'],
+                                'gender': GoRouterState.of(context)
+                                    .queryParameters['gender'],
+                                'mbti': mbti,
+                              },
+                            ).toString(),
+                          );
+                        },
                   child: const Text(
                     '다음',
                     style: TextStyle(
