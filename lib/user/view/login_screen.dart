@@ -17,8 +17,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final loginModel = KakaoLoginModel();
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(userProvider);
-
     return DefaultLayout(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

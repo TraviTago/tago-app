@@ -3,6 +3,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/user/model/kako_login_model.dart';
+import 'package:tago_app/user/model/sign_up_model.dart';
+import 'package:tago_app/user/model/sign_up_response.dart';
 import 'package:tago_app/user/model/social_login_model.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
@@ -49,6 +51,28 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     final resp = await repository.getMe();
 
     state = resp;
+  }
+
+  Future<SignUpResponse> signUp({
+    required SignUpModel signUpModel,
+  }) async {
+    state = UserModelLoading();
+
+    print(signUpModel.ageRange);
+    print(signUpModel.gender);
+    print(signUpModel.mbti);
+    print(signUpModel.favorites);
+    print(signUpModel.tripTypes);
+    SignUpResponse response = await authRepository.signUp(
+        ageRange: signUpModel.ageRange,
+        gender: signUpModel.gender,
+        mbti: signUpModel.mbti,
+        favorites: signUpModel.favorites,
+        tripTypes: signUpModel.tripTypes);
+
+    final userResp = await repository.getMe();
+    state = userResp;
+    return response;
   }
 
   // 로그인을 시도했을 때 어떤 상태인지 모르기 때문에 UserModelBase로 상태를 특정한다.
