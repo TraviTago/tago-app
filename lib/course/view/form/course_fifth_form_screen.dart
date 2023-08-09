@@ -15,7 +15,7 @@ class CourseFifthFormScreen extends StatefulWidget {
 }
 
 class _CourseFifthFormScreenState extends State<CourseFifthFormScreen> {
-  List<int> likes = [];
+  List<String> likes = [];
 
   @override
   Widget build(BuildContext context) {

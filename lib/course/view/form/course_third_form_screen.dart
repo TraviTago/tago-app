@@ -15,9 +15,9 @@ class CourseThirdFormScreen extends StatefulWidget {
 }
 
 class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
-  List<int> selectedGenderButtons = [];
-  List<int> selectedAgeButtons = [];
-  List<int> selectedPetButtons = [];
+  List<String> selectedGenderButtons = [];
+  List<String> selectedAgeButtons = [];
+  List<String> selectedPetButtons = [];
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;

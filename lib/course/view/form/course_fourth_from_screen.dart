@@ -611,9 +611,11 @@ class _PlaceModalState extends State<_PlaceModal> {
                 childAspectRatio: 4,
                 isModal: true,
                 initialSelectedIndexes: selectedPlaceIndexes,
-                onButtonSelected: (selectedButtonIndexes) {
+                onButtonSelected: (selectedButtonNames) {
                   setState(() {
-                    selectedPlaceIndexes = selectedButtonIndexes;
+                    selectedPlaceIndexes = selectedButtonNames
+                        .map((name) => widget.startPlaces.indexOf(name))
+                        .toList();
                   });
                 },
               ),

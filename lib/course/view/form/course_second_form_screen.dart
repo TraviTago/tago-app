@@ -15,7 +15,7 @@ class CourseSecondFormScreen extends StatefulWidget {
 }
 
 class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
-  List<int> selectedButtons = [];
+  List<String> selectedButtons = [];
   int counter = 1;
   bool isPrivateCourse = false;
   @override
