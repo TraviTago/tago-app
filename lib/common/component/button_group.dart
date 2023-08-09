@@ -10,7 +10,8 @@ class ButtonGroup extends StatefulWidget {
   final bool isMultipleSelection;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
-  final Function(List<int>) onButtonSelected; // 콜백 함수 추가
+  final Function(List<String>)
+      onButtonSelected; // 이전: Function(List<int>) onButtonSelected;
   final bool isModal;
   final List<int>? initialSelectedIndexes;
 
@@ -97,7 +98,14 @@ class _ButtonGroupState extends State<ButtonGroup> {
                         selectedButtons = [index];
                       }
                     });
-                    widget.onButtonSelected(selectedButtons);
+
+                    // 인덱스를 텍스트로 변환합니다.
+                    List<String> selectedTexts = selectedButtons
+                        .map((i) => widget.buttonTexts[i])
+                        .toList();
+
+                    // 변환된 텍스트 리스트를 콜백 함수에 전달합니다.
+                    widget.onButtonSelected(selectedTexts);
                   },
                 )
               : OutlinedButton(
@@ -128,7 +136,14 @@ class _ButtonGroupState extends State<ButtonGroup> {
                         selectedButtons = [index];
                       }
                     });
-                    widget.onButtonSelected(selectedButtons);
+
+                    // 인덱스를 텍스트로 변환합니다.
+                    List<String> selectedTexts = selectedButtons
+                        .map((i) => widget.buttonTexts[i])
+                        .toList();
+
+                    // 변환된 텍스트 리스트를 콜백 함수에 전달합니다.
+                    widget.onButtonSelected(selectedTexts);
                   },
                   child: Center(
                     child: Column(
