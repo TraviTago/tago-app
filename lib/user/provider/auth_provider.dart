@@ -3,16 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
+import 'package:tago_app/course/view/detail/course_detail_screen.dart';
 import 'package:tago_app/course/view/form/course_fifth_form_screen.dart';
 import 'package:tago_app/course/view/form/course_first_form_screen.dart';
 import 'package:tago_app/course/view/form/course_fourth_from_screen.dart';
 import 'package:tago_app/course/view/form/course_last_form_screen.dart';
 import 'package:tago_app/course/view/form/course_second_form_screen.dart';
 import 'package:tago_app/course/view/form/course_third_form_screen.dart';
-import 'package:tago_app/form/view/first_form_screen.dart';
-import 'package:tago_app/form/view/last_form_screen.dart';
-import 'package:tago_app/form/view/second_from_screen.dart';
-import 'package:tago_app/form/view/third_form_screen.dart';
+import 'package:tago_app/signup/view/first_form_screen.dart';
+import 'package:tago_app/signup/view/last_form_screen.dart';
+import 'package:tago_app/signup/view/second_from_screen.dart';
+import 'package:tago_app/signup/view/third_form_screen.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/user/view/login_screen.dart';
@@ -81,6 +82,11 @@ class AuthProvider extends ChangeNotifier {
           name: RootTab.routeName,
           builder: (_, __) => const RootTab(),
           routes: [
+            GoRoute(
+              path: 'courseDetail',
+              name: CourseDetailScreen.routeName,
+              builder: (_, __) => const CourseDetailScreen(),
+            ),
             GoRoute(
               path: 'courseForm1',
               name: CourseFirstFormScreen.routeName,

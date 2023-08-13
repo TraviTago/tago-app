@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tago_app/course/view/course_list_screen.dart';
+import 'package:tago_app/course/view/list/course_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

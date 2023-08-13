@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
+import 'package:tago_app/user/model/sign_up_model.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
-class LastFormScreen extends StatefulWidget {
+class LastFormScreen extends ConsumerStatefulWidget {
   static String get routeName => 'form4';
 
   const LastFormScreen({super.key});
 
   @override
-  State<LastFormScreen> createState() => _LastFormScreenState();
+  ConsumerState<LastFormScreen> createState() => _LastFormScreenState();
 }
 
-class _LastFormScreenState extends State<LastFormScreen> {
+class _LastFormScreenState extends ConsumerState<LastFormScreen> {
+  List<String> _selectedTripTypes = [];
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -59,7 +64,9 @@ class _LastFormScreenState extends State<LastFormScreen> {
                   childAspectRatio: 3,
                   onButtonSelected: (selectedButtons) {
                     // 콜백 구현
-                    print('Selected buttons: $selectedButtons');
+                    setState(() {
+                      _selectedTripTypes = selectedButtons;
+                    });
                   },
                 ),
               ),
@@ -70,10 +77,30 @@ class _LastFormScreenState extends State<LastFormScreen> {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: MaterialStateProperty.all(BUTTON_BG_COLOR),
+                    backgroundColor: _selectedTripTypes.isEmpty
+                        ? MaterialStateProperty.all(
+                            BUTTON_BG_COLOR.withOpacity(0.5))
+                        : MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () => context.go('/'),
+                  onPressed: _selectedTripTypes.isEmpty
+                      ? null
+                      : () async {
+                          // 카카오 로그인 성공 여부
+                          var queryParams =
+                              GoRouterState.of(context).queryParameters;
+                          await ref.read(userProvider.notifier).signUp(
+                                // TOFIX: 회원가입 모델 임시
+                                signUpModel: SignUpModel(
+                                  ageRange: int.tryParse(queryParams[
+                                      'ageRange']!)!, // 기본 값 0으로 설정, 적절한 값을 설정해야 할 수도 있습니다.
+                                  gender: "MALE",
+                                  mbti: "ENFP",
+                                  favorites: ["INSTAGRAM"],
+                                  tripTypes: ["SLOW_LAZY"],
+                                ),
+                              );
+                        },
                   child: const Text(
                     '시작하기',
                     style: TextStyle(
