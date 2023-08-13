@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_model.dart';
 
@@ -44,59 +45,65 @@ class CourseRecommendCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth =
         MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12.0),
-      child: Stack(
-        children: <Widget>[
-          Image.network(
-            imgUrl,
-            width: screenWidth,
-            height: screenWidth,
-            fit: BoxFit.cover,
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
+    return GestureDetector(
+      onTap: () {
+        // Use goRouter to navigate to the /courseDetail page.
+        context.go("/courseDetail");
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Stack(
+          children: <Widget>[
+            Image.network(
+              imgUrl,
               width: screenWidth,
-              height: (screenWidth) / 3,
-              decoration: BoxDecoration(
-                color: const Color(0xFF161616).withOpacity(0.8),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 20.0,
+              height: screenWidth,
+              fit: BoxFit.cover,
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: screenWidth,
+                height: (screenWidth) / 3,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF161616).withOpacity(0.8),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _DateAndName(
-                          date: startDate,
-                          name: name,
-                          duration: duration,
-                        ),
-                        _PersonLabel(curNum: curNum, maxNum: maxNum)
-                      ],
-                    ),
-                    Text(
-                      tags.join(' · '),
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 11.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 20.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _DateAndName(
+                            date: startDate,
+                            name: name,
+                            duration: duration,
+                          ),
+                          _PersonLabel(curNum: curNum, maxNum: maxNum)
+                        ],
                       ),
-                    ),
-                  ],
+                      Text(
+                        tags.join(' · '),
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
