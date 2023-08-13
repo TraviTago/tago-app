@@ -4,15 +4,19 @@ part 'place_model.g.dart';
 
 @JsonSerializable()
 class PlaceModel {
-  final String id;
+  final int id;
+  final int typeId;
   final String title;
+  final String overview;
   final String imgUrl;
-  final String mapx;
-  final String mapy;
+  final double mapx;
+  final double mapy;
 
   PlaceModel({
     required this.id,
+    required this.typeId,
     required this.title,
+    required this.overview,
     required this.imgUrl,
     required this.mapx,
     required this.mapy,

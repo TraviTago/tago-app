@@ -8,13 +8,14 @@ part of 'place_detail_model.dart';
 
 PlaceDetailModel _$PlaceDetailModelFromJson(Map<String, dynamic> json) =>
     PlaceDetailModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
+      typeId: json['typeId'] as int,
       title: json['title'] as String,
       imgUrl: json['imgUrl'] as String,
-      mapx: json['mapx'] as String,
-      mapy: json['mapy'] as String,
-      address: json['address'] as String,
+      mapx: (json['mapx'] as num).toDouble(),
+      mapy: (json['mapy'] as num).toDouble(),
       overview: json['overview'] as String,
+      address: json['address'] as String,
       homepage: json['homepage'] as String?,
       telephone: json['telephone'] as String?,
       restDate: json['restDate'] as String?,
@@ -25,12 +26,13 @@ PlaceDetailModel _$PlaceDetailModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PlaceDetailModelToJson(PlaceDetailModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'typeId': instance.typeId,
       'title': instance.title,
+      'overview': instance.overview,
       'imgUrl': instance.imgUrl,
       'mapx': instance.mapx,
       'mapy': instance.mapy,
       'address': instance.address,
-      'overview': instance.overview,
       'homepage': instance.homepage,
       'telephone': instance.telephone,
       'restDate': instance.restDate,

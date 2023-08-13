@@ -6,7 +6,6 @@ part 'place_detail_model.g.dart';
 @JsonSerializable()
 class PlaceDetailModel extends PlaceModel {
   final String address;
-  final String overview;
   final String? homepage;
   final String? telephone;
   final String? restDate;
@@ -14,12 +13,13 @@ class PlaceDetailModel extends PlaceModel {
   final String? parking;
   PlaceDetailModel({
     required super.id,
+    required super.typeId,
     required super.title,
     required super.imgUrl,
     required super.mapx,
     required super.mapy,
+    required super.overview,
     required this.address,
-    required this.overview,
     this.homepage,
     this.telephone,
     this.restDate,
