@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/course/view/detail/course_detail_map_screen.dart';
 import 'package:tago_app/course/view/detail/course_detail_overview_screen.dart';
@@ -16,6 +17,8 @@ class CourseDetailScreen extends StatefulWidget {
 class _CourseDetailScreenState extends State<CourseDetailScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  //TOFIX
+  final detailModel = courseDetailData;
 
   @override
   void initState() {
@@ -32,7 +35,26 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: "aa",
+      titleComponet: Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              detailModel.name,
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+            _PersonLabel(
+              curNum: detailModel.curNum,
+              maxNum: detailModel.maxNum,
+            ),
+          ],
+        ),
+      ),
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -80,14 +102,51 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
-                  children: const [
-                    CourseDetailOverViewScreen(),
-                    CourseDetailMapScreen(),
+                  children: [
+                    CourseDetailOverViewScreen(
+                      detailModel: detailModel,
+                    ),
+                    const CourseDetailMapScreen(),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PersonLabel extends StatelessWidget {
+  final int curNum;
+  final int maxNum;
+
+  const _PersonLabel({
+    required this.curNum,
+    required this.maxNum,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      width: 50,
+      height: 30,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5).withOpacity(0.9),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(
+            10,
+          ),
+        ),
+      ),
+      child: Text(
+        '$curNum/$maxNum',
+        style: const TextStyle(
+          fontSize: 13.0,
+          color: Colors.black,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
