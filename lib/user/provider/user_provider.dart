@@ -67,6 +67,8 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
 
     final userResp = await repository.getMe();
     state = userResp;
+    print('회원가입 성공');
+
     return response;
   }
 

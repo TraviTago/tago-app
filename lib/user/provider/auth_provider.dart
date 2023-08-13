@@ -141,14 +141,20 @@ class AuthProvider extends ChangeNotifier {
       return null;
     }
     //유저 정보가 없을 때 로그인 중이면 로그인 페이지로, 만약 로그인 중이 아니라면 로그인 페이지로 이동
-
     if (user == null) {
       return logginIn ? null : '/login';
     }
+    //유저 정보가 있을 때
     if (user is UserModel) {
-      return logginIn || state.location == '/splash'
-          ? (user.signedUp! ? '/' : '/form1')
-          : null;
+      //로그인 중이거나, 앱 시작인 경우 회원가입 되어있다면 홈으로, 아니면 회원가입 폼으로
+      if (logginIn || state.location == '/splash') {
+        return user.signedUp ? '/' : '/form1';
+        //회원가입 중이라면, 회원가입 완료 되어있다면 홈으로, 아니면 다시 로그인 폼으로
+      } else if (state.location == '/form1') {
+        return user.signedUp ? '/' : '/form1';
+      } else {
+        return null;
+      }
     }
     if (user is UserModelError) {
       return !logginIn ? '/login' : null;
