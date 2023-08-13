@@ -28,22 +28,4 @@ class CourseModel {
       _$CourseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CourseModelToJson(this);
-
-  // factory RestaurantModel.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return RestaurantModel(
-  //     id: json['id'],
-  //     name: json['name'],
-  //     thumbUrl: 'http://$ip${json['thumbUrl']}',
-  //     tags: List<String>.from(json['tags']),
-  //     priceRange: RestaurantPriceRange.values.firstWhere(
-  //           (e) => e.name == json['priceRange'],
-  //     ),
-  //     ratings: json['ratings'],
-  //     ratingsCount: json['ratingsCount'],
-  //     deliveryTime: json['deliveryTime'],
-  //     deliveryFee: json['deliveryFee'],
-  //   );
-  // }
 }
