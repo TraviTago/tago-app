@@ -18,13 +18,13 @@ class UserModel extends UserModelBase {
   final String oauthProvider;
   final String email;
   final String? name;
-  bool? signedUp = false;
+  bool signedUp;
 
   UserModel({
     required this.oauthProvider,
     required this.email,
     required this.name,
-    this.signedUp,
+    required this.signedUp,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

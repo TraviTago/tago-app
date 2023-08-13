@@ -58,11 +58,6 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   }) async {
     state = UserModelLoading();
 
-    print(signUpModel.ageRange);
-    print(signUpModel.gender);
-    print(signUpModel.mbti);
-    print(signUpModel.favorites);
-    print(signUpModel.tripTypes);
     SignUpResponse response = await authRepository.signUp(
         ageRange: signUpModel.ageRange,
         gender: signUpModel.gender,

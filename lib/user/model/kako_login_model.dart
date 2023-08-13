@@ -15,6 +15,7 @@ class KakaoLoginModel implements SocialLogin {
         oauthProvider: describeEnum(SNSPlatform.KAKAO),
         email: "njs05053@naver.com",
         name: user.kakaoAccount!.profile!.nickname,
+        signedUp: false,
       );
     } catch (e) {
       return UserModelError();
