@@ -11,9 +11,8 @@ class KakaoLoginModel implements SocialLogin {
       final user = await UserApi.instance.me();
 
       return UserModel(
-        //TO FIX
         oauthProvider: describeEnum(SNSPlatform.KAKAO),
-        email: "njs05053@naver.com",
+        email: user.kakaoAccount!.email!,
         name: user.kakaoAccount!.profile!.nickname,
         signedUp: false,
       );
