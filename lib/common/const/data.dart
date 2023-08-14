@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_detail_model.dart';
 import 'package:tago_app/course/model/course_model.dart';
 import 'package:tago_app/place/model/place_model.dart';
@@ -33,6 +34,18 @@ final Map<String, String> buttonData = {
   '커피': 'cafe',
   '쇼핑': 'shopping',
 };
+
+final markerImages = [
+  DataUtils.loadAssetAsBase64('asset/img/marker/1.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/2.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/3.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/4.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/5.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/6.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/7.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/8.png'),
+  DataUtils.loadAssetAsBase64('asset/img/marker/9.png'),
+];
 
 CourseModel courseData = CourseModel(
   id: '1',

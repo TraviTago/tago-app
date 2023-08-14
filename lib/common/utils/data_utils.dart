@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:flutter/services.dart';
+
 class DataUtils {
   static String formatDuration(int durationInSeconds) {
     int hours = durationInSeconds ~/ 60;
@@ -21,6 +26,12 @@ class DataUtils {
     String formattedHour = date.hour.toString().padLeft(2, '0');
     String formattedMinute = date.minute.toString().padLeft(2, '0');
     return '$formattedHour:$formattedMinute';
+  }
+
+  static Future<String> loadAssetAsBase64(String path) async {
+    final ByteData data = await rootBundle.load(path);
+    final List<int> bytes = data.buffer.asUint8List();
+    return 'data:image/png;base64,${base64Encode(bytes)}';
   }
 
   static String cleanOverview(String overview) {
