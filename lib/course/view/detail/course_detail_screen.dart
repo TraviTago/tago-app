@@ -59,59 +59,63 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Material(
-                color: Colors.white,
-                elevation: 0,
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: TabBar(
-                    isScrollable: true,
-                    padding: const EdgeInsets.only(left: 20.0),
-                    controller: _tabController,
-                    labelColor: PRIMARY_COLOR,
-                    unselectedLabelStyle: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                    ),
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 18.0,
-                    ),
-                    indicator: const UnderlineTabIndicator(
-                      insets: EdgeInsets.only(
-                        left: 10.0,
-                        right: 10.0,
-                        bottom: 5.0,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(1.0)),
-                      borderSide: BorderSide(
-                        width: 3.0,
-                        color: PRIMARY_COLOR,
-                      ),
-                    ),
-                    tabs: const <Widget>[
-                      Tab(text: '코스보기'),
-                      Tab(text: '지도로보기'),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
+        child: Column(
+          children: <Widget>[
+            Material(
+              color: Colors.white,
+              elevation: 0,
+              child: Container(
+                height: 35,
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  isScrollable: true,
+                  padding: const EdgeInsets.only(left: 20.0),
                   controller: _tabController,
-                  children: [
-                    CourseDetailOverViewScreen(
-                      detailModel: detailModel,
+                  labelColor: PRIMARY_COLOR,
+                  unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                  ),
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18.0,
+                  ),
+                  indicator: const UnderlineTabIndicator(
+                    insets: EdgeInsets.only(
+                      left: 10.0,
+                      right: 10.0,
                     ),
-                    const CourseDetailMapScreen(),
+                    borderRadius: BorderRadius.all(Radius.circular(1.0)),
+                    borderSide: BorderSide(
+                      width: 3.0,
+                      color: PRIMARY_COLOR,
+                    ),
+                  ),
+                  tabs: const <Widget>[
+                    Tab(
+                      child: Text('코스보기'),
+                    ),
+                    Tab(
+                      child: Text('지도로보기'),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  CourseDetailOverViewScreen(
+                    detailModel: detailModel,
+                  ),
+                  CourseDetailMapScreen(
+                    detailModel: detailModel,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
