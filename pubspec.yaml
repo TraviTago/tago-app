@@ -74,6 +74,8 @@ flutter:
   assets:
     - asset/img/
     - asset/img/menu/
+    - asset/img/marker/
+    - asset/script/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
