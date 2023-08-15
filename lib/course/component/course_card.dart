@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_model.dart';
 
@@ -42,91 +43,96 @@ class CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            DataUtils.formatDate(startDate),
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
+    return GestureDetector(
+      onTap: () {
+        context.go("/courseDetail");
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DataUtils.formatDate(startDate),
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 15.0,
-          ),
-          SizedBox(
-            height: 120,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      8.0,
-                    ),
-                    child: Image.network(
-                      imgUrl,
-                      fit: BoxFit.cover,
+            const SizedBox(
+              height: 15.0,
+            ),
+            SizedBox(
+              height: 120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        8.0,
+                      ),
+                      child: Image.network(
+                        imgUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15.0,
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Color(0xFFF5F5F5),
-                            width: 2.0,
-                          ),
-                        ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15.0,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _DateAndName(
-                                date: startDate,
-                                name: name,
-                                duration: duration,
-                              ),
-                              _PersonLabel(curNum: curNum, maxNum: maxNum)
-                            ],
-                          ),
-                          Text(
-                            tags.join(' · '),
-                            style: const TextStyle(
-                              color: Color(0xFF595959),
-                              fontSize: 10.0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color(0xFFF5F5F5),
+                              width: 2.0,
                             ),
                           ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                        ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 5.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _DateAndName(
+                                  date: startDate,
+                                  name: name,
+                                  duration: duration,
+                                ),
+                                _PersonLabel(curNum: curNum, maxNum: maxNum)
+                              ],
+                            ),
+                            Text(
+                              tags.join(' · '),
+                              style: const TextStyle(
+                                color: Color(0xFF595959),
+                                fontSize: 10.0,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5.0,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

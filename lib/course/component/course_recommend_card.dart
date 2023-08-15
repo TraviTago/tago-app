@@ -13,7 +13,7 @@ class CourseRecommendCard extends StatelessWidget {
   final int curNum; //현재 인원
   final int duration;
   final int startDate;
-
+  final bool isCompleteCompnent;
   const CourseRecommendCard({
     required this.id,
     required this.name,
@@ -23,11 +23,13 @@ class CourseRecommendCard extends StatelessWidget {
     required this.curNum,
     required this.duration,
     required this.startDate,
+    this.isCompleteCompnent = false,
     Key? key,
   }) : super(key: key);
 
   factory CourseRecommendCard.fromModel({
     required CourseModel model,
+    bool isCompleteCompnent = false,
   }) {
     return CourseRecommendCard(
       id: model.id,
@@ -38,6 +40,7 @@ class CourseRecommendCard extends StatelessWidget {
       curNum: model.curNum,
       startDate: model.startDate,
       duration: model.duration,
+      isCompleteCompnent: isCompleteCompnent,
     );
   }
 
@@ -47,8 +50,7 @@ class CourseRecommendCard extends StatelessWidget {
         MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
     return GestureDetector(
       onTap: () {
-        // Use goRouter to navigate to the /courseDetail page.
-        context.go("/courseDetail");
+        context.push("/courseDetail");
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
@@ -86,7 +88,8 @@ class CourseRecommendCard extends StatelessWidget {
                             name: name,
                             duration: duration,
                           ),
-                          _PersonLabel(curNum: curNum, maxNum: maxNum)
+                          if (!isCompleteCompnent)
+                            _PersonLabel(curNum: curNum, maxNum: maxNum)
                         ],
                       ),
                       Text(
