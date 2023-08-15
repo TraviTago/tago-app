@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/course/component/form/person_counter.dart';
 
@@ -16,7 +17,9 @@ class CourseSecondFormScreen extends StatefulWidget {
 
 class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
   List<String> selectedButtons = [];
-  int counter = 1;
+  int totalNum = 1;
+  int maxNum = 4;
+  int maxNumWithTotal = 4;
   bool isPrivateCourse = false;
   @override
   Widget build(BuildContext context) {
@@ -49,94 +52,177 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: screenWidth / 5 * 2,
-                child: ButtonGroup(
-                  buttonCount: 2,
-                  buttonTexts: const ['아니요. 타고에서 구할래요!', '네 일행이 있습니다!'],
-                  crossAxisCount: 1,
-                  childAspectRatio: 5,
-                  onButtonSelected: (selected) {
-                    setState(() {
-                      selectedButtons = selected;
-                    });
-                  },
-                ),
-              ),
-              if (!selectedButtons.contains(1))
-                const SizedBox(
-                  height: 100,
-                ),
-              if (selectedButtons.contains(1))
-                SizedBox(
-                  height: 100,
-                  child: Column(
-                    children: [
-                      Row(
+              Column(
+                children: [
+                  SizedBox(
+                    height: screenWidth / 6 * 2,
+                    child: ButtonGroup(
+                      buttonCount: 2,
+                      buttonTexts: courseSecondFormBtnText,
+                      crossAxisCount: 1,
+                      childAspectRatio: 6,
+                      onButtonSelected: (selected) {
+                        setState(() {
+                          selectedButtons = selected;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  if (!selectedButtons.contains(courseSecondFormBtnText[1]))
+                    SizedBox(
+                      height: 100,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            '총 인원수',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 100,
+                                child: Text(
+                                  '희망 택시정원',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20.0,
+                              ),
+                              PersonCounter(
+                                min: 1,
+                                max: 8,
+                                count: maxNum,
+                                textColor: maxNum % 4 == 0
+                                    ? PRIMARY_COLOR
+                                    : Colors.black, // 조건에 따른 색상 설정
+                                onIncrement: () {
+                                  setState(() {
+                                    maxNum++;
+                                  });
+                                },
+                                onDecrement: () {
+                                  setState(() {
+                                    if (maxNum > 1) maxNum--;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (selectedButtons.contains(courseSecondFormBtnText[1]))
+                    SizedBox(
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 100,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  '본인 포함 인원 수',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20.0,
+                              ),
+                              PersonCounter(
+                                min: 1,
+                                max: 8,
+                                count: totalNum,
+                                onIncrement: () {
+                                  setState(() {
+                                    totalNum++;
+                                  });
+                                  if (totalNum == 5) {
+                                    setState(() {
+                                      maxNumWithTotal = 8;
+                                    });
+                                  }
+                                },
+                                onDecrement: () {
+                                  setState(() {
+                                    if (totalNum > 1) totalNum--;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                           const SizedBox(
-                            width: 20.0,
+                            height: 20.0,
                           ),
-                          PersonCounter(
-                            count: counter,
-                            onIncrement: () {
-                              setState(() {
-                                counter++;
-                              });
-                            },
-                            onDecrement: () {
-                              setState(() {
-                                if (counter > 1) counter--;
-                              });
-                            },
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 100,
+                                child: Text(
+                                  '희망 택시정원',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20.0,
+                              ),
+                              PersonCounter(
+                                min: totalNum,
+                                max: 8,
+                                count: maxNumWithTotal,
+                                textColor: maxNumWithTotal % 4 == 0
+                                    ? PRIMARY_COLOR
+                                    : Colors.black, // 조건에 따른 색상 설정
+                                onIncrement: () {
+                                  setState(() {
+                                    maxNumWithTotal++;
+                                  });
+                                },
+                                onDecrement: () {
+                                  setState(() {
+                                    if (maxNumWithTotal > 1) maxNumWithTotal--;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Transform.scale(
-                            // Checkbox 크기 조정
-                            scale: 1.2,
-                            child: Checkbox(
-                              activeColor: PRIMARY_COLOR,
-                              side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFDADADA),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              value: isPrivateCourse,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  isPrivateCourse = newValue ?? false;
-                                });
-                              },
-                            ),
-                          ),
-                          const Text(
-                            '저희 일행끼리만 여행하고 싶어요',
-                            style: TextStyle(
-                              color: Color(0xFF595959),
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
+                  const Text(
+                    '일반은 최대 4인, 대형은 최대 8인 승차가능',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: LABEL_TEXT_COLOR,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               ElevatedButton(
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(
@@ -151,9 +237,6 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                 onPressed: selectedButtons.isEmpty
                     ? null
                     : () {
-                        print(isPrivateCourse);
-                        print(counter);
-                        print(selectedButtons);
                         context.goNamed('courseForm3');
                       },
                 child: const Text(

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
 class CourseThirdFormScreen extends StatefulWidget {
@@ -79,7 +80,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                         height: screenWidth / (4 * 2),
                         child: ButtonGroup(
                           buttonCount: 2,
-                          buttonTexts: const ['동성만!', '상관없어요!'],
+                          buttonTexts: courseThirdFormBtnText[0],
                           crossAxisCount: 2,
                           childAspectRatio: 4,
                           onButtonSelected: (selected) {
@@ -110,7 +111,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                               height: screenWidth / (4 * 2),
                               child: ButtonGroup(
                                 buttonCount: 2,
-                                buttonTexts: const ['비슷하게', '상관없어요!'],
+                                buttonTexts: courseThirdFormBtnText[1],
                                 crossAxisCount: 2,
                                 childAspectRatio: 4,
                                 onButtonSelected: (selected) {
@@ -140,7 +141,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                             height: screenWidth / (4 * 2),
                             child: ButtonGroup(
                               buttonCount: 2,
-                              buttonTexts: const ['좋아요!', '싫어요!'],
+                              buttonTexts: courseThirdFormBtnText[2],
                               crossAxisCount: 2,
                               childAspectRatio: 4,
                               onButtonSelected: (selected) {

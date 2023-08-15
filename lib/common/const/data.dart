@@ -14,6 +14,13 @@ const simulatorIp = '127.0.0.1:8080';
 
 final ip = Platform.isIOS ? 'http://$simulatorIp' : 'http://$emulatorIp';
 
+final courseSecondFormBtnText = ['아니요. 타고에서 구할래요!', '네 일행이 있습니다!'];
+final courseThirdFormBtnText = [
+  ['동성만!', '상관없어요!'],
+  ['비슷하게', '상관없어요!'],
+  ['좋아요!', '싫어요!'],
+];
+
 final Map<String, String> buttonData = {
   '인스타그램': 'instagram',
   '유튜브': 'youtube',
