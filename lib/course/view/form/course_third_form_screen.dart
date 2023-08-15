@@ -54,7 +54,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                   Text(
                     '내 여행메이트는 이랬으면 좋겠어요!',
                     style: TextStyle(
-                      color: Color(0xFF595959),
+                      color: LABEL_TEXT_SUB_COLOR,
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),

@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_detail_model.dart';
 
 class CourseDetailMapScreen extends StatelessWidget {
@@ -38,8 +34,7 @@ class CourseDetailMapScreen extends StatelessWidget {
           ${detailModel.places.asMap().entries.map((entry) {
           final index = entry.key;
           final place = entry.value;
-          final imageSrc =
-              snapshot.data![0][index]; // 첫 번째 Future에서 반환된 이미지 리스트
+          final imageSrc = snapshot.data![0][index];
           return '''addCustomMarkerAndOverlay(new kakao.maps.LatLng(${place.mapy}, ${place.mapx}), "${place.title}", "$imageSrc");''';
         }).join()}
 

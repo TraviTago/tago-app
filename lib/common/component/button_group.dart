@@ -82,7 +82,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                       color: selectedButtons.contains(index)
                           ? Colors.white
                           : widget.isModal
-                              ? const Color(0xFF747474)
+                              ? BUTTON_BG_COLOR
                               : LABEL_TEXT_COLOR,
                     ),
                   ),
@@ -166,7 +166,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                                 ? FontWeight.w500
                                 : FontWeight.w500,
                             color: selectedButtons.contains(index)
-                                ? const Color(0xFF595959)
+                                ? LABEL_TEXT_SUB_COLOR
                                 : LABEL_TEXT_COLOR,
                           ),
                         ),

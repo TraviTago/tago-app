@@ -186,7 +186,7 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
   Widget _buildPickerButton(String title, List<String> options,
       String? currentValue, Function(String) onChanged) {
     Color underlineColor =
-        currentValue != null ? PRIMARY_COLOR : const Color(0xFFDADADA);
+        currentValue != null ? PRIMARY_COLOR : SELECTED_BOX_BG_COLOR;
     return InkWell(
       onTap: () => _showPicker(title, options, currentValue, onChanged),
       child: Column(

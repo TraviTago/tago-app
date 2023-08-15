@@ -88,7 +88,7 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                     Text(
                       '어렵다면 저희가 추천해드릴게요!',
                       style: TextStyle(
-                        color: Color(0xFF595959),
+                        color: LABEL_TEXT_SUB_COLOR,
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
                       ),
@@ -157,8 +157,8 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                                                   },
                                                   child: const Icon(Icons.close,
                                                       size: 14,
-                                                      color: Color(
-                                                          0xFF747474)), // Add 'close' icon
+                                                      color:
+                                                          BUTTON_BG_COLOR), // Add 'close' icon
                                                 ),
                                               ],
                                             ),
@@ -207,13 +207,13 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        backgroundColor: const Color(0xFFF5F5F5),
+                        backgroundColor: LABEL_BG_COLOR,
                       ),
                       child: const Row(
                         children: [
                           Icon(
                             Icons.search,
-                            color: Color(0xFF595959),
+                            color: LABEL_TEXT_SUB_COLOR,
                           ),
                           SizedBox(
                             width: 10.0,
@@ -221,7 +221,7 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                           Text(
                             '장소 추가하기',
                             style: TextStyle(
-                              color: Color(0xFF595959),
+                              color: LABEL_TEXT_SUB_COLOR,
                               fontSize: 15.0,
                               fontWeight: FontWeight.w500,
                             ),
@@ -239,7 +239,7 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                             activeColor: PRIMARY_COLOR,
                             side: const BorderSide(
                               width: 1,
-                              color: Color(0xFFDADADA),
+                              color: SELECTED_BOX_BG_COLOR,
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
@@ -309,7 +309,7 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            backgroundColor: const Color(0xFFF5F5F5),
+                            backgroundColor: LABEL_BG_COLOR,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -378,7 +378,7 @@ class _CourseFourthFormScreenState extends State<CourseFourthFormScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            backgroundColor: const Color(0xFFF5F5F5),
+                            backgroundColor: LABEL_BG_COLOR,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -493,7 +493,7 @@ class _TimePickerModalState extends State<_TimePickerModal> {
           vertical: 50.0,
         ),
         decoration: const BoxDecoration(
-          color: Color(0xFFF5F5F5),
+          color: LABEL_BG_COLOR,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
@@ -508,11 +508,11 @@ class _TimePickerModalState extends State<_TimePickerModal> {
               minutesInterval: 30,
               normalTextStyle: TextStyle(
                 fontSize: 18,
-                color: const Color(0xFF595959).withOpacity(0.3),
+                color: LABEL_TEXT_SUB_COLOR.withOpacity(0.3),
               ),
               highlightedTextStyle: const TextStyle(
                 fontSize: 20,
-                color: Color(0xFF595959),
+                color: LABEL_TEXT_SUB_COLOR,
                 decorationColor: Colors.white,
               ),
               spacing: 60,
@@ -595,7 +595,7 @@ class _PlaceModalState extends State<_PlaceModal> {
           vertical: 50.0,
         ),
         decoration: const BoxDecoration(
-          color: Color(0xFFF5F5F5),
+          color: LABEL_BG_COLOR,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
@@ -706,11 +706,11 @@ class _SearchModalState extends State<SearchModal> {
           vertical: 50.0,
         ),
         decoration: const BoxDecoration(
-          color: Color(0xFFF5F5F5), // Container의 배경색을 흰색으로 설정
+          color: LABEL_BG_COLOR,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
-          ), // Container의 상단 왼쪽 및 오른쪽 모서리를 둥글게 설정
+          ),
         ),
         child: Column(
           children: [
@@ -720,18 +720,18 @@ class _SearchModalState extends State<SearchModal> {
                 _onSearchChanged();
               },
               style: const TextStyle(
-                fontWeight: FontWeight.w700, // 입력되는 텍스트의 굵기를 설정
+                fontWeight: FontWeight.w700,
               ),
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 5.0),
                 filled: true,
-                fillColor: Colors.white, // TextField의 배경색을 흰색으로 설정
+                fillColor: Colors.white,
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Color(0xFF595959),
+                  color: LABEL_TEXT_SUB_COLOR,
                 ),
                 hintStyle: TextStyle(
-                  color: Color(0xFF595959),
+                  color: LABEL_TEXT_SUB_COLOR,
                   fontSize: 15.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -790,7 +790,7 @@ class _SearchModalState extends State<SearchModal> {
                                     MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
                                     return selectedPlaces[key]! // key를 사용하여 접근
-                                        ? const Color(0xFF65C466)
+                                        ? SELECTED_PLACE_BG_COLOR
                                         : Colors.white;
                                   },
                                 ),
@@ -799,7 +799,7 @@ class _SearchModalState extends State<SearchModal> {
                                   (Set<MaterialState> states) {
                                     return selectedPlaces[key]! // key를 사용하여 접근
                                         ? Colors.white
-                                        : const Color(0xFFDADADA);
+                                        : SELECTED_BOX_BG_COLOR;
                                   },
                                 ),
                                 side: MaterialStateProperty.all(

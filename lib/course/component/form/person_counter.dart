@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tago_app/common/const/colors.dart';
 
 class PersonCounter extends StatefulWidget {
   final int count;
@@ -33,7 +34,7 @@ class PersonCounterState extends State<PersonCounter> {
           Radius.circular(10),
         ),
         border: Border.all(
-          color: const Color(0xFFDADADA),
+          color: SELECTED_BOX_BG_COLOR,
           width: 1,
         ),
       ),
@@ -50,8 +51,8 @@ class PersonCounterState extends State<PersonCounter> {
                 Icons.remove,
                 size: 18.0,
                 color: widget.count > widget.min
-                    ? const Color(0xFF595959)
-                    : const Color(0xFFDADADA),
+                    ? LABEL_TEXT_SUB_COLOR
+                    : SELECTED_BOX_BG_COLOR,
               ),
             ),
             Text(
@@ -69,8 +70,8 @@ class PersonCounterState extends State<PersonCounter> {
                 Icons.add,
                 size: 18.0,
                 color: widget.count < widget.max
-                    ? const Color(0xFF595959)
-                    : const Color(0xFFDADADA),
+                    ? LABEL_TEXT_SUB_COLOR
+                    : SELECTED_BOX_BG_COLOR,
               ),
             ),
           ],

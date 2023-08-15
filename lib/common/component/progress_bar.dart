@@ -39,7 +39,7 @@ class _ProgressBarState extends State<ProgressBar>
       color: PRIMARY_COLOR,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       minHeight: 10.0,
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: LABEL_BG_COLOR,
     );
   }
 

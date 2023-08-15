@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_model.dart';
 
@@ -89,7 +90,7 @@ class CourseCard extends StatelessWidget {
                         decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Color(0xFFF5F5F5),
+                              color: LABEL_BG_COLOR,
                               width: 2.0,
                             ),
                           ),
@@ -116,7 +117,7 @@ class CourseCard extends StatelessWidget {
                             Text(
                               tags.join(' · '),
                               style: const TextStyle(
-                                color: Color(0xFF595959),
+                                color: LABEL_TEXT_SUB_COLOR,
                                 fontSize: 10.0,
                               ),
                             ),
@@ -154,7 +155,7 @@ class _PersonLabel extends StatelessWidget {
       width: 40,
       height: 20,
       decoration: const BoxDecoration(
-        color: Color(0xFFF5F5F5),
+        color: LABEL_BG_COLOR,
         borderRadius: BorderRadius.all(
           Radius.circular(
             10,
@@ -204,7 +205,7 @@ class _DateAndName extends StatelessWidget {
           '소요시간 ${DataUtils.formatDuration(duration)}',
           style: const TextStyle(
             fontSize: 10,
-            color: Color(0xFF595959),
+            color: LABEL_TEXT_SUB_COLOR,
             fontWeight: FontWeight.w300,
           ),
         ),

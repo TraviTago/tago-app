@@ -93,10 +93,10 @@ class _CourseFirstFormScreenState extends State<CourseFirstFormScreen> {
                       color: Colors.black,
                     ),
                     weekendTextStyle: const TextStyle(
-                      color: Color(0xFFBFBFBF),
+                      color: LABEL_TEXT_COLOR,
                     ),
                     defaultTextStyle: const TextStyle(
-                      color: Color(0xFFBFBFBF),
+                      color: LABEL_TEXT_COLOR,
                     ),
                     selectedDecoration: const BoxDecoration(
                       color: PRIMARY_COLOR,

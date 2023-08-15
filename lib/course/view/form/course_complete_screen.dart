@@ -46,7 +46,7 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                     '클릭해서 취향에 맞게 수정해보세요 ',
                     style: TextStyle(
                       fontSize: 13.0,
-                      color: Color(0xFF595959),
+                      color: LABEL_TEXT_SUB_COLOR,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -70,7 +70,7 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                           activeColor: PRIMARY_COLOR,
                           side: const BorderSide(
                             width: 1,
-                            color: Color(0xFFDADADA),
+                            color: SELECTED_BOX_BG_COLOR,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
@@ -86,7 +86,7 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                       const Text(
                         '코스 상세정보를 모두 확인했어요',
                         style: TextStyle(
-                          color: Color(0xFF595959),
+                          color: LABEL_TEXT_SUB_COLOR,
                           fontSize: 13.0,
                           fontWeight: FontWeight.w500,
                         ),
@@ -110,20 +110,21 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
                     backgroundColor: !isCheckedCourse
-                        ? MaterialStateProperty.all(const Color(0xFFF5F5F5))
+                        ? MaterialStateProperty.all(LABEL_BG_COLOR)
                         : MaterialStateProperty.all(PRIMARY_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                   onPressed: !isCheckedCourse
                       ? null
                       : () {
+                          //TOFIX: 코스 추가 로직
                           context.go('/');
                         },
                   child: Text(
                     '내 여행으로 추가하기',
                     style: !isCheckedCourse
                         ? const TextStyle(
-                            color: Color(0xFF595959),
+                            color: LABEL_TEXT_SUB_COLOR,
                             fontWeight: FontWeight.w500,
                             fontSize: 16.0)
                         : const TextStyle(

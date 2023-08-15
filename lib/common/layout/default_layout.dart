@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tago_app/common/const/colors.dart';
 
 class DefaultLayout extends StatelessWidget {
   final Color? backgroundColor;
@@ -39,7 +40,7 @@ class DefaultLayout extends StatelessWidget {
               '홈으로 돌아가기',
               textAlign: TextAlign.start,
               style: TextStyle(
-                color: Color(0xFF595959),
+                color: LABEL_TEXT_SUB_COLOR,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
               ),
@@ -51,7 +52,7 @@ class DefaultLayout extends StatelessWidget {
               splashRadius: 0.1,
               icon: const Icon(
                 Icons.chevron_left_rounded,
-                color: Color(0xFF595959),
+                color: LABEL_TEXT_SUB_COLOR,
                 size: 34,
               ),
               onPressed: () {

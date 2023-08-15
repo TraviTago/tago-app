@@ -138,7 +138,7 @@ class _PersonLabel extends StatelessWidget {
       width: 50,
       height: 30,
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5).withOpacity(0.9),
+        color: LABEL_BG_COLOR.withOpacity(0.9),
         borderRadius: const BorderRadius.all(
           Radius.circular(
             10,

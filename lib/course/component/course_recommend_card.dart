@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/model/course_model.dart';
 
@@ -68,7 +69,7 @@ class CourseRecommendCard extends StatelessWidget {
                 width: screenWidth,
                 height: (screenWidth) / 3,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF161616).withOpacity(0.8),
+                  color: TRIP_CARD_BLUR_COLOR.withOpacity(0.8),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -128,7 +129,7 @@ class _PersonLabel extends StatelessWidget {
       width: 40,
       height: 20,
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5).withOpacity(0.9),
+        color: LABEL_BG_COLOR.withOpacity(0.9),
         borderRadius: const BorderRadius.all(
           Radius.circular(
             10,

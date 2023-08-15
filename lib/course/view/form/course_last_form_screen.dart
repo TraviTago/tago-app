@@ -82,22 +82,20 @@ class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
                     counterText: '',
                     hintText: '코스명을 입력해주세요',
                     hintStyle:
-                        const TextStyle(color: Color(0xFFA5A5A5), fontSize: 16),
+                        const TextStyle(color: LABEL_TEXT_COLOR, fontSize: 16),
                     // Hide default counter
                     suffix: Text(
                       '($courseNameCount/12)',
                       style: const TextStyle(
                         fontSize: 13.0,
-                        color: Color(0xFFA5A5A5),
+                        color: LABEL_TEXT_COLOR,
                       ),
                     ),
                     enabledBorder: const UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color(0xFFF5F5F5), width: 2.0),
+                      borderSide: BorderSide(color: LABEL_BG_COLOR, width: 2.0),
                     ),
                     focusedBorder: const UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color(0xFFF5F5F5), width: 2.0),
+                      borderSide: BorderSide(color: LABEL_BG_COLOR, width: 2.0),
                     ),
                   ),
                   style: const TextStyle(
