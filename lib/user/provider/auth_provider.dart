@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/course/view/detail/course_detail_screen.dart';
+import 'package:tago_app/course/view/form/course_complete_screen.dart';
 import 'package:tago_app/course/view/form/course_fifth_form_screen.dart';
 import 'package:tago_app/course/view/form/course_first_form_screen.dart';
 import 'package:tago_app/course/view/form/course_fourth_from_screen.dart';
@@ -86,6 +87,11 @@ class AuthProvider extends ChangeNotifier {
               path: 'courseDetail',
               name: CourseDetailScreen.routeName,
               builder: (_, __) => const CourseDetailScreen(),
+            ),
+            GoRoute(
+              path: 'courseComplete',
+              name: CourseCompleteScreen.routeName,
+              builder: (_, __) => const CourseCompleteScreen(),
             ),
             GoRoute(
               path: 'courseForm1',

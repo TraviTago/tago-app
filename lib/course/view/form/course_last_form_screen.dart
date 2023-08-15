@@ -127,7 +127,7 @@ class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
                     ? null
                     : () {
                         print('Selected like Place : $textController.text');
-                        context.goNamed('courseForm6');
+                        context.goNamed('courseComplete');
                       },
                 child: const Text(
                   '완료',
