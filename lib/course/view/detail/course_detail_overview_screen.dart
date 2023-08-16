@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/course/component/detail/course_member_card.dart';
 import 'package:tago_app/course/model/course_detail_model.dart';
@@ -11,6 +12,25 @@ class CourseDetailOverViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      floatingActionButton: MaterialButton(
+        onPressed: () {},
+        color: PRIMARY_COLOR,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0,
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+          child: Text(
+            '참여하기',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
       child: SafeArea(
         bottom: true,
         child: Padding(
@@ -22,7 +42,14 @@ class CourseDetailOverViewScreen extends StatelessWidget {
                 final place = detailModel.places[index];
                 return PlaceCard(place: place, index: index);
               } else {
-                return CourseMemberCard(detailModel: detailModel);
+                return Column(
+                  children: [
+                    CourseMemberCard(detailModel: detailModel),
+                    const SizedBox(
+                      height: 80,
+                    )
+                  ],
+                );
               }
             },
           ),
