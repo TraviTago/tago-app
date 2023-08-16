@@ -8,6 +8,7 @@ class DefaultLayout extends StatelessWidget {
   final bool backBtnComponent;
   final Widget? titleComponet;
   final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
 
   const DefaultLayout({
     required this.child,
@@ -15,6 +16,7 @@ class DefaultLayout extends StatelessWidget {
     this.title,
     this.titleComponet,
     this.bottomNavigationBar,
+    this.floatingActionButton,
     this.backBtnComponent = false,
     Key? key,
   }) : super(key: key);
@@ -24,8 +26,21 @@ class DefaultLayout extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
       appBar: renderAppBar(context),
-      body: child,
+      body: (floatingActionButton == null)
+          ? child
+          : Stack(
+              children: <Widget>[
+                child,
+                Positioned(
+                  bottom: 60,
+                  left: 0,
+                  right: 0,
+                  child: Center(child: floatingActionButton!),
+                ),
+              ],
+            ),
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
