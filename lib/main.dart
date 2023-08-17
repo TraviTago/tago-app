@@ -4,10 +4,12 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/common/rotuer/go_router.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
   KakaoSdk.init(
-    nativeAppKey: 'b92e829b2b66cfaa229d26508ab56230',
+    nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY'],
   );
   initializeDateFormatting().then(
     (_) => runApp(

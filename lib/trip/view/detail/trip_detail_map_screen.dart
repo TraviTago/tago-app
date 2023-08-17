@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
@@ -43,20 +44,18 @@ class TripDetailMapScreen extends StatelessWidget {
         return DefaultLayout(
           child: Stack(
             children: [
-              Flexible(
-                child: KakaoMapView(
-                  width: MediaQuery.of(context).size.width,
-                  height: double.infinity,
-                  kakaoMapKey: "91fadb9b0a4afdc90a589e16612d6a10",
-                  lat: detailModel.places[0].mapy,
-                  lng: detailModel.places[0].mapx,
-                  customScript: customScript,
-                  zoomLevel: 8,
-                  onTapMarker: (message) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text(message.message)));
-                  },
-                ),
+              KakaoMapView(
+                width: MediaQuery.of(context).size.width,
+                height: double.infinity,
+                kakaoMapKey: dotenv.env['KAKAO_REST_API_KEY']!,
+                lat: detailModel.places[0].mapy,
+                lng: detailModel.places[0].mapx,
+                customScript: customScript,
+                zoomLevel: 8,
+                onTapMarker: (message) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(message.message)));
+                },
               ),
             ],
           ),
