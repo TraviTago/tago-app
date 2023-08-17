@@ -4,20 +4,20 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/course/component/course_recommend_card.dart';
+import 'package:tago_app/trip/component/trip_recommend_card.dart';
 
-class CourseCompleteScreen extends StatefulWidget {
-  static String get routeName => 'courseComplete';
+class TripCompleteScreen extends StatefulWidget {
+  static String get routeName => 'tripComplete';
 
-  const CourseCompleteScreen({super.key});
+  const TripCompleteScreen({super.key});
 
   @override
-  State<CourseCompleteScreen> createState() => _CourseCompleteScreenState();
+  State<TripCompleteScreen> createState() => _TripCompleteScreenState();
 }
 
-bool isCheckedCourse = false;
+bool isCheckedTrip = false;
 
-class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
+class _TripCompleteScreenState extends State<TripCompleteScreen> {
   @override
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,8 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                   const SizedBox(
                     height: 30.0,
                   ),
-                  CourseRecommendCard.fromModel(
-                    model: courseData,
+                  TripRecommendCard.fromModel(
+                    model: tripData,
                     isCompleteCompnent: true,
                   ),
                   const SizedBox(
@@ -75,10 +75,10 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          value: isCheckedCourse,
+                          value: isCheckedTrip,
                           onChanged: (bool? newValue) {
                             setState(() {
-                              isCheckedCourse = newValue ?? false;
+                              isCheckedTrip = newValue ?? false;
                             });
                           },
                         ),
@@ -109,12 +109,12 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: !isCheckedCourse
+                    backgroundColor: !isCheckedTrip
                         ? MaterialStateProperty.all(LABEL_BG_COLOR)
                         : MaterialStateProperty.all(PRIMARY_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: !isCheckedCourse
+                  onPressed: !isCheckedTrip
                       ? null
                       : () {
                           //TOFIX: 코스 추가 로직
@@ -122,7 +122,7 @@ class _CourseCompleteScreenState extends State<CourseCompleteScreen> {
                         },
                   child: Text(
                     '내 여행으로 추가하기',
-                    style: !isCheckedCourse
+                    style: !isCheckedTrip
                         ? const TextStyle(
                             color: LABEL_TEXT_SUB_COLOR,
                             fontWeight: FontWeight.w500,

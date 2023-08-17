@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/course/view/detail/course_detail_map_screen.dart';
-import 'package:tago_app/course/view/detail/course_detail_overview_screen.dart';
+import 'package:tago_app/trip/view/detail/trip_detail_map_screen.dart';
+import 'package:tago_app/trip/view/detail/trip_detail_overview_screen.dart';
 
-class CourseDetailScreen extends StatefulWidget {
-  static String get routeName => 'courseDetail';
+class TripDetailScreen extends StatefulWidget {
+  static String get routeName => 'tripDetail';
 
-  const CourseDetailScreen({super.key});
+  const TripDetailScreen({super.key});
 
   @override
-  State<CourseDetailScreen> createState() => _CourseDetailScreenState();
+  State<TripDetailScreen> createState() => _TripDetailScreenState();
 }
 
-class _CourseDetailScreenState extends State<CourseDetailScreen>
+class _TripDetailScreenState extends State<TripDetailScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   //TOFIX
-  final detailModel = courseDetailData;
+  final detailModel = tripDetailData;
 
   @override
   void initState() {
@@ -106,10 +106,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  CourseDetailOverViewScreen(
+                  TripDetailOverViewScreen(
                     detailModel: detailModel,
                   ),
-                  CourseDetailMapScreen(
+                  TripDetailMapScreen(
                     detailModel: detailModel,
                   ),
                 ],

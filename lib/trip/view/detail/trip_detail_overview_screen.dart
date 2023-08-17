@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/course/component/detail/course_member_card.dart';
-import 'package:tago_app/course/model/course_detail_model.dart';
+import 'package:tago_app/trip/component/detail/trip_member_card.dart';
+import 'package:tago_app/trip/model/trip_detail_model.dart';
 import 'package:tago_app/place/component/place_card.dart';
 
-class CourseDetailOverViewScreen extends StatelessWidget {
-  final CourseDetailModel detailModel;
+class TripDetailOverViewScreen extends StatelessWidget {
+  final TripDetailModel detailModel;
 
-  const CourseDetailOverViewScreen({super.key, required this.detailModel});
+  const TripDetailOverViewScreen({super.key, required this.detailModel});
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -44,7 +44,7 @@ class CourseDetailOverViewScreen extends StatelessWidget {
               } else {
                 return Column(
                   children: [
-                    CourseMemberCard(detailModel: detailModel),
+                    TripMemberCard(detailModel: detailModel),
                     const SizedBox(
                       height: 80,
                     )

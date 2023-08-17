@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/course/model/course_detail_model.dart';
+import 'package:tago_app/trip/model/trip_detail_model.dart';
 
-class CourseDetailMapScreen extends StatelessWidget {
-  final CourseDetailModel detailModel;
+class TripDetailMapScreen extends StatelessWidget {
+  final TripDetailModel detailModel;
 
-  const CourseDetailMapScreen({
+  const TripDetailMapScreen({
     Key? key,
     required this.detailModel,
   }) : super(key: key);

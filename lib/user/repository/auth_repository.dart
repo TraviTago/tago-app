@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/dio/dio.dart';
-import 'package:tago_app/user/model/login_response.dart';
-import 'package:tago_app/user/model/sign_up_response.dart';
+import 'package:tago_app/login/model/login_response.dart';
+import 'package:tago_app/signup/model/sign_up_response.dart';
 import 'package:tago_app/user/model/token_response.dart';
 
 import '../../../common/const/data.dart';

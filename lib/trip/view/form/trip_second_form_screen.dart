@@ -5,22 +5,22 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/course/component/form/person_counter.dart';
+import 'package:tago_app/trip/component/form/person_counter.dart';
 
-class CourseSecondFormScreen extends StatefulWidget {
-  const CourseSecondFormScreen({Key? key}) : super(key: key);
-  static String get routeName => 'courseForm2';
+class TripSecondFormScreen extends StatefulWidget {
+  const TripSecondFormScreen({Key? key}) : super(key: key);
+  static String get routeName => 'tripForm2';
 
   @override
-  _CourseSecondFormScreenState createState() => _CourseSecondFormScreenState();
+  _TripSecondFormScreenState createState() => _TripSecondFormScreenState();
 }
 
-class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
+class _TripSecondFormScreenState extends State<TripSecondFormScreen> {
   List<String> selectedButtons = [];
   int totalNum = 1;
   int maxNum = 4;
   int maxNumWithTotal = 4;
-  bool isPrivateCourse = false;
+  bool isPrivateTrip = false;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
@@ -58,7 +58,7 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                     height: screenWidth / 6 * 2,
                     child: ButtonGroup(
                       buttonCount: 2,
-                      buttonTexts: courseSecondFormBtnText,
+                      buttonTexts: tripSecondFormBtnText,
                       crossAxisCount: 1,
                       childAspectRatio: 6,
                       onButtonSelected: (selected) {
@@ -71,7 +71,7 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (!selectedButtons.contains(courseSecondFormBtnText[1]))
+                  if (!selectedButtons.contains(tripSecondFormBtnText[1]))
                     SizedBox(
                       height: 100,
                       child: Column(
@@ -118,7 +118,7 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                         ],
                       ),
                     ),
-                  if (selectedButtons.contains(courseSecondFormBtnText[1]))
+                  if (selectedButtons.contains(tripSecondFormBtnText[1]))
                     SizedBox(
                       height: 100,
                       child: Column(
@@ -237,7 +237,7 @@ class _CourseSecondFormScreenState extends State<CourseSecondFormScreen> {
                 onPressed: selectedButtons.isEmpty
                     ? null
                     : () {
-                        context.goNamed('courseForm3');
+                        context.goNamed('tripForm3');
                       },
                 child: const Text(
                   '다음',

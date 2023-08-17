@@ -1,14 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tago_app/course/model/course_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/place/model/place_model.dart';
 
-part 'course_detail_model.g.dart';
+part 'trip_detail_model.g.dart';
 
 @JsonSerializable()
-class CourseDetailModel extends CourseModel {
+class TripDetailModel extends TripModel {
   final List<PlaceModel> places;
 
-  CourseDetailModel({
+  TripDetailModel({
     required super.id,
     required super.name,
     required super.imgUrl,
@@ -20,9 +20,9 @@ class CourseDetailModel extends CourseModel {
     required this.places,
   });
 
-  factory CourseDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$CourseDetailModelFromJson(json);
+  factory TripDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$TripDetailModelFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$CourseDetailModelToJson(this);
+  Map<String, dynamic> toJson() => _$TripDetailModelToJson(this);
 }

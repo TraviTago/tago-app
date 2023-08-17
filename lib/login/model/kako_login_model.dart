@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:tago_app/user/model/social_login_model.dart';
+import 'package:tago_app/login/model/social_login_model.dart';
 import 'package:tago_app/user/model/user_model.dart';
 
 class KakaoLoginModel implements SocialLogin {

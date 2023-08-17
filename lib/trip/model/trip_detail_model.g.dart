@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'course_detail_model.dart';
+part of 'trip_detail_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CourseDetailModel _$CourseDetailModelFromJson(Map<String, dynamic> json) =>
-    CourseDetailModel(
+TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
+    TripDetailModel(
       id: json['id'] as String,
       name: json['name'] as String,
       imgUrl: json['imgUrl'] as String,
@@ -21,7 +21,7 @@ CourseDetailModel _$CourseDetailModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$CourseDetailModelToJson(CourseDetailModel instance) =>
+Map<String, dynamic> _$TripDetailModelToJson(TripDetailModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

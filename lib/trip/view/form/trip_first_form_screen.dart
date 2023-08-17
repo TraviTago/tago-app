@@ -5,16 +5,16 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class CourseFirstFormScreen extends StatefulWidget {
-  const CourseFirstFormScreen({super.key});
+class TripFirstFormScreen extends StatefulWidget {
+  const TripFirstFormScreen({super.key});
 
-  static String get routeName => 'courseForm1';
+  static String get routeName => 'tripForm1';
 
   @override
-  State<CourseFirstFormScreen> createState() => _CourseFirstFormScreenState();
+  State<TripFirstFormScreen> createState() => _TripFirstFormScreenState();
 }
 
-class _CourseFirstFormScreenState extends State<CourseFirstFormScreen> {
+class _TripFirstFormScreenState extends State<TripFirstFormScreen> {
   DateTime _selectedDay = DateTime.now();
   final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
@@ -145,7 +145,7 @@ class _CourseFirstFormScreenState extends State<CourseFirstFormScreen> {
                 ),
                 onPressed: () {
                   print(_selectedDay);
-                  context.goNamed('courseForm2');
+                  context.goNamed('tripForm2');
                 },
                 child: const Text(
                   '다음',

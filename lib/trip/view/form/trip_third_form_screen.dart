@@ -6,16 +6,16 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class CourseThirdFormScreen extends StatefulWidget {
-  const CourseThirdFormScreen({super.key});
+class TripThirdFormScreen extends StatefulWidget {
+  const TripThirdFormScreen({super.key});
 
-  static String get routeName => 'courseForm3';
+  static String get routeName => 'tripForm3';
 
   @override
-  State<CourseThirdFormScreen> createState() => _CourseThirdFormScreenState();
+  State<TripThirdFormScreen> createState() => _TripThirdFormScreenState();
 }
 
-class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
+class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
   List<String> selectedGenderButtons = [];
   List<String> selectedAgeButtons = [];
   List<String> selectedPetButtons = [];
@@ -80,7 +80,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                         height: screenWidth / (4 * 2),
                         child: ButtonGroup(
                           buttonCount: 2,
-                          buttonTexts: courseThirdFormBtnText[0],
+                          buttonTexts: tripThirdFormBtnText[0],
                           crossAxisCount: 2,
                           childAspectRatio: 4,
                           onButtonSelected: (selected) {
@@ -111,7 +111,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                               height: screenWidth / (4 * 2),
                               child: ButtonGroup(
                                 buttonCount: 2,
-                                buttonTexts: courseThirdFormBtnText[1],
+                                buttonTexts: tripThirdFormBtnText[1],
                                 crossAxisCount: 2,
                                 childAspectRatio: 4,
                                 onButtonSelected: (selected) {
@@ -141,7 +141,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                             height: screenWidth / (4 * 2),
                             child: ButtonGroup(
                               buttonCount: 2,
-                              buttonTexts: courseThirdFormBtnText[2],
+                              buttonTexts: tripThirdFormBtnText[2],
                               crossAxisCount: 2,
                               childAspectRatio: 4,
                               onButtonSelected: (selected) {
@@ -181,7 +181,7 @@ class _CourseThirdFormScreenState extends State<CourseThirdFormScreen> {
                               'Selected gender buttons: $selectedGenderButtons');
                           print('Selected age buttons: $selectedAgeButtons');
                           print('Selected pet buttons: $selectedPetButtons');
-                          context.goNamed('courseForm4');
+                          context.goNamed('tripForm4');
                         },
                   child: const Text(
                     '다음',

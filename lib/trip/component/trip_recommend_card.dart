@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/course/model/course_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 
-class CourseRecommendCard extends StatelessWidget {
+class TripRecommendCard extends StatelessWidget {
   final String id;
   final String name;
   final String imgUrl;
@@ -15,7 +15,7 @@ class CourseRecommendCard extends StatelessWidget {
   final int duration;
   final int startDate;
   final bool isCompleteCompnent;
-  const CourseRecommendCard({
+  const TripRecommendCard({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -28,11 +28,11 @@ class CourseRecommendCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory CourseRecommendCard.fromModel({
-    required CourseModel model,
+  factory TripRecommendCard.fromModel({
+    required TripModel model,
     bool isCompleteCompnent = false,
   }) {
-    return CourseRecommendCard(
+    return TripRecommendCard(
       id: model.id,
       name: model.name,
       imgUrl: model.imgUrl,
@@ -51,7 +51,7 @@ class CourseRecommendCard extends StatelessWidget {
         MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
     return GestureDetector(
       onTap: () {
-        context.push("/courseDetail");
+        context.push("/tripDetail");
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),

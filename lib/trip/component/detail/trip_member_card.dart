@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/course/model/course_detail_model.dart';
+import 'package:tago_app/trip/model/trip_detail_model.dart';
 
-class CourseMemberCard extends StatelessWidget {
-  final CourseDetailModel detailModel;
+class TripMemberCard extends StatelessWidget {
+  final TripDetailModel detailModel;
 
-  const CourseMemberCard({super.key, required this.detailModel});
+  const TripMemberCard({super.key, required this.detailModel});
   @override
   Widget build(BuildContext context) {
     return Padding(

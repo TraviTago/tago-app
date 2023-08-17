@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/course/model/course_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 
-class CourseCard extends StatelessWidget {
+class TripCard extends StatelessWidget {
   final String id;
   final String name;
   final String imgUrl;
@@ -15,7 +15,7 @@ class CourseCard extends StatelessWidget {
   final int duration;
   final int startDate;
 
-  const CourseCard({
+  const TripCard({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -27,10 +27,10 @@ class CourseCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory CourseCard.fromModel({
-    required CourseModel model,
+  factory TripCard.fromModel({
+    required TripModel model,
   }) {
-    return CourseCard(
+    return TripCard(
       id: model.id,
       name: model.name,
       imgUrl: model.imgUrl,
@@ -46,7 +46,7 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go("/courseDetail");
+        context.go("/tripDetail");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),

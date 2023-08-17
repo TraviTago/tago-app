@@ -3,21 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
-import 'package:tago_app/course/view/detail/course_detail_screen.dart';
-import 'package:tago_app/course/view/form/course_complete_screen.dart';
-import 'package:tago_app/course/view/form/course_fifth_form_screen.dart';
-import 'package:tago_app/course/view/form/course_first_form_screen.dart';
-import 'package:tago_app/course/view/form/course_fourth_from_screen.dart';
-import 'package:tago_app/course/view/form/course_last_form_screen.dart';
-import 'package:tago_app/course/view/form/course_second_form_screen.dart';
-import 'package:tago_app/course/view/form/course_third_form_screen.dart';
+import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
+import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
+import 'package:tago_app/trip/view/form/trip_fifth_form_screen.dart';
+import 'package:tago_app/trip/view/form/trip_first_form_screen.dart';
+import 'package:tago_app/trip/view/form/trip_fourth_from_screen.dart';
+import 'package:tago_app/trip/view/form/trip_last_form_screen.dart';
+import 'package:tago_app/trip/view/form/trip_second_form_screen.dart';
+import 'package:tago_app/trip/view/form/trip_third_form_screen.dart';
 import 'package:tago_app/signup/view/first_form_screen.dart';
 import 'package:tago_app/signup/view/last_form_screen.dart';
 import 'package:tago_app/signup/view/second_from_screen.dart';
 import 'package:tago_app/signup/view/third_form_screen.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
-import 'package:tago_app/user/view/login_screen.dart';
+import 'package:tago_app/login/view/login_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
   return AuthProvider(ref: ref);
@@ -84,45 +84,45 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, __) => const RootTab(),
           routes: [
             GoRoute(
-              path: 'courseDetail',
-              name: CourseDetailScreen.routeName,
-              builder: (_, __) => const CourseDetailScreen(),
+              path: 'tripDetail',
+              name: TripDetailScreen.routeName,
+              builder: (_, __) => const TripDetailScreen(),
             ),
             GoRoute(
-              path: 'courseComplete',
-              name: CourseCompleteScreen.routeName,
-              builder: (_, __) => const CourseCompleteScreen(),
+              path: 'tripComplete',
+              name: TripCompleteScreen.routeName,
+              builder: (_, __) => const TripCompleteScreen(),
             ),
             GoRoute(
-              path: 'courseForm1',
-              name: CourseFirstFormScreen.routeName,
-              builder: (_, __) => const CourseFirstFormScreen(),
+              path: 'tripForm1',
+              name: TripFirstFormScreen.routeName,
+              builder: (_, __) => const TripFirstFormScreen(),
               routes: [
                 GoRoute(
-                  path: 'courseForm2',
-                  name: CourseSecondFormScreen.routeName,
-                  builder: (_, __) => const CourseSecondFormScreen(),
+                  path: 'tripForm2',
+                  name: TripSecondFormScreen.routeName,
+                  builder: (_, __) => const TripSecondFormScreen(),
                   routes: [
                     GoRoute(
-                      path: 'courseForm3',
-                      name: CourseThirdFormScreen.routeName,
-                      builder: (_, __) => const CourseThirdFormScreen(),
+                      path: 'tripForm3',
+                      name: TripThirdFormScreen.routeName,
+                      builder: (_, __) => const TripThirdFormScreen(),
                       routes: [
                         GoRoute(
-                          path: 'courseForm4',
-                          name: CourseFourthFormScreen.routeName,
-                          builder: (_, __) => const CourseFourthFormScreen(),
+                          path: 'tripForm4',
+                          name: TripFourthFormScreen.routeName,
+                          builder: (_, __) => const TripFourthFormScreen(),
                           routes: [
                             GoRoute(
-                              path: 'courseForm5',
-                              name: CourseFifthFormScreen.routeName,
-                              builder: (_, __) => const CourseFifthFormScreen(),
+                              path: 'tripForm5',
+                              name: TripFifthFormScreen.routeName,
+                              builder: (_, __) => const TripFifthFormScreen(),
                               routes: [
                                 GoRoute(
-                                  path: 'courseForm6',
-                                  name: CourseLastFormScreen.routeName,
+                                  path: 'tripForm6',
+                                  name: TripLastFormScreen.routeName,
                                   builder: (_, __) =>
-                                      const CourseLastFormScreen(),
+                                      const TripLastFormScreen(),
                                 ),
                               ],
                             ),

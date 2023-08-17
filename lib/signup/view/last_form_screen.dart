@@ -5,7 +5,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
-import 'package:tago_app/user/model/sign_up_model.dart';
+import 'package:tago_app/signup/model/sign_up_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 
 class LastFormScreen extends ConsumerStatefulWidget {

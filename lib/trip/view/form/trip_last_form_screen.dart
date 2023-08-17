@@ -4,23 +4,23 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 
-class CourseLastFormScreen extends StatefulWidget {
-  const CourseLastFormScreen({super.key});
-  static String get routeName => 'courseForm6';
+class TripLastFormScreen extends StatefulWidget {
+  const TripLastFormScreen({super.key});
+  static String get routeName => 'tripForm6';
 
   @override
-  State<CourseLastFormScreen> createState() => _CourseLastFormScreenState();
+  State<TripLastFormScreen> createState() => _TripLastFormScreenState();
 }
 
-class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
-  int courseNameCount = 0;
+class _TripLastFormScreenState extends State<TripLastFormScreen> {
+  int tripNameCount = 0;
   final textController = TextEditingController();
 
   @override
   void initState() {
     textController.addListener(() {
       setState(() {
-        courseNameCount = textController.text.length;
+        tripNameCount = textController.text.length;
       });
     });
     super.initState();
@@ -85,7 +85,7 @@ class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
                         const TextStyle(color: LABEL_TEXT_COLOR, fontSize: 16),
                     // Hide default counter
                     suffix: Text(
-                      '($courseNameCount/12)',
+                      '($tripNameCount/12)',
                       style: const TextStyle(
                         fontSize: 13.0,
                         color: LABEL_TEXT_COLOR,
@@ -115,17 +115,17 @@ class _CourseLastFormScreenState extends State<CourseLastFormScreen> {
                   minimumSize: MaterialStateProperty.all<Size>(
                       Size(MediaQuery.of(context).size.width, 45)),
                   elevation: MaterialStateProperty.all(0),
-                  backgroundColor: courseNameCount == 0
+                  backgroundColor: tripNameCount == 0
                       ? MaterialStateProperty.all(
                           BUTTON_BG_COLOR.withOpacity(0.5))
                       : MaterialStateProperty.all(BUTTON_BG_COLOR),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                onPressed: courseNameCount == 0
+                onPressed: tripNameCount == 0
                     ? null
                     : () {
                         print('Selected like Place : $textController.text');
-                        context.goNamed('courseComplete');
+                        context.goNamed('tripComplete');
                       },
                 child: const Text(
                   '완료',

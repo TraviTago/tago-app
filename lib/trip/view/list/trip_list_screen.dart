@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
-import 'package:tago_app/course/component/course_card.dart';
-import 'package:tago_app/course/component/course_recommend_card.dart';
+import 'package:tago_app/trip/component/trip_card.dart';
+import 'package:tago_app/trip/component/trip_recommend_card.dart';
 
-class CourseListScreen extends StatelessWidget {
-  const CourseListScreen({super.key});
+class TripListScreen extends StatelessWidget {
+  const TripListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class CourseListScreen extends StatelessWidget {
               size: 45,
             ),
             onPressed: () {
-              context.go('/courseForm1');
+              context.go('/tripForm1');
             },
             backgroundColor: PRIMARY_COLOR,
           ),
@@ -46,8 +46,8 @@ class CourseListScreen extends StatelessWidget {
             const SizedBox(
               height: 10.0,
             ),
-            CourseRecommendCard.fromModel(model: courseData),
-            CourseCard.fromModel(model: courseCardData),
+            TripRecommendCard.fromModel(model: tripData),
+            TripCard.fromModel(model: tripCardData),
           ],
         ),
       ),

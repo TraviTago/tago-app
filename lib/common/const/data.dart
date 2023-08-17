@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/course/model/course_detail_model.dart';
-import 'package:tago_app/course/model/course_model.dart';
+import 'package:tago_app/trip/model/trip_detail_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/place/model/place_model.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
@@ -14,8 +14,8 @@ const simulatorIp = '127.0.0.1:8080';
 
 final ip = Platform.isIOS ? 'http://$simulatorIp' : 'http://$emulatorIp';
 
-final courseSecondFormBtnText = ['아니요. 타고에서 구할래요!', '네 일행이 있습니다!'];
-final courseThirdFormBtnText = [
+final tripSecondFormBtnText = ['아니요. 타고에서 구할래요!', '네 일행이 있습니다!'];
+final tripThirdFormBtnText = [
   ['동성만!', '상관없어요!'],
   ['비슷하게', '상관없어요!'],
   ['좋아요!', '싫어요!'],
@@ -54,7 +54,7 @@ final markerImages = [
   DataUtils.loadAssetAsBase64('asset/img/marker/9.png'),
 ];
 
-CourseModel courseData = CourseModel(
+TripModel tripData = TripModel(
   id: '1',
   name: '낭만적인 밤바다 코스',
   imgUrl: 'https://picsum.photos/id/421/200/200',
@@ -65,7 +65,7 @@ CourseModel courseData = CourseModel(
   startDate: 1656140400,
 );
 
-CourseModel courseCardData = CourseModel(
+TripModel tripCardData = TripModel(
   id: '1',
   name: '아름다운 숲 코스',
   imgUrl: 'https://picsum.photos/id/28/200/200',
@@ -76,7 +76,7 @@ CourseModel courseCardData = CourseModel(
   startDate: 1656140400,
 );
 
-CourseDetailModel courseDetailData = CourseDetailModel(
+TripDetailModel tripDetailData = TripDetailModel(
   id: '1',
   name: '낭만적인 밤바다 코스',
   imgUrl: 'https://picsum.photos/id/28/200/200',

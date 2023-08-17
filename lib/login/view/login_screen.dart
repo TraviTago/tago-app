@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/user/model/kako_login_model.dart';
+import 'package:tago_app/login/model/kako_login_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

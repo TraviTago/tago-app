@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'course_model.g.dart';
+part 'trip_model.g.dart';
 
 @JsonSerializable()
-class CourseModel {
+class TripModel {
   final String id;
   final String name;
   final String imgUrl;
@@ -13,7 +13,7 @@ class CourseModel {
   final int duration;
   final int startDate;
 
-  CourseModel({
+  TripModel({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -24,8 +24,8 @@ class CourseModel {
     required this.startDate,
   });
 
-  factory CourseModel.fromJson(Map<String, dynamic> json) =>
-      _$CourseModelFromJson(json);
+  factory TripModel.fromJson(Map<String, dynamic> json) =>
+      _$TripModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CourseModelToJson(this);
+  Map<String, dynamic> toJson() => _$TripModelToJson(this);
 }
