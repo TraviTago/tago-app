@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/view/home_screen.dart';
+import 'package:tago_app/user/view/my_page_screen.dart';
 
 class RootTab extends StatefulWidget {
   const RootTab({Key? key}) : super(key: key);
@@ -134,7 +135,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         children: [
           const HomeScreen(),
           Center(child: Container(child: const Text('내여행'))),
-          Center(child: Container(child: const Text('마이페이지'))),
+          const MyPageScreen(),
         ],
       ),
     );

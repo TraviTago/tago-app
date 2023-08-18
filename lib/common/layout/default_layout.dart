@@ -7,6 +7,7 @@ class DefaultLayout extends StatelessWidget {
   final String? title;
   final bool backBtnComponent;
   final Widget? titleComponet;
+  final Widget? titleComponetWithoutPop;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
 
@@ -15,6 +16,7 @@ class DefaultLayout extends StatelessWidget {
     this.backgroundColor,
     this.title,
     this.titleComponet,
+    this.titleComponetWithoutPop,
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.backBtnComponent = false,
@@ -45,6 +47,14 @@ class DefaultLayout extends StatelessWidget {
   }
 
   AppBar? renderAppBar(BuildContext context) {
+    if (titleComponetWithoutPop != null) {
+      return AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: titleComponetWithoutPop,
+        foregroundColor: Colors.black,
+      );
+    }
     if (backBtnComponent) {
       return AppBar(
           backgroundColor: Colors.white,
