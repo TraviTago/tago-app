@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
+import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
 import 'package:tago_app/trip/view/form/trip_fifth_form_screen.dart';
@@ -33,16 +34,12 @@ class AuthProvider extends ChangeNotifier {
       if (previous != next) {
         //UserMeProvider에 변경사항이 생겼을 때만 AuthProvider에 알린다.
         notifyListeners();
-
-        // If the new state is UserModel, get the stores of the user.
       }
     });
     ref.listen<bool>(splashScreenTimerProvider, (previous, next) {
       if (previous != next) {
         //UserMeProvider에 변경사항이 생겼을 때만 AuthProvider에 알린다.
         notifyListeners();
-
-        // If the new state is UserModel, get the stores of the user.
       }
     });
   }
@@ -84,9 +81,14 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, __) => const RootTab(),
           routes: [
             GoRoute(
-              path: 'tripDetail',
+              path: 'tripDetail/:tripId',
               name: TripDetailScreen.routeName,
               builder: (_, __) => const TripDetailScreen(),
+            ),
+            GoRoute(
+              path: 'placeDetail/:placeId',
+              name: PlaceDetaiLScreen.routeName,
+              builder: (_, __) => const PlaceDetaiLScreen(),
             ),
             GoRoute(
               path: 'tripComplete',

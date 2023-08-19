@@ -51,7 +51,7 @@ class TripRecommendCard extends StatelessWidget {
         MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
     return GestureDetector(
       onTap: () {
-        context.push("/tripDetail");
+        context.go("/tripDetail/$id");
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
@@ -34,6 +35,9 @@ class _TripDetailScreenState extends State<TripDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    //TOFIX
+    final tripId =
+        int.parse(GoRouterState.of(context).pathParameters['tripId']!);
     return DefaultLayout(
       titleComponet: Padding(
         padding: const EdgeInsets.only(right: 15.0),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
@@ -46,7 +45,7 @@ class TripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go("/tripDetail");
+        context.go("/tripDetail/$id");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),
