@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
-import 'package:tago_app/login/model/kako_login_model.dart';
 import 'package:tago_app/signup/model/sign_up_model.dart';
 import 'package:tago_app/signup/model/sign_up_response.dart';
 import 'package:tago_app/login/model/social_login_model.dart';
@@ -110,10 +110,24 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   }
 
   Future<void> logout() async {
-    final kakoLogin = KakaoLoginModel();
+    SNSPlatform? platform;
+
+    // state의 값을 UserModel 타입으로 확인
+    if (state is UserModel) {
+      platform = SNSPlatform.values.firstWhere(
+        (e) => describeEnum(e) == (state as UserModel).oauthProvider,
+      );
+    }
+
     // 가장 먼저 state을 null로 만들어서
     // 로그인 페이지로 보낸다.
     state = null;
+
+    if (platform == null) {
+      state = null;
+
+      throw Exception("Unable to determine the oauthProvider for logout");
+    }
 
     //storage 토큰 삭제
     await Future.wait([
@@ -121,7 +135,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
       storage.delete(key: ACCESS_TOKEN_KEY),
     ]);
 
-    //TODO: 카카오 토큰 삭제
-    await kakoLogin.logout();
+    //카카오 토큰 삭제
+    await platform.loginHandler.logout();
   }
 }

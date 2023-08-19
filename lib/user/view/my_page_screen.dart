@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/common/component/space_container.dart';
@@ -6,12 +7,13 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/signup/model/sign_up_model.dart';
 import 'package:tago_app/user/component/menu_list.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
-class MyPageScreen extends StatelessWidget {
+class MyPageScreen extends ConsumerWidget {
   const MyPageScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final SignUpModel signUpModel = SignUpModel(
       ageRange: 20,
       gender: "여성",
@@ -54,8 +56,8 @@ class MyPageScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextButton(
-                        onPressed: () => {
-                          //TOFIX: 로그아웃
+                        onPressed: () async {
+                          await ref.read(userProvider.notifier).logout();
                         },
                         style: TextButton.styleFrom(
                           minimumSize: const Size(137, 35),
