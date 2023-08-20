@@ -87,8 +87,8 @@ class AuthProvider extends ChangeNotifier {
             ),
             GoRoute(
               path: 'placeDetail/:placeId',
-              name: PlaceDetaiLScreen.routeName,
-              builder: (_, __) => const PlaceDetaiLScreen(),
+              name: PlaceDetailScreen.routeName,
+              builder: (_, __) => const PlaceDetailScreen(),
             ),
             GoRoute(
               path: 'tripComplete',

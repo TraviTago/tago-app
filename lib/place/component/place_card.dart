@@ -63,8 +63,8 @@ class PlaceCard extends StatelessWidget {
               height: 20.0,
             ),
             Text(
-              DataUtils.cleanOverview(place
-                  .overview), // Assuming overview property exists in PlaceModel
+              DataUtils.cleanOverview(place.overview,
+                  false), // Assuming overview property exists in PlaceModel
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,
