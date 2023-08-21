@@ -7,6 +7,7 @@ import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
 import 'package:tago_app/place/provider/kakao_blog_search_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlaceDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'placeDetail';
@@ -108,61 +109,74 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                   itemBuilder: (_, index) {
                     final blogItem = data[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
-                            style: const TextStyle(
-                              color: LABEL_TEXT_SUB_COLOR,
-                              fontSize: 13.0,
+                    return InkWell(
+                      onTap: () async {
+                        if (await canLaunchUrl(
+                          Uri.parse(blogItem.url),
+                        )) {
+                          await launchUrl(
+                            Uri.parse(blogItem.url),
+                          );
+                        } else {
+                          print('Could not launch ${blogItem.url}');
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
+                              style: const TextStyle(
+                                color: LABEL_TEXT_SUB_COLOR,
+                                fontSize: 13.0,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          DataUtils.processText(
-                              blogItem.title, "해운대 해수욕장", true),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: DataUtils.processText(
-                                    blogItem.contents, "해운대 해수욕장", false),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    blogItem.thumbnail,
-                                    fit: BoxFit.cover,
-                                  ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            DataUtils.processText(
+                                blogItem.title, "해운대 해수욕장", true),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: DataUtils.processText(
+                                      blogItem.contents, "해운대 해수욕장", false),
                                 ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            DataUtils.formatDateOnDateTime(blogItem.datetime),
-                            style: const TextStyle(
-                              fontSize: 13.0,
-                              color: LABEL_TEXT_SUB_COLOR,
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                      blogItem.thumbnail,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              DataUtils.formatDateOnDateTime(blogItem.datetime),
+                              style: const TextStyle(
+                                fontSize: 13.0,
+                                color: LABEL_TEXT_SUB_COLOR,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
