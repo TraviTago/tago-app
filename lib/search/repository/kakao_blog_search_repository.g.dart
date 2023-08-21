@@ -22,8 +22,8 @@ class _KakaoBlogSearchRepository implements KakaoBlogSearchRepository {
   Future<PagePagination<KakaoBlogSearchModel>> paginate({
     sort = 'accuracy',
     page = 1,
-    size = 10,
-    query = "해운대해수욕장 후기",
+    size = 5,
+    required query,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

@@ -6,7 +6,7 @@ import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
-import 'package:tago_app/place/provider/kakao_blog_search_provider.dart';
+import 'package:tago_app/search/provider/kakao_blog_search_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceDetailScreen extends ConsumerStatefulWidget {
@@ -23,8 +23,17 @@ class PlaceDetailScreen extends ConsumerStatefulWidget {
 class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
     with SingleTickerProviderStateMixin {
   @override
+  void initState() {
+    super.initState();
+    final detailModel = gwanganriDetail;
+    ref
+        .read(kakaoBlogSearchProvider.notifier)
+        .paginate('${detailModel.title} 후기');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final detailModel = placeDetailModel;
+    final detailModel = gwanganriDetail;
 
     final data = ref.watch(kakaoBlogSearchProvider);
 
@@ -138,7 +147,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                               height: 8.0,
                             ),
                             DataUtils.processText(
-                                blogItem.title, "해운대 해수욕장", true),
+                                blogItem.title, detailModel.title, true),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -148,7 +157,9 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                                 Expanded(
                                   flex: 5,
                                   child: DataUtils.processText(
-                                      blogItem.contents, "해운대 해수욕장", false),
+                                      blogItem.contents,
+                                      detailModel.title,
+                                      false),
                                 ),
                                 const SizedBox(
                                   width: 10,

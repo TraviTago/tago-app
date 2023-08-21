@@ -18,13 +18,10 @@ class KakaoBlogSearchStateNotifier
 
   KakaoBlogSearchStateNotifier({
     required this.repository,
-  }) : super([]) {
-    paginate();
-  }
+  }) : super([]);
 
-  paginate() async {
-    final resp = await repository.paginate();
-
+  paginate([String query = "부산 여행 후기"]) async {
+    final resp = await repository.paginate(query: query);
     state = resp.documents;
   }
 }

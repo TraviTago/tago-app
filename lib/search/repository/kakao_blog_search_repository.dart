@@ -27,7 +27,7 @@ abstract class KakaoBlogSearchRepository {
   Future<PagePagination<KakaoBlogSearchModel>> paginate({
     @Query('sort') String sort = 'accuracy',
     @Query('page') int page = 1,
-    @Query('size') int size = 10,
-    @Query('query') String query = "해운대해수욕장 후기",
+    @Query('size') int size = 5,
+    @Query('query') required String query,
   });
 }
