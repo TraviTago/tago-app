@@ -47,7 +47,7 @@ class TripDetailMapScreen extends StatelessWidget {
               KakaoMapView(
                 width: MediaQuery.of(context).size.width,
                 height: double.infinity,
-                kakaoMapKey: dotenv.env['KAKAO_REST_API_KEY']!,
+                kakaoMapKey: dotenv.env['KAKAO_REST_JAVASCRIPT_KEY']!,
                 lat: detailModel.places[0].mapy,
                 lng: detailModel.places[0].mapx,
                 customScript: customScript,
