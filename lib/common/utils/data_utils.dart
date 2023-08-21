@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DataUtils {
@@ -18,6 +19,14 @@ class DataUtils {
     DateTime date =
         DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
     return '${date.month}월 ${date.day}일';
+  }
+
+  static String formatDateOnDateTime(String dateTimeString) {
+    DateTime parsedDate = DateTime.parse(dateTimeString);
+    String formattedYear = parsedDate.year.toString();
+    String formattedMonth = parsedDate.month.toString().padLeft(2, '0');
+    String formattedDay = parsedDate.day.toString().padLeft(2, '0');
+    return '$formattedYear-$formattedMonth-$formattedDay';
   }
 
   static String formatTime(int timestampInSeconds) {
@@ -83,6 +92,91 @@ class DataUtils {
     } else {
       return "$input 휴무";
     }
+  }
+
+  static Widget processText(
+    String text,
+    String touristAttraction,
+    bool isTitle,
+  ) {
+    var noHtmlText = text.replaceAll(RegExp(r'<[^>]*>'), '');
+
+    // 관광지 이름의 띄어쓰기를 유연하게 대응하기 위한 정규표현식 생성
+    final pattern = touristAttraction.splitMapJoin(RegExp(r'\s*'),
+        onMatch: (m) => r'\s*', onNonMatch: (n) => RegExp.escape(n));
+
+    final regex = RegExp(pattern);
+
+    // 관광지 이름으로 분할
+    final parts = noHtmlText.split(regex);
+
+    // 관광지 이름이 포함되지 않았을 때
+    if (parts.length == 1) {
+      return Text(
+        noHtmlText,
+        maxLines: 5,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
+
+    // 관광지 이름이 포함되었을 때, 해당 부분을 bold 처리
+    List<TextSpan> spans = [];
+    for (int i = 0; i < parts.length; i++) {
+      spans.add(
+        TextSpan(
+          text: parts[i],
+          style: isTitle
+              ? const TextStyle(
+                  fontSize: 18.0,
+                  color: Color(0xFF1148C8),
+                )
+              : const TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                ),
+        ),
+      );
+      if (i < parts.length - 1) {
+        final match = regex.firstMatch(noHtmlText.substring(parts[i].length));
+        spans.add(
+          TextSpan(
+            text: match?.group(0) ?? '',
+            style: isTitle
+                ? const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18.0,
+                    color: Color(0xFF1148C8),
+                  )
+                : const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0,
+                    color: Colors.black,
+                  ),
+          ),
+        );
+        if (match != null) {
+          final endIndex = parts[i].length + match.end;
+          noHtmlText = noHtmlText.substring(endIndex);
+        }
+      }
+    }
+
+    return Text.rich(
+      TextSpan(children: spans),
+      maxLines: 5,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  static String extractDomain(String url) {
+    RegExp regex = RegExp(r'https?://([^/]+)/');
+    Match? match = regex.firstMatch(url);
+
+    if (match != null && match.groupCount > 0) {
+      return match.group(1)!; // 첫 번째 캡쳐 그룹에서 도메인을 반환
+    }
+
+    return url; // 일치하는 항목을 찾을 수 없는 경우 전체 URL 반환
   }
 
   static String preprocessParking(String input) {
