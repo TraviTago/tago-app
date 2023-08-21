@@ -22,7 +22,7 @@ class _KakaoBlogSearchRepository implements KakaoBlogSearchRepository {
   Future<PagePagination<KakaoBlogSearchModel>> paginate({
     sort = 'accuracy',
     page = 1,
-    size = 5,
+    size = 10,
     required query,
   }) async {
     const _extra = <String, dynamic>{};

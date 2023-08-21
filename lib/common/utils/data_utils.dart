@@ -163,7 +163,7 @@ class DataUtils {
 
     return Text.rich(
       TextSpan(children: spans),
-      maxLines: 5,
+      maxLines: isTitle ? 2 : 5,
       overflow: TextOverflow.ellipsis,
     );
   }
