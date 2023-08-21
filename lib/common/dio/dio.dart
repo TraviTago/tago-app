@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
@@ -37,6 +38,14 @@ class CustomInterceptor extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     print('[REQ] [${options.method}] ${options.uri}');
+
+    if (options.headers["kakao"] == 'true') {
+      final kakaoApiKey = dotenv.env['KAKAO_REST_API_KEY'];
+
+      options.headers.addAll({
+        'Authorization': 'KakaoAK $kakaoApiKey',
+      });
+    }
 
     if (options.headers['accessToken'] == 'true') {
       // 헤더 삭제
