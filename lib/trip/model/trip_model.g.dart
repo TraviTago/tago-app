@@ -7,23 +7,24 @@ part of 'trip_model.dart';
 // **************************************************************************
 
 TripModel _$TripModelFromJson(Map<String, dynamic> json) => TripModel(
-      id: json['id'] as String,
+      tripId: json['tripId'] as int,
+      dateTime: DateTime.parse(json['dateTime'] as String),
       name: json['name'] as String,
-      imgUrl: json['imgUrl'] as String,
-      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      maxNum: json['maxNum'] as int,
-      curNum: json['curNum'] as int,
-      duration: json['duration'] as int,
-      startDate: json['startDate'] as int,
+      imageUrl: json['imageUrl'] as String,
+      places:
+          (json['places'] as List<dynamic>).map((e) => e as String).toList(),
+      maxMember: json['maxMember'] as int,
+      currentMember: json['currentMember'] as int,
+      totalTime: json['totalTime'] as int,
     );
 
 Map<String, dynamic> _$TripModelToJson(TripModel instance) => <String, dynamic>{
-      'id': instance.id,
+      'tripId': instance.tripId,
+      'dateTime': instance.dateTime.toIso8601String(),
       'name': instance.name,
-      'imgUrl': instance.imgUrl,
-      'tags': instance.tags,
-      'maxNum': instance.maxNum,
-      'curNum': instance.curNum,
-      'duration': instance.duration,
-      'startDate': instance.startDate,
+      'imageUrl': instance.imageUrl,
+      'places': instance.places,
+      'maxMember': instance.maxMember,
+      'currentMember': instance.currentMember,
+      'totalTime': instance.totalTime,
     };

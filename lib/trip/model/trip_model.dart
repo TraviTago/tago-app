@@ -4,24 +4,24 @@ part 'trip_model.g.dart';
 
 @JsonSerializable()
 class TripModel {
-  final String id;
+  final int tripId;
+  final DateTime dateTime;
   final String name;
-  final String imgUrl;
-  final List<String> tags;
-  final int maxNum; //최대 인원
-  final int curNum; //현재 인원
-  final int duration;
-  final int startDate;
+  final String imageUrl;
+  final List<String> places;
+  final int maxMember; //최대 인원
+  final int currentMember; //현재 인원
+  final int totalTime;
 
   TripModel({
-    required this.id,
+    required this.tripId,
+    required this.dateTime,
     required this.name,
-    required this.imgUrl,
-    required this.tags,
-    required this.maxNum,
-    required this.curNum,
-    required this.duration,
-    required this.startDate,
+    required this.imageUrl,
+    required this.places,
+    required this.maxMember,
+    required this.currentMember,
+    required this.totalTime,
   });
 
   factory TripModel.fromJson(Map<String, dynamic> json) =>

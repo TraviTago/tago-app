@@ -8,14 +8,13 @@ part of 'trip_detail_model.dart';
 
 TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
     TripDetailModel(
-      id: json['id'] as String,
+      tripId: json['tripId'] as int,
       name: json['name'] as String,
-      imgUrl: json['imgUrl'] as String,
-      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      maxNum: json['maxNum'] as int,
-      curNum: json['curNum'] as int,
-      duration: json['duration'] as int,
-      startDate: json['startDate'] as int,
+      imageUrl: json['imageUrl'] as String,
+      maxMember: json['maxMember'] as int,
+      currentMember: json['currentMember'] as int,
+      totalTime: json['totalTime'] as int,
+      dateTime: DateTime.parse(json['dateTime'] as String),
       places: (json['places'] as List<dynamic>)
           .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -23,13 +22,12 @@ TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TripDetailModelToJson(TripDetailModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'tripId': instance.tripId,
+      'dateTime': instance.dateTime.toIso8601String(),
       'name': instance.name,
-      'imgUrl': instance.imgUrl,
-      'tags': instance.tags,
-      'maxNum': instance.maxNum,
-      'curNum': instance.curNum,
-      'duration': instance.duration,
-      'startDate': instance.startDate,
+      'imageUrl': instance.imageUrl,
+      'maxMember': instance.maxMember,
+      'currentMember': instance.currentMember,
+      'totalTime': instance.totalTime,
       'places': instance.places,
     };
