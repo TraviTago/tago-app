@@ -53,8 +53,8 @@ class _TripDetailScreenState extends State<TripDetailScreen>
               ),
             ),
             _PersonLabel(
-              curNum: detailModel.curNum,
-              maxNum: detailModel.maxNum,
+              curNum: detailModel.currentMember,
+              maxNum: detailModel.maxMember,
             ),
           ],
         ),

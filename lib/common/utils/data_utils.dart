@@ -15,9 +15,7 @@ class DataUtils {
     return '$hours시간 $minutes분';
   }
 
-  static String formatDate(int timestampInSeconds) {
-    DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
+  static String formatDate(DateTime date) {
     return '${date.month}월 ${date.day}일';
   }
 
@@ -29,9 +27,7 @@ class DataUtils {
     return '$formattedYear-$formattedMonth-$formattedDay';
   }
 
-  static String formatTime(int timestampInSeconds) {
-    DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
+  static String formatTime(DateTime date) {
     String formattedHour = date.hour.toString().padLeft(2, '0');
     String formattedMinute = date.minute.toString().padLeft(2, '0');
     return '$formattedHour:$formattedMinute';

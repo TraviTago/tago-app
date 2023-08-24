@@ -79,7 +79,7 @@ class TripMemberCard extends StatelessWidget {
                     children: [
                       const Text('출발 시간'),
                       Text(
-                        DataUtils.formatTime(detailModel.startDate),
+                        DataUtils.formatTime(detailModel.dateTime),
                         style: const TextStyle(
                             fontSize: 14.0, fontWeight: FontWeight.w500),
                       ),

@@ -6,25 +6,25 @@ import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class TripRecommendCard extends StatelessWidget {
-  final String id;
+  final int tripId;
+  final DateTime dateTime;
   final String name;
-  final String imgUrl;
-  final List<String> tags;
-  final int maxNum; //최대 인원
-  final int curNum; //현재 인원
-  final int duration;
-  final int startDate;
+  final String imageUrl;
+  final List<String> places;
+  final int maxMember; //최대 인원
+  final int currentMember; //현재 인원
+  final int totalTime;
   final bool isCompleteCompnent;
   final bool isMyTrip;
   const TripRecommendCard({
-    required this.id,
+    required this.tripId,
+    required this.dateTime,
     required this.name,
-    required this.imgUrl,
-    required this.tags,
-    required this.maxNum,
-    required this.curNum,
-    required this.duration,
-    required this.startDate,
+    required this.imageUrl,
+    required this.places,
+    required this.maxMember,
+    required this.currentMember,
+    required this.totalTime,
     this.isCompleteCompnent = false,
     this.isMyTrip = false,
     Key? key,
@@ -36,14 +36,14 @@ class TripRecommendCard extends StatelessWidget {
     bool isMyTrip = false,
   }) {
     return TripRecommendCard(
-      id: model.id,
+      tripId: model.tripId,
       name: model.name,
-      imgUrl: model.imgUrl,
-      tags: model.tags,
-      maxNum: model.maxNum,
-      curNum: model.curNum,
-      startDate: model.startDate,
-      duration: model.duration,
+      imageUrl: model.imageUrl,
+      places: model.places,
+      maxMember: model.maxMember,
+      currentMember: model.currentMember,
+      dateTime: model.dateTime,
+      totalTime: model.totalTime,
       isCompleteCompnent: isCompleteCompnent,
       isMyTrip: isMyTrip,
     );
@@ -55,14 +55,14 @@ class TripRecommendCard extends StatelessWidget {
         MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
     return GestureDetector(
       onTap: () {
-        context.go("/tripDetail/$id");
+        context.go("/tripDetail/$tripId");
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
         child: Stack(
           children: <Widget>[
             Image.network(
-              imgUrl,
+              imageUrl,
               width: screenWidth,
               height: screenWidth,
               fit: BoxFit.cover,
@@ -89,16 +89,17 @@ class TripRecommendCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _DateAndName(
-                            date: startDate,
+                            date: dateTime,
                             name: name,
-                            duration: duration,
+                            duration: totalTime,
                           ),
                           if (!isCompleteCompnent)
-                            _PersonLabel(curNum: curNum, maxNum: maxNum)
+                            _PersonLabel(
+                                curNum: currentMember, maxNum: maxMember)
                         ],
                       ),
                       Text(
-                        tags.join(' · '),
+                        places.join(' · '),
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Colors.white,
@@ -154,7 +155,7 @@ class _PersonLabel extends StatelessWidget {
 
 class _DateAndName extends StatelessWidget {
   final String name;
-  final int date;
+  final DateTime date;
   final int duration;
 
   const _DateAndName({
