@@ -13,6 +13,7 @@ class KakaoLoginModel implements SocialLogin {
       return UserModel(
         oauthProvider: describeEnum(SNSPlatform.KAKAO),
         email: user.kakaoAccount!.email!,
+        imgUrl: user.kakaoAccount!.profile!.profileImageUrl,
         name: user.kakaoAccount!.profile!.nickname,
         signedUp: false,
       );

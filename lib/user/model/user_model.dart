@@ -17,12 +17,14 @@ class UserModelLoading extends UserModelBase {}
 class UserModel extends UserModelBase {
   final String oauthProvider;
   final String email;
+  final String? imgUrl;
   final String? name;
   bool signedUp;
 
   UserModel({
     required this.oauthProvider,
     required this.email,
+    required this.imgUrl,
     required this.name,
     required this.signedUp,
   });

@@ -85,6 +85,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
         final resp = await authRepository.login(
           oauthProvider: userModel.oauthProvider,
           email: userModel.email,
+          imgUrl: userModel.imgUrl,
           name: userModel.name,
         );
 

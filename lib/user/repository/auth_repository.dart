@@ -25,12 +25,14 @@ class AuthRepository {
   Future<LoginResponse> login({
     required String oauthProvider,
     required String email,
+    required String? imgUrl,
     required String? name,
   }) async {
     final resp = await dio.post(
       '$baseUrl/login',
       data: {
         'oauthProvider': oauthProvider,
+        'imgUrl': imgUrl,
         'email': email,
         'name': name,
       },
