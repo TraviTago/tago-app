@@ -159,7 +159,10 @@ class TripsListComponent extends StatelessWidget {
                   height: 20.0,
                 ),
                 ...upcomingTrips
-                    .map((trip) => TripRecommendCard.fromModel(model: trip))
+                    .map((trip) => TripRecommendCard.fromModel(
+                          model: trip,
+                          isMyTrip: true,
+                        ))
                     .toList(),
                 const SizedBox(
                   height: 20.0,
@@ -192,6 +195,7 @@ class TripsListComponent extends StatelessWidget {
                     .map((trip) => TripRecommendCard.fromModel(
                           model: trip,
                           isCompleteCompnent: true,
+                          isMyTrip: true,
                         ))
                     .toList(),
               ],

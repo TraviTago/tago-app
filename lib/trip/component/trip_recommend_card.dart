@@ -15,6 +15,7 @@ class TripRecommendCard extends StatelessWidget {
   final int duration;
   final int startDate;
   final bool isCompleteCompnent;
+  final bool isMyTrip;
   const TripRecommendCard({
     required this.id,
     required this.name,
@@ -25,12 +26,14 @@ class TripRecommendCard extends StatelessWidget {
     required this.duration,
     required this.startDate,
     this.isCompleteCompnent = false,
+    this.isMyTrip = false,
     Key? key,
   }) : super(key: key);
 
   factory TripRecommendCard.fromModel({
     required TripModel model,
     bool isCompleteCompnent = false,
+    bool isMyTrip = false,
   }) {
     return TripRecommendCard(
       id: model.id,
@@ -42,6 +45,7 @@ class TripRecommendCard extends StatelessWidget {
       startDate: model.startDate,
       duration: model.duration,
       isCompleteCompnent: isCompleteCompnent,
+      isMyTrip: isMyTrip,
     );
   }
 
