@@ -19,6 +19,12 @@ class DataUtils {
     return '${date.month}월 ${date.day}일';
   }
 
+  static bool isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
   static String formatDateOnDateTime(String dateTimeString) {
     DateTime parsedDate = DateTime.parse(dateTimeString);
     String formattedYear = parsedDate.year.toString();
