@@ -3,7 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/search/model/kakao_blog_search_model.dart';
-import 'package:tago_app/search/model/page_pagination_model.dart';
+import 'package:tago_app/common/model/page_pagination_model.dart';
 
 part 'kakao_blog_search_repository.g.dart';
 
