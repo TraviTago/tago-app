@@ -12,7 +12,6 @@ class TripCard extends StatelessWidget {
   final int maxMember; //최대 인원
   final int currentMember; //현재 인원
   final int totalTime;
-  final DateTime dateTime;
 
   const TripCard({
     required this.tripId,
@@ -22,7 +21,6 @@ class TripCard extends StatelessWidget {
     required this.maxMember,
     required this.currentMember,
     required this.totalTime,
-    required this.dateTime,
     Key? key,
   }) : super(key: key);
 
@@ -36,7 +34,6 @@ class TripCard extends StatelessWidget {
       places: model.places,
       maxMember: model.maxMember,
       currentMember: model.currentMember,
-      dateTime: model.dateTime,
       totalTime: model.totalTime,
     );
   }
@@ -48,20 +45,10 @@ class TripCard extends StatelessWidget {
         context.go("/tripDetail/$tripId");
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30.0),
+        padding: const EdgeInsets.only(bottom: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              DataUtils.formatDate(dateTime),
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
-            ),
-            const SizedBox(
-              height: 15.0,
-            ),
             SizedBox(
               height: 120,
               child: Row(
@@ -69,13 +56,16 @@ class TripCard extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        8.0,
-                      ),
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          8.0,
+                        ),
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),
