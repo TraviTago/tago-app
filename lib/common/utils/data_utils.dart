@@ -25,6 +25,10 @@ class DataUtils {
         date1.day == date2.day;
   }
 
+  static String formatDateTimeToParams(DateTime dateTime) {
+    return "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}T${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:00";
+  }
+
   static String formatDateOnDateTime(String dateTimeString) {
     DateTime parsedDate = DateTime.parse(dateTimeString);
     String formattedYear = parsedDate.year.toString();
