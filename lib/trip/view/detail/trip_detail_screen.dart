@@ -45,7 +45,7 @@ class _TripDetailScreenState extends State<TripDetailScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              detailModel.name,
+              detailModel.tripName,
               style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w700,
@@ -53,8 +53,8 @@ class _TripDetailScreenState extends State<TripDetailScreen>
               ),
             ),
             _PersonLabel(
-              curNum: detailModel.currentMember,
-              maxNum: detailModel.maxMember,
+              curNum: detailModel.currentCnt,
+              maxNum: detailModel.maxCnt,
             ),
           ],
         ),

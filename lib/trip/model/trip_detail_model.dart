@@ -5,23 +5,15 @@ part 'trip_detail_model.g.dart';
 
 @JsonSerializable()
 class TripDetailModel {
-  final int tripId;
-  final DateTime dateTime;
-  final String name;
-  final String imageUrl;
-  final int maxMember; //최대 인원
-  final int currentMember; //현재 인원
-  final int totalTime;
+  final String tripName;
+  final int currentCnt;
+  final int maxCnt;
   final List<PlaceModel> places;
 
   TripDetailModel({
-    required this.tripId,
-    required this.name,
-    required this.imageUrl,
-    required this.maxMember,
-    required this.currentMember,
-    required this.totalTime,
-    required this.dateTime,
+    required this.tripName,
+    required this.currentCnt,
+    required this.maxCnt,
     required this.places,
   });
 

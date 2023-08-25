@@ -8,13 +8,9 @@ part of 'trip_detail_model.dart';
 
 TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
     TripDetailModel(
-      tripId: json['tripId'] as int,
-      name: json['name'] as String,
-      imageUrl: json['imageUrl'] as String,
-      maxMember: json['maxMember'] as int,
-      currentMember: json['currentMember'] as int,
-      totalTime: json['totalTime'] as int,
-      dateTime: DateTime.parse(json['dateTime'] as String),
+      tripName: json['tripName'] as String,
+      currentCnt: json['currentCnt'] as int,
+      maxCnt: json['maxCnt'] as int,
       places: (json['places'] as List<dynamic>)
           .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -22,12 +18,8 @@ TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TripDetailModelToJson(TripDetailModel instance) =>
     <String, dynamic>{
-      'tripId': instance.tripId,
-      'dateTime': instance.dateTime.toIso8601String(),
-      'name': instance.name,
-      'imageUrl': instance.imageUrl,
-      'maxMember': instance.maxMember,
-      'currentMember': instance.currentMember,
-      'totalTime': instance.totalTime,
+      'tripName': instance.tripName,
+      'currentCnt': instance.currentCnt,
+      'maxCnt': instance.maxCnt,
       'places': instance.places,
     };

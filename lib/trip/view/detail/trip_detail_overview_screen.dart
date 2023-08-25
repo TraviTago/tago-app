@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/trip/component/detail/trip_member_card.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
 import 'package:tago_app/place/component/place_card.dart';
 
@@ -42,10 +41,10 @@ class TripDetailOverViewScreen extends StatelessWidget {
                 final place = detailModel.places[index];
                 return PlaceCard(place: place, index: index);
               } else {
-                return Column(
+                return const Column(
                   children: [
-                    TripMemberCard(detailModel: detailModel),
-                    const SizedBox(
+                    // TripMemberCard(detailModel: detailModel),
+                    SizedBox(
                       height: 80,
                     )
                   ],
