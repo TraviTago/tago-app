@@ -5,6 +5,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
+import 'package:tago_app/trip/provider/trip_provider.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_map_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_overview_screen.dart';
@@ -36,18 +37,16 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    int tripId = int.parse(GoRouterState.of(context).pathParameters['tripId']!);
     return FutureBuilder<TripDetailModel>(
-      future: ref.watch(tripRepositoryProvider).getDetailTrip(
-            tripId:
-                int.parse(GoRouterState.of(context).pathParameters['tripId']!),
-          ),
+      future: ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData) {
-          return const Center(child: Text('No data available'));
+          return const DefaultLayout(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
 
         final detailModel = snapshot.data!;
