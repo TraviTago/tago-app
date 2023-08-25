@@ -18,21 +18,21 @@ class CursorPaginationLoading extends CursorPaginationBase {}
   genericArgumentFactories: true,
 )
 class CursorPagination<T> extends CursorPaginationBase {
-  final List<T> trips;
+  final List<T> contents;
   final bool hasNext;
 
   CursorPagination({
     required this.hasNext,
-    required this.trips,
+    required this.contents,
   });
 
   CursorPagination copyWith({
     bool? hasNext,
-    List<T>? trips,
+    List<T>? contents,
   }) {
     return CursorPagination(
       hasNext: hasNext ?? this.hasNext,
-      trips: trips ?? this.trips,
+      contents: contents ?? this.contents,
     );
   }
 
@@ -45,7 +45,7 @@ class CursorPagination<T> extends CursorPaginationBase {
 class CursorPaginationRefetching<T> extends CursorPagination<T> {
   CursorPaginationRefetching({
     required super.hasNext,
-    required super.trips,
+    required super.contents,
   });
 }
 
@@ -54,6 +54,6 @@ class CursorPaginationRefetching<T> extends CursorPagination<T> {
 class CursorPaginationFetchingMore<T> extends CursorPagination<T> {
   CursorPaginationFetchingMore({
     required super.hasNext,
-    required super.trips,
+    required super.contents,
   });
 }

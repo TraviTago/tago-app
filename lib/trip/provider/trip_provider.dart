@@ -55,12 +55,12 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
         final pState = state as CursorPagination;
         state = CursorPaginationFetchingMore(
           hasNext: pState.hasNext,
-          trips: pState.trips,
+          contents: pState.contents,
         );
         paginationParams = paginationParams.copyWith(
-          cursorId: pState.trips.last.tripId,
+          cursorId: pState.contents.last.tripId,
           cursorDate:
-              DataUtils.formatDateTimeToParams(pState.trips.last.dateTime),
+              DataUtils.formatDateTimeToParams(pState.contents.last.dateTime),
         );
       }
       //데이터를 처음부터 가져오는 상황
@@ -71,7 +71,7 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
           final pState = state as CursorPagination;
           state = CursorPaginationRefetching(
             hasNext: pState.hasNext,
-            trips: pState.trips,
+            contents: pState.contents,
           );
         }
         //나머지 상황
@@ -88,9 +88,9 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
         final pState = state as CursorPaginationFetchingMore;
 
         state = resp.copyWith(
-          trips: [
-            ...pState.trips,
-            ...resp.trips,
+          contents: [
+            ...pState.contents,
+            ...resp.contents,
           ],
         );
       } else {

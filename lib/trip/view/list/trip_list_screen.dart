@@ -36,15 +36,15 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final trips = ref.watch(tripProvider);
+    final contents = ref.watch(tripProvider);
 
-    if (trips is CursorPaginationLoading) {
+    if (contents is CursorPaginationLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
 
-    final cp = trips as CursorPagination;
+    final cp = contents as CursorPagination;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -71,16 +71,16 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
         child: ListView.builder(
           controller: controller,
           padding: const EdgeInsets.symmetric(vertical: 20.0),
-          itemCount: cp.trips.length + 1,
+          itemCount: cp.contents.length + 1,
           itemBuilder: (_, index) {
-            if (index == cp.trips.length) {
+            if (index == cp.contents.length) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 8.0,
                   horizontal: 16.0,
                 ),
                 child: Center(
-                  child: trips is CursorPaginationFetchingMore
+                  child: contents is CursorPaginationFetchingMore
                       ? const CircularProgressIndicator()
                       : Container(
                           width: 40,
@@ -110,12 +110,12 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
 
             DateTime? previousDate;
             if (index - 1 >= 0) {
-              previousDate = cp.trips[index - 1].dateTime;
+              previousDate = cp.contents[index - 1].dateTime;
             }
 
             final bool shouldShowDate = previousDate == null ||
                 !DataUtils.isSameDate(previousDate,
-                    cp.trips[index].dateTime); // 도우미 함수를 사용하여 같은 날짜인지 확인
+                    cp.contents[index].dateTime); // 도우미 함수를 사용하여 같은 날짜인지 확인
 
             if (index == 0) {
               return Column(
@@ -136,7 +136,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                     height: 20.0,
                   ),
                   Text(
-                    DataUtils.formatDate(cp.trips[index].dateTime),
+                    DataUtils.formatDate(cp.contents[index].dateTime),
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -146,7 +146,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                     height: 20.0,
                   ),
                   TripCard.fromModel(
-                    model: cp.trips[index],
+                    model: cp.contents[index],
                   ),
                 ],
               );
@@ -156,7 +156,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    DataUtils.formatDate(cp.trips[index].dateTime),
+                    DataUtils.formatDate(cp.contents[index].dateTime),
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -165,11 +165,11 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  TripCard.fromModel(model: cp.trips[index]),
+                  TripCard.fromModel(model: cp.contents[index]),
                 ],
               );
             } else {
-              return TripCard.fromModel(model: cp.trips[index]);
+              return TripCard.fromModel(model: cp.contents[index]);
             }
           },
         ),

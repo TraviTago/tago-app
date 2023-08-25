@@ -12,7 +12,7 @@ CursorPagination<T> _$CursorPaginationFromJson<T>(
 ) =>
     CursorPagination<T>(
       hasNext: json['hasNext'] as bool,
-      trips: (json['trips'] as List<dynamic>).map(fromJsonT).toList(),
+      contents: (json['contents'] as List<dynamic>).map(fromJsonT).toList(),
     );
 
 Map<String, dynamic> _$CursorPaginationToJson<T>(
@@ -20,6 +20,6 @@ Map<String, dynamic> _$CursorPaginationToJson<T>(
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{
-      'trips': instance.trips.map(toJsonT).toList(),
+      'contents': instance.contents.map(toJsonT).toList(),
       'hasNext': instance.hasNext,
     };
