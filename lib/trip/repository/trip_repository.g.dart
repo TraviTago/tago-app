@@ -19,17 +19,11 @@ class _TripRepository implements TripRepository {
   String? baseUrl;
 
   @override
-  Future<CursorPagination<TripModel>> paginate({
-    cursorId = 0,
-    cursorDate = '2023-08-24T19:00:00',
-    limit = 10,
-  }) async {
+  Future<CursorPagination<TripModel>> paginate({paginationParams}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'cursorId': cursorId,
-      r'cursorDate': cursorDate,
-      r'limit': limit,
-    };
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginationParams?.toJson() ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
