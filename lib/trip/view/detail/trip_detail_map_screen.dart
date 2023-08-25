@@ -36,7 +36,7 @@ class TripDetailMapScreen extends StatelessWidget {
           final index = entry.key;
           final place = entry.value;
           final imageSrc = snapshot.data![0][index];
-          return '''addCustomMarkerAndOverlay(new kakao.maps.LatLng(${place.mapy}, ${place.mapx}), "${place.title}", "$imageSrc");''';
+          return '''addCustomMarkerAndOverlay(new kakao.maps.LatLng(${place.mapY}, ${place.mapX}), "${place.title}", "$imageSrc");''';
         }).join()}
 
         ''';
@@ -48,8 +48,8 @@ class TripDetailMapScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: double.infinity,
                 kakaoMapKey: dotenv.env['KAKAO_REST_JAVASCRIPT_KEY']!,
-                lat: detailModel.places[0].mapy,
-                lng: detailModel.places[0].mapx,
+                lat: detailModel.places[0].mapY,
+                lng: detailModel.places[0].mapX,
                 customScript: customScript,
                 zoomLevel: 8,
                 onTapMarker: (message) {
