@@ -13,11 +13,10 @@ class PlaceDetailModel extends PlaceModel {
   final String? parking;
   PlaceDetailModel({
     required super.id,
-    required super.typeId,
     required super.title,
-    required super.imgUrl,
-    required super.mapx,
-    required super.mapy,
+    required super.imageUrl,
+    required super.mapX,
+    required super.mapY,
     required super.overview,
     required this.address,
     this.homepage,

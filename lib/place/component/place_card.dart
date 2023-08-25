@@ -53,7 +53,7 @@ class PlaceCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
-                place.imgUrl,
+                place.imageUrl,
                 width: double.infinity,
                 height: 150,
                 fit: BoxFit.cover,

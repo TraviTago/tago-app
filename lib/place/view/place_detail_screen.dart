@@ -78,7 +78,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DetailImage(imageUrl: detailModel.imgUrl),
+                    DetailImage(imageUrl: detailModel.imageUrl),
                     const SizedBox(height: 20.0),
                     Text(
                       detailModel.address,

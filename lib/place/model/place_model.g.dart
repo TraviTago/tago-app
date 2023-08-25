@@ -8,21 +8,19 @@ part of 'place_model.dart';
 
 PlaceModel _$PlaceModelFromJson(Map<String, dynamic> json) => PlaceModel(
       id: json['id'] as int,
-      typeId: json['typeId'] as int,
       title: json['title'] as String,
       overview: json['overview'] as String,
-      imgUrl: json['imgUrl'] as String,
-      mapx: (json['mapx'] as num).toDouble(),
-      mapy: (json['mapy'] as num).toDouble(),
+      imageUrl: json['imageUrl'] as String,
+      mapX: (json['mapX'] as num).toDouble(),
+      mapY: (json['mapY'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$PlaceModelToJson(PlaceModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'typeId': instance.typeId,
       'title': instance.title,
       'overview': instance.overview,
-      'imgUrl': instance.imgUrl,
-      'mapx': instance.mapx,
-      'mapy': instance.mapy,
+      'imageUrl': instance.imageUrl,
+      'mapX': instance.mapX,
+      'mapY': instance.mapY,
     };

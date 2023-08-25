@@ -5,21 +5,19 @@ part 'place_model.g.dart';
 @JsonSerializable()
 class PlaceModel {
   final int id;
-  final int typeId;
   final String title;
   final String overview;
-  final String imgUrl;
-  final double mapx;
-  final double mapy;
+  final String imageUrl;
+  final double mapX;
+  final double mapY;
 
   PlaceModel({
     required this.id,
-    required this.typeId,
     required this.title,
     required this.overview,
-    required this.imgUrl,
-    required this.mapx,
-    required this.mapy,
+    required this.imageUrl,
+    required this.mapX,
+    required this.mapY,
   });
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) =>
