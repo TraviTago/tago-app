@@ -15,7 +15,7 @@ class KakaoLoginModel implements SocialLogin {
         email: user.kakaoAccount!.email!,
         imgUrl: user.kakaoAccount!.profile!.profileImageUrl,
         name: user.kakaoAccount!.profile!.nickname,
-        signedUp: false,
+        profile: null,
       );
     } catch (e) {
       return UserModelError();
