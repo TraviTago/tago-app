@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tago_app/signup/model/sign_up_model.dart';
 
 part 'user_model.g.dart';
 
@@ -19,14 +20,14 @@ class UserModel extends UserModelBase {
   final String email;
   final String? imgUrl;
   final String? name;
-  bool signedUp;
+  final SignUpModel? profile;
 
   UserModel({
     required this.oauthProvider,
     required this.email,
     required this.imgUrl,
     required this.name,
-    required this.signedUp,
+    required this.profile,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
