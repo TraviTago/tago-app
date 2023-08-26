@@ -53,7 +53,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
                   buttonTexts: const [
-                    '느긋 하고 여유롭게',
+                    '느긋하고 여유롭게',
                     '부지런히 이곳저곳!',
                     '최신유행은 가봐야지',
                     '사람이 많지않은 좋은곳',
@@ -89,15 +89,16 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                           // 카카오 로그인 성공 여부
                           var queryParams =
                               GoRouterState.of(context).queryParameters;
+
                           await ref.read(userProvider.notifier).signUp(
-                                // TOFIX: 회원가입 모델 임시
                                 signUpModel: SignUpModel(
-                                  ageRange: int.tryParse(queryParams[
-                                      'ageRange']!)!, // 기본 값 0으로 설정, 적절한 값을 설정해야 할 수도 있습니다.
-                                  gender: "MALE",
-                                  mbti: "ENFP",
-                                  favorites: ["INSTAGRAM"],
-                                  tripTypes: ["SLOW_LAZY"],
+                                  ageRange:
+                                      int.tryParse(queryParams['ageRange']!)!,
+                                  gender: queryParams['gender']!,
+                                  mbti: queryParams['mbti']!,
+                                  favorites:
+                                      queryParams['favorites']!.split(','),
+                                  tripTypes: _selectedTripTypes,
                                 ),
                               );
                         },
