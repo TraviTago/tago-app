@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:tago_app/common/component/shimmer_box.dart';
 import 'package:tago_app/common/component/space_container.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/signup/model/sign_up_model.dart';
 import 'package:tago_app/user/component/menu_list.dart';
+import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 
 class MyPageScreen extends ConsumerWidget {
@@ -14,13 +14,7 @@ class MyPageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SignUpModel signUpModel = SignUpModel(
-      ageRange: 20,
-      gender: "여성",
-      mbti: "ENFP",
-      favorites: ["INSTAGRAM"],
-      tripTypes: ["SLOW_LAZY"],
-    );
+    final UserModelBase? user = ref.read(userProvider);
 
     return DefaultLayout(
       titleComponetWithoutPop: const Padding(
@@ -38,76 +32,80 @@ class MyPageScreen extends ConsumerWidget {
         ),
       ),
       child: SingleChildScrollView(
-        child: FutureBuilder<User>(
-          future: UserApi.instance.me(),
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (snapshot.hasData) {
-                var profile = snapshot.data!.kakaoAccount!.profile!;
-                return Column(
-                  children: [
-                    _ProfileCard(profile: profile, signUpModel: signUpModel),
-                    const SpacerContainer(),
-                    _ServiceCenter(),
-                    const SpacerContainer(),
-                    _Information(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextButton(
-                        onPressed: () async {
-                          await ref.read(userProvider.notifier).logout();
-                        },
-                        style: TextButton.styleFrom(
-                          minimumSize: const Size(137, 35),
-                          foregroundColor: LABEL_TEXT_SUB_COLOR,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          backgroundColor: LABEL_BG_COLOR,
-                        ),
-                        child: const Text(
-                          '로그아웃',
-                          style: TextStyle(
-                            color: LABEL_TEXT_SUB_COLOR,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 13.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => {
-                        //TOFIX: 탈퇴하기
-                      },
-                      child: const Text(
-                        '탈퇴하기',
-                        style: TextStyle(
-                          color: LABEL_TEXT_SUB_COLOR,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10.0,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
+        child: Column(
+          children: [
+            if (user is UserModel) _ProfileCard(userModel: user),
+            const SpacerContainer(),
+            _ServiceCenter(),
+            const SpacerContainer(),
+            _Information(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TextButton(
+                onPressed: () async {
+                  await ref.read(userProvider.notifier).logout();
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(137, 35),
+                  foregroundColor: LABEL_TEXT_SUB_COLOR,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  backgroundColor: LABEL_BG_COLOR,
+                ),
+                child: const Text(
+                  '로그아웃',
+                  style: TextStyle(
+                    color: LABEL_TEXT_SUB_COLOR,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13.0,
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => {
+                //TOFIX: 탈퇴하기
+              },
+              child: const Text(
+                '탈퇴하기',
+                style: TextStyle(
+                  color: LABEL_TEXT_SUB_COLOR,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10.0,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _ProfileCard extends StatelessWidget {
-  final Profile profile;
-  final SignUpModel signUpModel;
+class _ServiceCenter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: Colors.white),
+      child: MenuList(
+        titles: const ['자주 묻는 질문', '고객센터'],
+        onTaps: [
+          () => {context.go('/tripDetail')},
+          () => {},
+        ],
+      ),
+    );
+  }
+}
 
-  const _ProfileCard({required this.profile, required this.signUpModel});
+class _ProfileCard extends StatelessWidget {
+  final UserModel userModel;
+
+  const _ProfileCard({
+    required this.userModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +120,17 @@ class _ProfileCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: Image.network(
-              profile.profileImageUrl!,
+              userModel.imgUrl!,
               fit: BoxFit.cover,
               width: 90,
               height: 90,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return const ShimmerBox(width: 90.0, height: 90.0);
+              },
             ),
           ),
           const SizedBox(width: 20),
@@ -137,7 +142,7 @@ class _ProfileCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      profile.nickname!,
+                      userModel.name!,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,
@@ -147,7 +152,7 @@ class _ProfileCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 3),
                       child: Text(
-                        signUpModel.mbti,
+                        userModel.profile!.mbti,
                         style: const TextStyle(
                           color: PRIMARY_COLOR,
                           fontWeight: FontWeight.w600,
@@ -160,7 +165,7 @@ class _ProfileCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "${signUpModel.ageRange}대",
+                      "${userModel.profile!.ageRange}대",
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: LABEL_TEXT_SUB_COLOR,
@@ -168,7 +173,7 @@ class _ProfileCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      signUpModel.gender,
+                      userModel.profile!.gender,
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: LABEL_TEXT_SUB_COLOR,
@@ -200,22 +205,6 @@ class _ProfileCard extends StatelessWidget {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ServiceCenter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      child: MenuList(
-        titles: const ['자주 묻는 질문', '고객센터'],
-        onTaps: [
-          () => {context.go('/tripDetail')},
-          () => {},
         ],
       ),
     );

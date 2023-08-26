@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tago_app/common/component/shimmer_text.dart';
 
 class TripListSkeleton extends StatelessWidget {
   const TripListSkeleton({super.key});
@@ -18,7 +19,7 @@ class TripListSkeleton extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ShimmerText(width: 150, height: 20),
+                      const ShimmerText(width: 150, height: 20),
                       const SizedBox(height: 10.0),
                       // Adding the Shimmer effect for the TripRecommendCard
                       Shimmer.fromColors(
@@ -41,7 +42,7 @@ class TripListSkeleton extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (index == 1) ShimmerText(width: 50, height: 20),
+                    if (index == 1) const ShimmerText(width: 50, height: 20),
                     const SizedBox(height: 10.0),
                     SizedBox(
                       height: 120,
@@ -64,10 +65,10 @@ class TripListSkeleton extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -86,7 +87,7 @@ class TripListSkeleton extends StatelessWidget {
                                       ShimmerText(width: 40, height: 15),
                                     ],
                                   ),
-                                  const SizedBox(height: 20.0),
+                                  SizedBox(height: 20.0),
                                   ShimmerText(width: 200, height: 10),
                                 ],
                               ),
@@ -103,34 +104,6 @@ class TripListSkeleton extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-// Helper widgets for Shimmer
-  Widget ShimmerBox({required double width, required double height}) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: height,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  Widget ShimmerText({required double width, required double height}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: Container(
-          width: width,
-          height: height,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

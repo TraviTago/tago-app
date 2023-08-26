@@ -185,11 +185,13 @@ class TripsListComponent extends StatelessWidget {
                         isMyTrip: true,
                       ),
                       if (index == upcomingTrips.length - 1) ...[
-                        const SizedBox(height: 30.0), // 마지막 요소의 경우 간격
-                        const Divider(
-                          color: LABEL_BG_COLOR,
-                          thickness: 2.0,
-                        ), // 구분선 추가
+                        if (pastTrips.isNotEmpty) ...[
+                          const SizedBox(height: 30.0),
+                          const Divider(
+                            color: LABEL_BG_COLOR,
+                            thickness: 2.0,
+                          ),
+                        ]
                       ] else
                         const SizedBox(height: 30.0), // 나머지 요소들
                     ],
