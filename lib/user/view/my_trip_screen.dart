@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
+import 'package:tago_app/trip/model/my_trip_response_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
+import 'package:tago_app/trip/repository/trip_repository.dart';
 
-class MyTripScreen extends StatelessWidget {
-  const MyTripScreen({super.key});
+class MyTripScreen extends ConsumerWidget {
+  const MyTripScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final myTripList = [];
+  Widget build(BuildContext context, WidgetRef ref) {
     final DateTime now = DateTime.now();
-
-    List upcomingTrips = [];
-    List pastTrips = [];
-
-    for (var trip in myTripList) {
-      if (DateTime.fromMillisecondsSinceEpoch(trip.startDate * 1000)
-          .isBefore(now)) {
-        pastTrips.add(trip);
-      } else {
-        upcomingTrips.add(trip);
-      }
-    }
 
     return DefaultLayout(
       titleComponetWithoutPop: const Padding(
@@ -38,10 +29,35 @@ class MyTripScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: (upcomingTrips.isEmpty && pastTrips.isEmpty)
-          ? const EmptyTripsComponent()
-          : TripsListComponent(
-              upcomingTrips: upcomingTrips, pastTrips: pastTrips),
+      child: FutureBuilder<MyTripResponseModel>(
+        future: ref.watch(tripRepositoryProvider).getMyTrips(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // show loading indicator
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.trips.isEmpty) {
+            return const EmptyTripsComponent();
+          } else {
+            List<TripModel> myTripList = snapshot.data!.trips;
+            List upcomingTrips = [];
+            List pastTrips = [];
+
+            for (var trip in myTripList) {
+              if (trip.dateTime.isBefore(now)) {
+                pastTrips.add(trip);
+              } else {
+                upcomingTrips.add(trip);
+              }
+            }
+
+            return (upcomingTrips.isEmpty && pastTrips.isEmpty)
+                ? const EmptyTripsComponent()
+                : TripsListComponent(
+                    upcomingTrips: upcomingTrips, pastTrips: pastTrips);
+          }
+        },
+      ),
     );
   }
 }
@@ -158,12 +174,27 @@ class TripsListComponent extends StatelessWidget {
                 const SizedBox(
                   height: 20.0,
                 ),
-                ...upcomingTrips
-                    .map((trip) => TripRecommendCard.fromModel(
-                          model: trip,
-                          isMyTrip: true,
-                        ))
-                    .toList(),
+                ...upcomingTrips.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  var trip = entry.value;
+
+                  return Column(
+                    children: [
+                      TripRecommendCard.fromModel(
+                        model: trip,
+                        isMyTrip: true,
+                      ),
+                      if (index == upcomingTrips.length - 1) ...[
+                        const SizedBox(height: 30.0), // 마지막 요소의 경우 간격
+                        const Divider(
+                          color: LABEL_BG_COLOR,
+                          thickness: 2.0,
+                        ), // 구분선 추가
+                      ] else
+                        const SizedBox(height: 30.0), // 나머지 요소들
+                    ],
+                  );
+                }).toList(),
                 const SizedBox(
                   height: 20.0,
                 ),
@@ -191,13 +222,24 @@ class TripsListComponent extends StatelessWidget {
                 const SizedBox(
                   height: 20.0,
                 ),
-                ...pastTrips
-                    .map((trip) => TripRecommendCard.fromModel(
-                          model: trip,
-                          isCompleteCompnent: true,
-                          isMyTrip: true,
-                        ))
-                    .toList(),
+                ...pastTrips.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  var trip = entry.value;
+
+                  return Column(
+                    children: [
+                      TripRecommendCard.fromModel(
+                        model: trip,
+                        isMyTrip: true,
+                      ),
+                      if (index == pastTrips.length - 1)
+                        const SizedBox(height: 10.0) // 마지막 요소의 경우
+
+                      else
+                        const SizedBox(height: 30.0), // 나머지 요소들
+                    ],
+                  );
+                }).toList(),
               ],
             ],
           )),
