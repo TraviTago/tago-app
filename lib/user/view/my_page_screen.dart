@@ -5,6 +5,7 @@ import 'package:tago_app/common/component/shimmer_box.dart';
 import 'package:tago_app/common/component/space_container.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/user/component/menu_list.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
@@ -14,7 +15,7 @@ class MyPageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final UserModelBase? user = ref.read(userProvider);
+    final UserModelBase? user = ref.watch(userProvider);
 
     return DefaultLayout(
       titleComponetWithoutPop: const Padding(
@@ -173,7 +174,7 @@ class _ProfileCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      userModel.profile!.gender,
+                      DataUtils.genderPrinter(userModel.profile!.gender),
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: LABEL_TEXT_SUB_COLOR,
@@ -183,7 +184,7 @@ class _ProfileCard extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () => {
-                    //TOFIX: 로그아웃
+                    context.go('/profile'),
                   },
                   style: TextButton.styleFrom(
                     minimumSize: const Size(155, 25),

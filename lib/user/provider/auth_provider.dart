@@ -19,6 +19,7 @@ import 'package:tago_app/signup/view/third_form_screen.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/login/view/login_screen.dart';
+import 'package:tago_app/user/view/my_profile_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
   return AuthProvider(ref: ref);
@@ -86,6 +87,11 @@ class AuthProvider extends ChangeNotifier {
               builder: (_, __) => const TripDetailScreen(),
             ),
             GoRoute(
+              path: 'profile',
+              name: MyProfileScreen.routeName,
+              builder: (_, __) => const MyProfileScreen(),
+            ),
+            GoRoute(
               path: 'placeDetail/:placeId',
               name: PlaceDetailScreen.routeName,
               builder: (_, __) => const PlaceDetailScreen(),
@@ -151,6 +157,7 @@ class AuthProvider extends ChangeNotifier {
     final UserModelBase? user = ref.read(userProvider);
     final bool timerCompleted = ref.read(splashScreenTimerProvider);
     final logginIn = state.location == '/login';
+
     if (!timerCompleted) {
       return null;
     }
@@ -163,8 +170,9 @@ class AuthProvider extends ChangeNotifier {
       //로그인 중이거나, 앱 시작인 경우 회원가입 되어있다면 홈으로, 아니면 회원가입 폼으로
       if (logginIn || state.location == '/splash') {
         return (user.profile != null) ? '/' : '/form1';
-        //회원가입 중이라면, 회원가입 완료 되어있다면 홈으로, 아니면 다시 로그인 폼으로
-      } else if (state.location == '/form1') {
+      }
+      //회원가입 중이라면, 회원가입 완료 되어있다면 홈으로, 아니면 다시 로그인 폼으로
+      else if (state.location == '/form1') {
         return (user.profile != null) ? '/' : '/form1';
       } else {
         return null;
