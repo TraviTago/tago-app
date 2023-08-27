@@ -15,6 +15,10 @@ class DataUtils {
     return '$hours시간 $minutes분';
   }
 
+  static String genderPrinter(String gender) {
+    return gender == "MALE" ? "남성" : "여성";
+  }
+
   static String formatDate(DateTime date) {
     return '${date.month}월 ${date.day}일';
   }
