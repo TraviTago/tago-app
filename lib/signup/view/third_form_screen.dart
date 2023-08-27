@@ -88,6 +88,8 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                                     .queryParameters['gender'],
                                 'mbti': GoRouterState.of(context)
                                     .queryParameters['mbti'],
+                                'isPatching': GoRouterState.of(context)
+                                    .queryParameters['isPatching'],
                                 'favorites': _selectedFavorites.join(','),
                               },
                             ).toString(),

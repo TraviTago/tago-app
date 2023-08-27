@@ -163,6 +163,8 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
                                 'gender': GoRouterState.of(context)
                                     .queryParameters['gender'],
                                 'mbti': mbti,
+                                'isPatching': GoRouterState.of(context)
+                                    .queryParameters['isPatching'],
                               },
                             ).toString(),
                           );

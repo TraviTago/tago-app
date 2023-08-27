@@ -18,10 +18,19 @@ class LastFormScreen extends ConsumerStatefulWidget {
 }
 
 class _LastFormScreenState extends ConsumerState<LastFormScreen> {
-  List<String> _selectedTripTypes = [];
+  String selectedTripType1 = "";
+  String selectedTripType2 = "";
+  String selectedTripType3 = "";
+  final List<String> _selectedTripTypes = [];
 
   @override
   Widget build(BuildContext context) {
+    bool isAllSelected = selectedTripType1 != "" &&
+        selectedTripType2 != "" &&
+        selectedTripType3 != "";
+
+    bool isPatching =
+        GoRouterState.of(context).queryParameters['isPatching'] == "true";
     return DefaultLayout(
       child: SafeArea(
         top: true,
@@ -29,7 +38,6 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ProgressBar(
@@ -43,32 +51,70 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                 '주로 어떤 여행을 하시나요?',
                 style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w700),
               ),
-              const SizedBox(
-                height: 100.0,
+              const Expanded(
+                flex: 2,
+                child: SizedBox(),
               ),
               Expanded(
                 child: ButtonGroup(
-                  isMultipleSelection: true,
-                  buttonCount: 6,
+                  buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
                   buttonTexts: const [
                     '느긋하고 여유롭게',
                     '부지런히 이곳저곳!',
-                    '최신유행은 가봐야지',
-                    '사람이 많지않은 좋은곳',
-                    '여행에서 음식은 중요해',
-                    '음식은 크게 중요하지 않아'
                   ],
                   crossAxisCount: 2,
                   childAspectRatio: 3,
                   onButtonSelected: (selectedButtons) {
                     // 콜백 구현
                     setState(() {
-                      _selectedTripTypes = selectedButtons;
+                      selectedTripType1 = selectedButtons[0];
                     });
                   },
                 ),
+              ),
+              Expanded(
+                child: ButtonGroup(
+                  buttonCount: 2,
+                  mainAxisSpacing: 25.0,
+                  crossAxisSpacing: 15.0,
+                  buttonTexts: const [
+                    '여행에서 음식은 중요해',
+                    '음식은 크게 중요하지 않아',
+                  ],
+                  crossAxisCount: 2,
+                  childAspectRatio: 3,
+                  onButtonSelected: (selectedButtons) {
+                    // 콜백 구현
+                    setState(() {
+                      selectedTripType2 = selectedButtons[0];
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: ButtonGroup(
+                  buttonCount: 2,
+                  mainAxisSpacing: 25.0,
+                  crossAxisSpacing: 15.0,
+                  buttonTexts: const [
+                    '최신유행은 가봐야지',
+                    '사람이 많지않은 좋은곳',
+                  ],
+                  crossAxisCount: 2,
+                  childAspectRatio: 3,
+                  onButtonSelected: (selectedButtons) {
+                    // 콜백 구현
+                    setState(() {
+                      selectedTripType3 = selectedButtons[0];
+                    });
+                  },
+                ),
+              ),
+              const Expanded(
+                flex: 2,
+                child: SizedBox(),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
@@ -77,15 +123,22 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                     minimumSize: MaterialStateProperty.all<Size>(
                         Size(MediaQuery.of(context).size.width, 45)),
                     elevation: MaterialStateProperty.all(0),
-                    backgroundColor: _selectedTripTypes.isEmpty
+                    backgroundColor: !isAllSelected
                         ? MaterialStateProperty.all(
                             BUTTON_BG_COLOR.withOpacity(0.5))
                         : MaterialStateProperty.all(BUTTON_BG_COLOR),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: _selectedTripTypes.isEmpty
+                  onPressed: !isAllSelected
                       ? null
                       : () async {
+                          _selectedTripTypes.addAll([
+                            selectedTripType1,
+                            selectedTripType2,
+                            selectedTripType3
+                          ]);
+
+                          print(_selectedTripTypes);
                           // 카카오 로그인 성공 여부
                           var queryParams =
                               GoRouterState.of(context).queryParameters;
@@ -101,10 +154,13 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                                   tripTypes: _selectedTripTypes,
                                 ),
                               );
+                          if (isPatching) {
+                            context.go('/profile');
+                          }
                         },
-                  child: const Text(
-                    '시작하기',
-                    style: TextStyle(
+                  child: Text(
+                    isPatching ? '수정하기' : '저장하기',
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 16.0),
