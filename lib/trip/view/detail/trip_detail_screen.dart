@@ -36,8 +36,11 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
   @override
   Widget build(BuildContext context) {
     int tripId = int.parse(GoRouterState.of(context).pathParameters['tripId']!);
-    return FutureBuilder<TripDetailModel>(
-      future: ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
+    return FutureBuilder<List<dynamic>>(
+      future: Future.wait([
+        ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
+        ref.watch(tripRepositoryProvider).getStatusTrip(tripId: tripId),
+      ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const DefaultLayout(
@@ -47,7 +50,8 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
           );
         }
 
-        final detailModel = snapshot.data!;
+        final detailModel = snapshot.data![0] as TripDetailModel;
+        final statusModel = snapshot.data![1];
 
         return DefaultLayout(
           titleComponet: Padding(
@@ -123,6 +127,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                     children: [
                       TripDetailOverViewScreen(
                         detailModel: detailModel,
+                        statusModel: statusModel,
                       ),
                       TripDetailMapScreen(
                         detailModel: detailModel,
