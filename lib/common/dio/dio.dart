@@ -109,7 +109,7 @@ class CustomInterceptor extends Interceptor {
 
       try {
         final resp = await dio.post(
-          'http://$ip/api/v1/auth/token/reissue',
+          '$ip/api/v1/auth/token/reissue',
           options: Options(
             headers: {
               'authorization': 'Bearer $refreshToken',
@@ -118,6 +118,7 @@ class CustomInterceptor extends Interceptor {
         );
 
         final accessToken = resp.data['accessToken'];
+        print('[RES] 토큰 갱신');
 
         final options = err.requestOptions;
 
