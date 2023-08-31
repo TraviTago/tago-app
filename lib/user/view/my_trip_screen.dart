@@ -182,7 +182,6 @@ class TripsListComponent extends StatelessWidget {
                     children: [
                       TripRecommendCard.fromModel(
                         model: trip,
-                        isMyTrip: true,
                       ),
                       if (index == upcomingTrips.length - 1) ...[
                         if (pastTrips.isNotEmpty) ...[
@@ -232,7 +231,6 @@ class TripsListComponent extends StatelessWidget {
                     children: [
                       TripRecommendCard.fromModel(
                         model: trip,
-                        isMyTrip: true,
                       ),
                       if (index == pastTrips.length - 1)
                         const SizedBox(height: 10.0) // 마지막 요소의 경우

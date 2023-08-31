@@ -10,6 +10,7 @@ class DefaultLayout extends StatelessWidget {
   final Widget? titleComponetWithoutPop;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
+  final Widget? titleCompnentWithPrimaryColor;
 
   const DefaultLayout({
     required this.child,
@@ -19,6 +20,7 @@ class DefaultLayout extends StatelessWidget {
     this.titleComponetWithoutPop,
     this.bottomNavigationBar,
     this.floatingActionButton,
+    this.titleCompnentWithPrimaryColor,
     this.backBtnComponent = false,
     Key? key,
   }) : super(key: key);
@@ -85,6 +87,27 @@ class DefaultLayout extends StatelessWidget {
               },
             ),
           ));
+    }
+    if (titleCompnentWithPrimaryColor != null) {
+      return AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            icon: const Icon(
+              Icons.chevron_left_rounded,
+              color: PRIMARY_COLOR,
+              size: 34,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        title: titleCompnentWithPrimaryColor,
+        foregroundColor: Colors.black,
+      );
     }
     if (titleComponet != null) {
       return AppBar(

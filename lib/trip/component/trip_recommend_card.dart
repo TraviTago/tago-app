@@ -14,8 +14,7 @@ class TripRecommendCard extends StatelessWidget {
   final int maxMember; //최대 인원
   final int currentMember; //현재 인원
   final int totalTime;
-  final bool isCompleteCompnent;
-  final bool isMyTrip;
+
   const TripRecommendCard({
     required this.tripId,
     required this.dateTime,
@@ -25,15 +24,10 @@ class TripRecommendCard extends StatelessWidget {
     required this.maxMember,
     required this.currentMember,
     required this.totalTime,
-    this.isCompleteCompnent = false,
-    this.isMyTrip = false,
     Key? key,
   }) : super(key: key);
-
   factory TripRecommendCard.fromModel({
     required TripModel model,
-    bool isCompleteCompnent = false,
-    bool isMyTrip = false,
   }) {
     return TripRecommendCard(
       tripId: model.tripId,
@@ -44,18 +38,16 @@ class TripRecommendCard extends StatelessWidget {
       currentMember: model.currentMember,
       dateTime: model.dateTime,
       totalTime: model.totalTime,
-      isCompleteCompnent: isCompleteCompnent,
-      isMyTrip: isMyTrip,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth =
-        MediaQuery.of(context).size.width - 60; // List Screen 좌우 패딩 값을 뺸다.
+    double screenWidth = MediaQuery.of(context).size.width - 60;
     return GestureDetector(
       onTap: () {
-        context.go("/tripDetail/$tripId");
+        context
+            .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
@@ -93,7 +85,8 @@ class TripRecommendCard extends StatelessWidget {
                             name: name,
                             duration: totalTime,
                           ),
-                          if (!isCompleteCompnent)
+                          if (!DateTime.now().isAfter(
+                              dateTime.add(Duration(minutes: totalTime))))
                             _PersonLabel(
                                 curNum: currentMember, maxNum: maxMember)
                         ],

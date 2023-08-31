@@ -55,7 +55,6 @@ class _TripCompleteScreenState extends State<TripCompleteScreen> {
                   ),
                   TripRecommendCard.fromModel(
                     model: tripData,
-                    isCompleteCompnent: true,
                   ),
                   const SizedBox(
                     height: 20.0,

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 
 class DataUtils {
   static String formatDuration(int durationInSeconds) {
@@ -13,6 +14,21 @@ class DataUtils {
       return '$hours시간';
     }
     return '$hours시간 $minutes분';
+  }
+
+  static TripStatus getTripStatus(DateTime tripDate, int tripTime) {
+    DateTime now = DateTime.now();
+    DateTime endOfTrip = tripDate.add(Duration(minutes: tripTime));
+    TripStatus status;
+
+    if (now.isBefore(tripDate)) {
+      status = TripStatus.upcoming;
+    } else if (now.isAfter(endOfTrip)) {
+      status = TripStatus.completed;
+    } else {
+      status = TripStatus.ongoing;
+    }
+    return status;
   }
 
   static String genderPrinter(String gender) {

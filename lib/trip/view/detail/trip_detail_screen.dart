@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_map_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_overview_screen.dart';
@@ -36,11 +38,15 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
   @override
   Widget build(BuildContext context) {
     int tripId = int.parse(GoRouterState.of(context).pathParameters['tripId']!);
-    return FutureBuilder<List<dynamic>>(
-      future: Future.wait([
-        ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
-        ref.watch(tripRepositoryProvider).getStatusTrip(tripId: tripId),
-      ]),
+    DateTime tripDate =
+        DateTime.parse(GoRouterState.of(context).queryParameters['tripDate']!);
+    int tripTime =
+        int.parse(GoRouterState.of(context).queryParameters['tripTime']!);
+
+    TripStatus tripStatus = DataUtils.getTripStatus(tripDate, tripTime);
+
+    return FutureBuilder<TripDetailModel>(
+      future: ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const DefaultLayout(
@@ -50,8 +56,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
           );
         }
 
-        final detailModel = snapshot.data![0] as TripDetailModel;
-        final statusModel = snapshot.data![1];
+        final detailModel = snapshot.data as TripDetailModel;
 
         return DefaultLayout(
           titleComponet: Padding(
@@ -67,10 +72,11 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                     color: Colors.black,
                   ),
                 ),
-                _PersonLabel(
-                  curNum: detailModel.currentCnt,
-                  maxNum: detailModel.maxCnt,
-                ),
+                if (tripStatus != TripStatus.completed)
+                  _PersonLabel(
+                    curNum: detailModel.currentCnt,
+                    maxNum: detailModel.maxCnt,
+                  ),
               ],
             ),
           ),
@@ -126,9 +132,9 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                     controller: _tabController,
                     children: [
                       TripDetailOverViewScreen(
-                        detailModel: detailModel,
-                        statusModel: statusModel,
-                      ),
+                          detailModel: detailModel,
+                          tripId: tripId,
+                          tripStatus: tripStatus),
                       TripDetailMapScreen(
                         detailModel: detailModel,
                       ),
@@ -143,8 +149,6 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
     );
   }
 }
-
-// ... (다른 위젯 정의들은 그대로 유지) ...
 
 class _PersonLabel extends StatelessWidget {
   final int curNum;

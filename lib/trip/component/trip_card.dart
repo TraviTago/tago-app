@@ -6,6 +6,8 @@ import 'package:tago_app/trip/model/trip_model.dart';
 
 class TripCard extends StatelessWidget {
   final int tripId;
+  final DateTime dateTime;
+
   final String name;
   final String imageUrl;
   final List<String> places;
@@ -15,6 +17,7 @@ class TripCard extends StatelessWidget {
 
   const TripCard({
     required this.tripId,
+    required this.dateTime,
     required this.name,
     required this.imageUrl,
     required this.places,
@@ -29,6 +32,7 @@ class TripCard extends StatelessWidget {
   }) {
     return TripCard(
       tripId: model.tripId,
+      dateTime: model.dateTime,
       name: model.name,
       imageUrl: model.imageUrl,
       places: model.places,
@@ -42,7 +46,8 @@ class TripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go("/tripDetail/$tripId");
+        context
+            .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -99,8 +104,10 @@ class TripCard extends StatelessWidget {
                                   name: name,
                                   duration: totalTime,
                                 ),
-                                _PersonLabel(
-                                    curNum: currentMember, maxNum: maxMember)
+                                if (!DateTime.now().isAfter(
+                                    dateTime.add(Duration(minutes: totalTime))))
+                                  _PersonLabel(
+                                      curNum: currentMember, maxNum: maxMember)
                               ],
                             ),
                             Text(

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
+import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
 import 'package:tago_app/trip/view/form/trip_fifth_form_screen.dart';
@@ -82,10 +83,16 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, __) => const RootTab(),
           routes: [
             GoRoute(
-              path: 'tripDetail/:tripId',
-              name: TripDetailScreen.routeName,
-              builder: (_, __) => const TripDetailScreen(),
-            ),
+                path: 'tripDetail/:tripId',
+                name: TripDetailScreen.routeName,
+                builder: (_, __) => const TripDetailScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'members',
+                    name: TripDetailMembersScreen.routeName,
+                    builder: (_, __) => const TripDetailMembersScreen(),
+                  ),
+                ]),
             GoRoute(
               path: 'profile',
               name: MyProfileScreen.routeName,
