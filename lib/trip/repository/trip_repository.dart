@@ -7,6 +7,7 @@ import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
 import 'package:tago_app/trip/model/my_trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
+import 'package:tago_app/trip/model/trip_member_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/model/trip_status_model.dart';
 
@@ -43,6 +44,14 @@ abstract class TripRepository {
     'accessToken': 'true',
   })
   Future<TripStatusModel> getStatusTrip({
+    @Path() required int tripId,
+  });
+
+  @GET('/{tripId}/members')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripMembersList> getMembersTrip({
     @Path() required int tripId,
   });
 
