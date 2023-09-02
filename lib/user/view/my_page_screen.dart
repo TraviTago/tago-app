@@ -91,10 +91,11 @@ class _ServiceCenter extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       child: MenuList(
-        titles: const ['자주 묻는 질문', '고객센터'],
+        titles: const ['자주 묻는 질문', '고객센터', '실시간 불편 신고'],
         onTaps: [
-          () => {context.go('/tripDetail')},
-          () => {},
+          () => {context.go('/customerQuestion')},
+          () => {context.go('/customerCenter')},
+          () => {context.go('/customerReport')},
         ],
       ),
     );

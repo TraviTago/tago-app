@@ -26,7 +26,6 @@ class PlaceDetailScreen extends ConsumerStatefulWidget {
 
 class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
     with SingleTickerProviderStateMixin {
-  final double _currentPage = 0;
   final currentPageNotifier = ValueNotifier<double>(0);
   late PageController pageController;
 
