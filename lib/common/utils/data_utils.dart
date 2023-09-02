@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:html/parser.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class DataUtils {
@@ -94,13 +95,15 @@ class DataUtils {
 
   static String cleanHomepage(String input) {
     final RegExp regExp = RegExp(
-      r'href="([^"]+)"',
+      r'href=(?:"([^"]+)"|([^\s">]+))',
       multiLine: true,
     );
+
     final Match? match = regExp.firstMatch(input);
 
-    if (match != null && match.groupCount >= 1) {
-      return match.group(1) ?? "";
+    if (match != null) {
+      if (match.group(1) != null) return match.group(1)!;
+      if (match.group(2) != null) return match.group(2)!;
     }
 
     return "";
@@ -120,77 +123,81 @@ class DataUtils {
     }
   }
 
+  static String preprocessOpenTime(String text) {
+    // <br></br> 패턴을 줄 바꿈 문자로 대체
+    text = text.replaceAll(
+        RegExp(r'<br\s*/?>\s*<br\s*/?>', caseSensitive: false), '\n');
+
+    // 단독의 <br> 태그를 줄 바꿈 문자로 대체
+    text = text.replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
+
+    String cleanText = text.replaceAll(RegExp('<[^>]+>'), '').trim();
+
+    // 제목 표기를 위해 `* `로 시작하는 부분 제거
+    cleanText = cleanText.replaceAll(RegExp(r'^\* .+?[\.,\?!]'), '').trim();
+
+    return cleanText;
+  }
+
   static Widget processText(
     String text,
-    String touristAttraction,
+    String keyword,
     bool isTitle,
   ) {
-    var noHtmlText = text.replaceAll(RegExp(r'<[^>]*>'), '');
+    // HTML 태그를 제거합니다.
+    final document = parse(text);
+    final cleanedText = parse(document.body!.text).documentElement!.text;
 
-    // 관광지 이름의 띄어쓰기를 유연하게 대응하기 위한 정규표현식 생성
-    final pattern = touristAttraction.splitMapJoin(RegExp(r'\s*'),
-        onMatch: (m) => r'\s*', onNonMatch: (n) => RegExp.escape(n));
+    final defaultTextStyle = isTitle
+        ? const TextStyle(
+            fontSize: 14.0,
+            color: Colors.black,
+          )
+        : const TextStyle(
+            fontSize: 17.0,
+            color: Color(0xFF1148C8),
+          );
 
-    final regex = RegExp(pattern);
+    final keywordTextStyle = isTitle
+        ? const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 14.0,
+            color: Colors.black,
+          )
+        : const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 17.0,
+            color: Color(0xFF1148C8),
+          );
 
-    // 관광지 이름으로 분할
-    final parts = noHtmlText.split(regex);
+    // 띄어쓰기가 제거된 키워드
+    final keywordWithoutSpaces = keyword.replaceAll(RegExp(r'\s+'), '');
 
-    // 관광지 이름이 포함되지 않았을 때
-    if (parts.length == 1) {
-      return Text(
-        noHtmlText,
-        maxLines: 5,
-        overflow: TextOverflow.ellipsis,
-      );
-    }
+    final RegExp keywordPattern = RegExp(
+      '($keyword|$keywordWithoutSpaces)',
+      caseSensitive: false,
+    );
 
-    // 관광지 이름이 포함되었을 때, 해당 부분을 bold 처리
-    List<TextSpan> spans = [];
-    for (int i = 0; i < parts.length; i++) {
-      spans.add(
-        TextSpan(
-          text: parts[i],
-          style: isTitle
-              ? const TextStyle(
-                  fontSize: 18.0,
-                  color: Color(0xFF1148C8),
-                )
-              : const TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.black,
-                ),
-        ),
-      );
-      if (i < parts.length - 1) {
-        final match = regex.firstMatch(noHtmlText.substring(parts[i].length));
-        spans.add(
-          TextSpan(
-            text: match?.group(0) ?? '',
-            style: isTitle
-                ? const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0,
-                    color: Color(0xFF1148C8),
-                  )
-                : const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
-          ),
-        );
-        if (match != null) {
-          final endIndex = parts[i].length + match.end;
-          noHtmlText = noHtmlText.substring(endIndex);
-        }
-      }
-    }
+    final spans = <InlineSpan>[];
+
+    // 키워드와 일치하는 모든 위치를 찾습니다.
+    cleanedText.splitMapJoin(
+      keywordPattern,
+      onMatch: (m) {
+        spans.add(TextSpan(text: m[0], style: keywordTextStyle));
+        return m[0]!;
+      },
+      onNonMatch: (nonMatch) {
+        spans.add(TextSpan(text: nonMatch, style: defaultTextStyle));
+        return nonMatch;
+      },
+    );
 
     return Text.rich(
       TextSpan(children: spans),
-      maxLines: isTitle ? 2 : 5,
-      overflow: TextOverflow.ellipsis,
+      maxLines: 5,
+      overflow: TextOverflow
+          .ellipsis, // If you want to show ellipsis when text exceeds maxLines
     );
   }
 
