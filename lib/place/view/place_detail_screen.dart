@@ -1,13 +1,16 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/space_container.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/model/page_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
-import 'package:tago_app/search/provider/kakao_blog_search_provider.dart';
+import 'package:tago_app/place/repository/place_repository.dart';
+import 'package:tago_app/search/model/kakao_blog_search_model.dart';
+import 'package:tago_app/search/repository/kakao_blog_search_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceDetailScreen extends ConsumerStatefulWidget {
@@ -23,44 +26,30 @@ class PlaceDetailScreen extends ConsumerStatefulWidget {
 
 class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
     with SingleTickerProviderStateMixin {
-  late PageController _pageController;
-  double _currentPage = 0;
+  final double _currentPage = 0;
+  final currentPageNotifier = ValueNotifier<double>(0);
+  late PageController pageController;
 
   @override
   void initState() {
     super.initState();
-    _initPageController();
-    _fetchData();
-  }
 
-  _initPageController() {
-    _pageController = PageController();
-    _pageController.addListener(() {
-      setState(() => _currentPage = _pageController.page ?? 0);
+    pageController = PageController();
+    pageController.addListener(() {
+      currentPageNotifier.value =
+          pageController.page ?? 0; // 리스너에서는 currentPageNotifier만 업데이트합니다.
     });
-  }
-
-  _fetchData() {
-    final detailModel = placeDetailModel;
-    ref
-        .read(kakaoBlogSearchProvider.notifier)
-        .paginate('${detailModel.title} 후기');
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final detailModel = placeDetailModel;
-    final data = ref.watch(kakaoBlogSearchProvider);
+    int placeId =
+        int.parse(GoRouterState.of(context).pathParameters['placeId']!);
+    String placeName = GoRouterState.of(context).queryParameters['title']!;
 
     return DefaultLayout(
       titleComponet: Text(
-        detailModel.title,
+        placeName,
         style: const TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.w700,
@@ -72,40 +61,61 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 30.0, vertical: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DetailImage(imageUrl: detailModel.imageUrl),
-                    const SizedBox(height: 20.0),
-                    Text(
-                      detailModel.address,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        color: LABEL_TEXT_SUB_COLOR,
+              FutureBuilder<PlaceDetailModel>(
+                future: ref
+                    .read(placeRepositoryProvider)
+                    .getDetailPlace(placeId: placeId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('오류: ${snapshot.error}'));
+                  } else if (!snapshot.hasData) {
+                    return const Center(child: Text('데이터가 없습니다.'));
+                  }
+
+                  final detailModel = snapshot.data!;
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DetailImage(imageUrl: detailModel.imageUrl),
+                            const SizedBox(height: 20.0),
+                            Text(
+                              detailModel.address,
+                              style: const TextStyle(
+                                fontSize: 17.0,
+                                color: LABEL_TEXT_SUB_COLOR,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            Text(
+                              DataUtils.cleanOverview(
+                                  detailModel.overview, true),
+                              style: const TextStyle(
+                                fontSize: 13.0,
+                                height: 1.5,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Text(
-                      DataUtils.cleanOverview(detailModel.overview, true),
-                      style: const TextStyle(
-                        fontSize: 13.0,
-                        height: 1.5,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                  ],
-                ),
+                      if (detailModel.telephone != null ||
+                          detailModel.restDate != null ||
+                          detailModel.parking != null ||
+                          detailModel.openTime != null ||
+                          detailModel.homepage != null)
+                        DetailInfo(detailModel: detailModel),
+                    ],
+                  );
+                },
               ),
-              if (detailModel.telephone != null ||
-                  detailModel.restDate != null ||
-                  detailModel.parking != null ||
-                  detailModel.openTime != null ||
-                  detailModel.homepage != null)
-                DetailInfo(detailModel: detailModel),
               const SpacerContainer(),
               const SizedBox(
                 height: 10.0,
@@ -127,141 +137,171 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                   ),
                 ),
               ),
-              if (data.isEmpty)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              if (data.isNotEmpty)
-                Column(
-                  children: [
-                    SizedBox(
-                      height:
-                          450, // Set an appropriate height for the PageView.
-                      child: PageView.builder(
-                        controller: _pageController,
-                        itemCount: (data.length / 2).ceil(),
-                        itemBuilder: (context, pageIndex) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 2,
-                            itemBuilder: (context, itemIndex) {
-                              final index = pageIndex * 2 + itemIndex;
-                              if (index >= data.length) {
-                                return const SizedBox.shrink();
-                              }
-                              final blogItem = data[index];
-                              return Column(
-                                children: [
-                                  Column(
+              FutureBuilder<PagePagination<KakaoBlogSearchModel>>(
+                  future: ref
+                      .watch(kakaoBlogSearchRepositoryProvider)
+                      .paginate(query: '$placeName 후기'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('오류: ${snapshot.error}'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('데이터가 없습니다.'));
+                    }
+
+                    final data = snapshot.data!;
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 450,
+                          child: PageView.builder(
+                            controller: pageController,
+                            itemCount: (data.documents.length / 2).ceil(),
+                            itemBuilder: (context, pageIndex) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: 2,
+                                itemBuilder: (context, itemIndex) {
+                                  final index = pageIndex * 2 + itemIndex;
+                                  if (index >= data.documents.length) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  final blogItem = data.documents[index];
+                                  return Column(
                                     children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          if (await canLaunchUrl(
-                                            Uri.parse(blogItem.url),
-                                          )) {
-                                            await launchUrl(
-                                              Uri.parse(blogItem.url),
-                                            );
-                                          } else {
-                                            print(
-                                                'Could not launch ${blogItem.url}');
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0, vertical: 8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  color: LABEL_TEXT_SUB_COLOR,
-                                                  fontSize: 13.0,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 8.0,
-                                              ),
-                                              DataUtils.processText(
-                                                  blogItem.title,
-                                                  detailModel.title,
-                                                  true),
-                                              const SizedBox(
-                                                height: 10.0,
-                                              ),
-                                              Row(
+                                      Column(
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              if (await canLaunchUrl(
+                                                Uri.parse(blogItem.url),
+                                              )) {
+                                                await launchUrl(
+                                                  Uri.parse(blogItem.url),
+                                                );
+                                              } else {
+                                                print(
+                                                    'Could not launch ${blogItem.url}');
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 30.0,
+                                                      vertical: 8.0),
+                                              child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Expanded(
-                                                    flex: 5,
-                                                    child:
-                                                        DataUtils.processText(
-                                                            blogItem.contents,
-                                                            detailModel.title,
-                                                            false),
+                                                  Text(
+                                                    '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      color:
+                                                          LABEL_TEXT_SUB_COLOR,
+                                                      fontSize: 13.0,
+                                                    ),
                                                   ),
                                                   const SizedBox(
-                                                    width: 10,
+                                                    height: 8.0,
                                                   ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.network(
-                                                        blogItem.thumbnail,
-                                                        fit: BoxFit.cover,
+                                                  DataUtils.processText(
+                                                      blogItem.title,
+                                                      placeName,
+                                                      false),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 5,
+                                                        child: DataUtils
+                                                            .processText(
+                                                                blogItem
+                                                                    .contents,
+                                                                placeName,
+                                                                true),
                                                       ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.network(
+                                                            blogItem.thumbnail,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    Object
+                                                                        exception,
+                                                                    StackTrace?
+                                                                        stackTrace) {
+                                                              // 이미지 로딩에 실패하면 빈 컨테이너 반환
+                                                              return Container();
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    DataUtils
+                                                        .formatDateOnDateTime(
+                                                            blogItem.datetime),
+                                                    style: const TextStyle(
+                                                      fontSize: 13.0,
+                                                      color:
+                                                          LABEL_TEXT_SUB_COLOR,
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                DataUtils.formatDateOnDateTime(
-                                                    blogItem.datetime),
-                                                style: const TextStyle(
-                                                  fontSize: 13.0,
-                                                  color: LABEL_TEXT_SUB_COLOR,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
+                                          if (itemIndex == 0) const Divider(),
+                                        ],
                                       ),
-                                      if (itemIndex == 0) const Divider(),
                                     ],
-                                  ),
-                                ],
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: DotsIndicator(
-                        dotsCount: (data.length / 2).ceil(),
-                        position: (_currentPage - _currentPage.floor() >= 0.5)
-                            ? _currentPage.ceil()
-                            : _currentPage.floor(),
-                        decorator: const DotsDecorator(
-                          activeColor: PRIMARY_COLOR,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                        ValueListenableBuilder<double>(
+                            valueListenable: currentPageNotifier,
+                            builder: (context, value, child) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: DotsIndicator(
+                                  dotsCount: (data.documents.length / 2).ceil(),
+                                  position: value.round(), // .round()를 사용하여 반올림
+                                  decorator: const DotsDecorator(
+                                    activeColor: PRIMARY_COLOR,
+                                  ),
+                                ),
+                              );
+                            }),
+                      ],
+                    );
+                  }),
             ],
           ),
         ),
@@ -300,6 +340,7 @@ class InfoRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
             assetName,
@@ -307,7 +348,11 @@ class InfoRow extends StatelessWidget {
             height: 20.0,
           ),
           const SizedBox(width: 20),
-          Text(text),
+          Expanded(
+            child: Text(
+              text,
+            ),
+          ),
         ],
       ),
     );
@@ -357,7 +402,7 @@ class DetailInfo extends StatelessWidget {
               if (detailModel.openTime != null)
                 InfoRow(
                     assetName: 'asset/img/clock.png',
-                    text: detailModel.openTime!),
+                    text: DataUtils.preprocessOpenTime(detailModel.openTime!)),
               if (detailModel.parking != null)
                 InfoRow(
                     assetName: 'asset/img/car.png',

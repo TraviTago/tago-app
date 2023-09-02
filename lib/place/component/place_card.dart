@@ -14,7 +14,7 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push("/placeDetail/${place.id}");
+        context.push("/placeDetail/${place.id}?title=${place.title}");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
