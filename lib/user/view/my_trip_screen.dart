@@ -50,6 +50,7 @@ class MyTripScreen extends ConsumerWidget {
                 upcomingTrips.add(trip);
               }
             }
+            pastTrips.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
             return (upcomingTrips.isEmpty && pastTrips.isEmpty)
                 ? const EmptyTripsComponent()
