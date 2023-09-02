@@ -251,7 +251,10 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                                                                     StackTrace?
                                                                         stackTrace) {
                                                               // 이미지 로딩에 실패하면 빈 컨테이너 반환
-                                                              return Container();
+                                                              return Image
+                                                                  .asset(
+                                                                'asset/img/loading.png',
+                                                              );
                                                             },
                                                           ),
                                                         ),
