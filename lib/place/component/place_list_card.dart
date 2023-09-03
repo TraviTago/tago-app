@@ -2,17 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/place/model/place_summary_model.dart';
 
-class PlaecRecommendCard extends StatelessWidget {
+class PlaceListCard extends StatelessWidget {
   final int id;
   final String address;
   final String title;
   final String imageUrl;
   final String overview;
 
-  const PlaecRecommendCard({
+  const PlaceListCard({
     required this.id,
     required this.title,
     required this.address,
@@ -20,10 +19,10 @@ class PlaecRecommendCard extends StatelessWidget {
     required this.overview,
     Key? key,
   }) : super(key: key);
-  factory PlaecRecommendCard.fromModel({
+  factory PlaceListCard.fromModel({
     required PlaceSummaryModel model,
   }) {
-    return PlaecRecommendCard(
+    return PlaceListCard(
       id: model.id,
       address: model.address,
       title: model.title,
@@ -33,14 +32,14 @@ class PlaecRecommendCard extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width - 60;
+    double screenWidth = MediaQuery.of(context).size.width / 5 * 2;
     return GestureDetector(
       onTap: () {
         context.push("/placeDetail/$id?title=$title");
       },
       child: Material(
         // Material 위젯 추가
-        elevation: 8.0, // 그림자 깊이 설정
+        elevation: 2, // 그림자 깊이 설정
         borderRadius: BorderRadius.circular(12.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12.0),
@@ -56,49 +55,35 @@ class PlaecRecommendCard extends StatelessWidget {
                 bottom: 0,
                 child: Container(
                   width: screenWidth,
-                  height: (screenWidth) / 5 * 2,
+                  height: (screenWidth) / 3 * 1,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 20.0,
+                      horizontal: 10.0,
+                      vertical: 5.0,
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
                           style: const TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 12.0,
                             fontWeight: FontWeight.w700,
                           ),
+                          maxLines: 1,
                         ),
                         Text(
                           address,
                           style: const TextStyle(
-                            fontSize: 11.0,
+                            fontSize: 10.0,
                             fontWeight: FontWeight.w500,
                             color: LABEL_TEXT_SUB_COLOR,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Text(
-                            DataUtils.cleanOverview(overview, false),
-                            style: const TextStyle(
-                              fontSize: 11.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          maxLines: 1,
                         ),
                       ],
                     ),
