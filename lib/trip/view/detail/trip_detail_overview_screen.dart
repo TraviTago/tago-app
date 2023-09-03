@@ -149,7 +149,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                           ),
                           if (tripStatus == TripStatus.ongoing)
                             MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.go('/customerReport');
+                              },
                               color: LABEL_BG_COLOR,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
