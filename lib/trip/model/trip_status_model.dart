@@ -6,7 +6,7 @@ part 'trip_status_model.g.dart';
 class TripStatusModel {
   final int femaleCnt;
   final int maleCnt;
-  final List<String> ageGroup;
+  final List<int> ageGroup;
   final String startTime;
   final String endTime;
 

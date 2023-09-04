@@ -11,7 +11,7 @@ TripStatusModel _$TripStatusModelFromJson(Map<String, dynamic> json) =>
       femaleCnt: json['femaleCnt'] as int,
       maleCnt: json['maleCnt'] as int,
       ageGroup:
-          (json['ageGroup'] as List<dynamic>).map((e) => e as String).toList(),
+          (json['ageGroup'] as List<dynamic>).map((e) => e as int).toList(),
       startTime: json['startTime'] as String,
       endTime: json['endTime'] as String,
     );

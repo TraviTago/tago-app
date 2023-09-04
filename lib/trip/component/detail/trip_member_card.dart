@@ -87,7 +87,7 @@ class TripMemberCard extends StatelessWidget {
                                 margin: EdgeInsets.only(
                                     right: age != statusModel.ageGroup.last
                                         ? 5.0
-                                        : 0.0), // 마지막 항목이면 마진을 추가하지 않음
+                                        : 0.0),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0,
                                   vertical: 5.0,
@@ -98,7 +98,7 @@ class TripMemberCard extends StatelessWidget {
                                       Radius.circular(20.0)),
                                 ),
                                 child: Text(
-                                  age,
+                                  '$age대',
                                   style: const TextStyle(
                                       fontSize: 13.0,
                                       fontWeight: FontWeight.w500),
