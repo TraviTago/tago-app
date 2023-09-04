@@ -39,11 +39,15 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width + 10,
+                height: MediaQuery.of(context).size.width,
                 child: Swiper(
+                  loop: false,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 30.0),
+                      padding: const EdgeInsets.only(
+                        top: 20.0, bottom: 30.0, left: 5.0, // 좌측 패딩 추가
+                        right: 5.0,
+                      ),
                       child: PlaecRecommendCard.fromModel(model: places[index]),
                     );
                   },
@@ -64,7 +68,7 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                   itemCount: places.length,
                   viewportFraction: (MediaQuery.of(context).size.width - 60) /
                       MediaQuery.of(context).size.width,
-                  scale: 0.85,
+                  scale: 1,
                 ),
               ),
               Column(
@@ -125,6 +129,7 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.width / 5 * 2 + 40,
                     child: Swiper(
+                      indicatorLayout: PageIndicatorLayout.SLIDE,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
                           children: [
@@ -164,6 +169,9 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                     ),
                   )
                 ],
+              ),
+              const SizedBox(
+                height: 30.0,
               ),
             ],
           ),
