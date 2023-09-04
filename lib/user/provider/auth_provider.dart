@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
+import 'package:tago_app/customer_service/view/customer_service_center_screen.dart';
+import 'package:tago_app/customer_service/view/customer_service_question_screen.dart';
+import 'package:tago_app/customer_service/view/customer_service_report_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
@@ -20,9 +23,6 @@ import 'package:tago_app/signup/view/third_form_screen.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/login/view/login_screen.dart';
-import 'package:tago_app/user/view/customer_service/customer_service_center_screen.dart';
-import 'package:tago_app/user/view/customer_service/customer_service_question_screen.dart';
-import 'package:tago_app/user/view/customer_service/customer_service_report_screen.dart';
 import 'package:tago_app/user/view/my_profile_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
