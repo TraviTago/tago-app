@@ -14,6 +14,7 @@ TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
       places: (json['places'] as List<dynamic>)
           .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isJoined: json['isJoined'] as bool,
     );
 
 Map<String, dynamic> _$TripDetailModelToJson(TripDetailModel instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$TripDetailModelToJson(TripDetailModel instance) =>
       'currentCnt': instance.currentCnt,
       'maxCnt': instance.maxCnt,
       'places': instance.places,
+      'isJoined': instance.isJoined,
     };

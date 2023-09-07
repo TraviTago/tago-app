@@ -9,12 +9,14 @@ class TripDetailModel {
   final int currentCnt;
   final int maxCnt;
   final List<PlaceModel> places;
+  final bool isJoined;
 
   TripDetailModel({
     required this.tripName,
     required this.currentCnt,
     required this.maxCnt,
     required this.places,
+    required this.isJoined,
   });
 
   factory TripDetailModel.fromJson(Map<String, dynamic> json) =>
