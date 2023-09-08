@@ -21,8 +21,6 @@ final tripThirdFormBtnText = [
 ];
 
 final Map<String, String> buttonData = {
-  '인스타그램': 'instagram',
-  '유튜브': 'youtube',
   '사진 촬영': 'photo',
   '맛집 탐방': 'food',
   '핫플': 'hot-place',

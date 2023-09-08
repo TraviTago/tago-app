@@ -126,7 +126,10 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
 
     if (platform == null) {
       state = null;
-
+      await Future.wait([
+        storage.delete(key: REFRESH_TOKEN_KEY),
+        storage.delete(key: ACCESS_TOKEN_KEY),
+      ]);
       throw Exception("Unable to determine the oauthProvider for logout");
     }
 
