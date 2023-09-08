@@ -1,10 +1,11 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/place/component/place_list_card.dart';
 import 'package:tago_app/place/component/place_recommend_card.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_recommend_model.dart';
 
 class PlaceMainScreen extends StatefulWidget {
   final Function(String)? onImageChange;
@@ -17,7 +18,7 @@ class PlaceMainScreen extends StatefulWidget {
 class _PlaceMainScreenState extends State<PlaceMainScreen> {
   final currentPageNotifier = ValueNotifier<double>(0);
   late PageController pageController;
-  List<PlaceSummaryModel> places = placeList;
+  List<PlaceRecommendModel> places = placeList;
 
   @override
   void initState() {
@@ -90,7 +91,9 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                context.push('/places');
+                              },
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

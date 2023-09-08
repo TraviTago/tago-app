@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_recommend_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
@@ -96,8 +96,8 @@ List<TripModel> tripDataList = [
   )
 ];
 
-List<PlaceSummaryModel> placeList = [
-  PlaceSummaryModel(
+List<PlaceRecommendModel> placeList = [
+  PlaceRecommendModel(
     id: 3,
     address: '부산광역시 해운대구 구남로 28',
     title: '밀양순대돼지국밥',
@@ -106,7 +106,7 @@ List<PlaceSummaryModel> placeList = [
     imageUrl:
         'http://tong.visitkorea.or.kr/cms/resource/91/2798191_image2_1.JPG',
   ),
-  PlaceSummaryModel(
+  PlaceRecommendModel(
     id: 2,
     title: "몰운대 (부산 국가지질공원)",
     address: "부산광역시 사하구 다대동",
@@ -115,7 +115,7 @@ List<PlaceSummaryModel> placeList = [
     imageUrl:
         "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg",
   ),
-  PlaceSummaryModel(
+  PlaceRecommendModel(
     id: 1,
     title: "맥도상태공원",
     address: "부산광역시 강서구 공항로 500",

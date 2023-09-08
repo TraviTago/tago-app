@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_recommend_model.dart';
 
 class PlaecRecommendCard extends StatelessWidget {
   final int id;
@@ -21,7 +21,7 @@ class PlaecRecommendCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   factory PlaecRecommendCard.fromModel({
-    required PlaceSummaryModel model,
+    required PlaceRecommendModel model,
   }) {
     return PlaecRecommendCard(
       id: model.id,

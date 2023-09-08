@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_recommend_model.dart';
 
 class PlaceListCard extends StatelessWidget {
   final int id;
@@ -20,7 +20,7 @@ class PlaceListCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   factory PlaceListCard.fromModel({
-    required PlaceSummaryModel model,
+    required PlaceRecommendModel model,
   }) {
     return PlaceListCard(
       id: model.id,
