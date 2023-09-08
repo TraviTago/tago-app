@@ -7,6 +7,7 @@ import 'package:tago_app/customer_service/view/customer_service_center_screen.da
 import 'package:tago_app/customer_service/view/customer_service_question_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_report_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
+import 'package:tago_app/place/view/place_search_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
@@ -120,6 +121,11 @@ class AuthProvider extends ChangeNotifier {
               path: 'placeDetail/:placeId',
               name: PlaceDetailScreen.routeName,
               builder: (_, __) => const PlaceDetailScreen(),
+            ),
+            GoRoute(
+              path: 'places',
+              name: PlaceSearchScreen.routeName,
+              builder: (_, __) => const PlaceSearchScreen(),
             ),
             GoRoute(
               path: 'tripComplete',
