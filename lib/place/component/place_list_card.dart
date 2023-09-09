@@ -2,32 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/place/model/place_recommend_model.dart';
+import 'package:tago_app/place/model/place_summary_model.dart';
 
 class PlaceListCard extends StatelessWidget {
   final int id;
   final String address;
   final String title;
   final String imageUrl;
-  final String overview;
 
   const PlaceListCard({
     required this.id,
     required this.title,
     required this.address,
     required this.imageUrl,
-    required this.overview,
     Key? key,
   }) : super(key: key);
+
   factory PlaceListCard.fromModel({
-    required PlaceRecommendModel model,
+    required PlaceSummaryModel model,
   }) {
     return PlaceListCard(
       id: model.id,
       address: model.address,
       title: model.title,
       imageUrl: model.imageUrl,
-      overview: model.overview,
     );
   }
   @override
@@ -39,7 +37,7 @@ class PlaceListCard extends StatelessWidget {
       },
       child: Material(
         // Material 위젯 추가
-        elevation: 2, // 그림자 깊이 설정
+        elevation: 10, // 그림자 깊이 설정
         borderRadius: BorderRadius.circular(12.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12.0),
