@@ -19,7 +19,8 @@ class _PlaceRepository implements PlaceRepository {
   String? baseUrl;
 
   @override
-  Future<CursorPagination<PlaceModel>> paginate({paginationParams}) async {
+  Future<CursorPagination<PlaceSummaryModel>> getPlaces(
+      {paginationParams}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(paginationParams?.toJson() ?? <String, dynamic>{});
@@ -28,21 +29,21 @@ class _PlaceRepository implements PlaceRepository {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CursorPagination<PlaceModel>>(Options(
+        _setStreamType<CursorPagination<PlaceSummaryModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '',
+              '/places',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CursorPagination<PlaceModel>.fromJson(
+    final value = CursorPagination<PlaceSummaryModel>.fromJson(
       _result.data!,
-      (json) => PlaceModel.fromJson(json as Map<String, dynamic>),
+      (json) => PlaceSummaryModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -62,7 +63,7 @@ class _PlaceRepository implements PlaceRepository {
     )
             .compose(
               _dio.options,
-              '/${placeId}',
+              '/place/${placeId}',
               queryParameters: queryParameters,
               data: _data,
             )

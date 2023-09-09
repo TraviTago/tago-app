@@ -6,13 +6,13 @@ import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
-import 'package:tago_app/place/model/place_model.dart';
+import 'package:tago_app/place/model/place_summary_model.dart';
 
 part 'place_repository.g.dart';
 
 final placeRepositoryProvider = Provider<PlaceRepository>((ref) {
   final dio = ref.watch(dioProvider);
-  final repository = PlaceRepository(dio, baseUrl: '$ip/api/v1/place');
+  final repository = PlaceRepository(dio, baseUrl: '$ip/api/v1');
   return repository;
 });
 
@@ -20,15 +20,15 @@ final placeRepositoryProvider = Provider<PlaceRepository>((ref) {
 abstract class PlaceRepository {
   factory PlaceRepository(Dio dio, {String baseUrl}) = _PlaceRepository;
 
-  @GET('')
+  @GET('/places')
   @Headers({
     'accessToken': 'true',
   })
-  Future<CursorPagination<PlaceModel>> paginate({
+  Future<CursorPagination<PlaceSummaryModel>> getPlaces({
     @Queries() PaginationParams? paginationParams,
   });
 
-  @GET('/{placeId}')
+  @GET('/place/{placeId}')
   @Headers({
     'accessToken': 'true',
   })
