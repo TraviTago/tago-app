@@ -6,6 +6,7 @@ import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_center_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_question_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_report_screen.dart';
+import 'package:tago_app/login/view/signup_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/place/view/place_search_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
@@ -60,6 +61,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/login',
           name: LoginScreen.routeName,
           builder: (_, __) => const LoginScreen(),
+        ),
+        GoRoute(
+          path: '/signup',
+          name: SignupScreen.routeName,
+          builder: (_, __) => const SignupScreen(),
         ),
         GoRoute(
           path: '/form1',
@@ -187,7 +193,7 @@ class AuthProvider extends ChangeNotifier {
   String? redirectLogic(GoRouterState state) {
     final UserModelBase? user = ref.read(userProvider);
     final bool timerCompleted = ref.read(splashScreenTimerProvider);
-    final logginIn = state.location == '/login';
+    final logginIn = state.location == '/login' || state.location == '/signup';
 
     if (!timerCompleted) {
       return null;

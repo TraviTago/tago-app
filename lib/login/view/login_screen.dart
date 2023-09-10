@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/custom_text_form_field.dart';
@@ -88,7 +89,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       backgroundColor:
                           MaterialStateProperty.all(LABEL_BG_COLOR),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push('/signup');
+                    },
                     child: const Text(
                       '회원가입',
                       style: TextStyle(
@@ -133,7 +136,7 @@ class _Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 100,
+        vertical: 110,
       ),
       child: Image.asset(
         'asset/img/logo_red.png',
