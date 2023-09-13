@@ -1,15 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tago_app/user/model/tokens_model.dart';
 
 part 'login_response.g.dart';
 
 @JsonSerializable()
 class LoginResponse {
-  final String refreshToken;
-  final String accessToken;
+  Tokens tokens;
 
   LoginResponse({
-    required this.refreshToken,
-    required this.accessToken,
+    required this.tokens,
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>

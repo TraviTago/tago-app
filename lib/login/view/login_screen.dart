@@ -1,10 +1,10 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/login/component/custom_text_form_field.dart';
-import 'package:tago_app/login/model/kako_login_model.dart';
+import 'package:tago_app/login/component/phone_number_field.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
+import 'package:tago_app/user/repository/auth_repository.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -16,148 +16,159 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  String username = '';
-  String password = '';
-  final loginModel = KakaoLoginModel();
+  String phoneNumber = "";
+  String verificationCode = "";
+  bool isPhoneNumberEnabled = true;
+  bool showVerificationField = false;
+  bool isVerifyMode = false;
+  String? errorText;
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      titleComponet: const Text(
+        '',
+      ),
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SafeArea(
-            top: true,
-            bottom: false,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  const _Logo(),
-                  CustomTextFormField(
-                    hintText: '이메일을 입력해주세요',
-                    onChanged: (String value) {
-                      username = value;
-                    },
-                  ),
-                  const SizedBox(height: 16.0),
-                  CustomTextFormField(
-                    hintText: '비밀번호를 입력해주세요',
-                    obscureText: true,
-                    onChanged: (String value) {
-                      password = value;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 100.0,
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width, 45)),
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor: MaterialStateProperty.all(PRIMARY_COLOR),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      '로그인',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.0),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width, 45)),
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor:
-                          MaterialStateProperty.all(LABEL_BG_COLOR),
-                    ),
-                    onPressed: () {
-                      context.push('/signup');
-                    },
-                    child: const Text(
-                      '회원가입',
-                      style: TextStyle(
-                          color: PRIMARY_COLOR,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          '기사님으로 로그인하기',
-                          style: TextStyle(
-                            color: LABEL_TEXT_SUB_COLOR,
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50.0,
-                  ),
-                ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '안녕하세요!\n휴대폰 번호로 로그인 해주세요',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 5.0,
+              ),
+              const Text(
+                '휴대폰 번호는 안전하게 보관되고 공개되지않아요',
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 40.0,
+              ),
+              PhoneNumberField(
+                hintText: "휴대폰번호 (- 없이 숫자만 입력)",
+                isPhoneNumber: true,
+                enabled: isPhoneNumberEnabled,
+                valid: true,
+                onChanged: (phone) {
+                  setState(() {
+                    phoneNumber = phone;
+                  });
+                },
+              ),
+              if (showVerificationField)
+                PhoneNumberField(
+                  hintText: "인증번호 6자리 입력",
+                  isPhoneNumber: false,
+                  valid: true,
+                  errorText: errorText,
+                  onChanged: (phone) {
+                    setState(() {
+                      verificationCode = phone;
+                    });
+                  },
+                ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              if (!isVerifyMode)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width, 40)),
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(LABEL_BG_COLOR),
+                  ),
+                  onPressed: handleSmsSending,
+                  child: Text(
+                    '인증문자 받기',
+                    style: TextStyle(
+                        color: phoneNumber.length == 13
+                            ? PRIMARY_COLOR
+                            : LABEL_TEXT_COLOR,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0),
+                  ),
+                ),
+              if (isVerifyMode)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width, 45)),
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: verificationCode.length == 6
+                        ? MaterialStateProperty.all(PRIMARY_COLOR)
+                        : MaterialStateProperty.all(LABEL_BG_COLOR),
+                  ),
+                  onPressed: handleSmsVerify,
+                  child: Text(
+                    '다음',
+                    style: TextStyle(
+                        color: verificationCode.length == 6
+                            ? Colors.white
+                            : LABEL_TEXT_COLOR,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0),
+                  ),
+                ),
+            ],
           ),
         ),
       ),
     );
   }
-}
 
-class _Logo extends StatelessWidget {
-  const _Logo();
+  void handleSmsSending() {
+    if (phoneNumber.length == 13) {
+      String formattedNumber = phoneNumber.replaceAll('-', '');
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 110,
-      ),
-      child: Image.asset(
-        'asset/img/logo_red.png',
-        width: MediaQuery.of(context).size.width / 2,
-      ),
-    );
+      ref.read(authRepositoryProvider).smsSending(number: formattedNumber);
+
+      setState(() {
+        isPhoneNumberEnabled = false;
+        showVerificationField = true;
+        isVerifyMode = true;
+      });
+    }
   }
-}
 
-class _LoginSubTitle extends StatelessWidget {
-  const _LoginSubTitle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '카카오톡으로 간편하게 로그인하세요 !',
-      style: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: Colors.black.withOpacity(0.65),
-      ),
-    );
+  void handleSmsVerify() async {
+    // 인증 번호를 확인합니다.
+    if (verificationCode.length == 6) {
+      String formattedNumber = phoneNumber.replaceAll('-', '');
+      try {
+        final smsVerify = await ref
+            .read(authRepositoryProvider)
+            .smsVerify(number: formattedNumber, code: verificationCode);
+        if (smsVerify.verify) {
+          await ref.read(userProvider.notifier).login(number: phoneNumber);
+        }
+      } catch (e) {
+        //1. 인증번호 틀렸을 경우
+        errorText = "인증번호를 다시 입력해주세요";
+        setState(() {});
+        //2. 시간초과일 경우
+      }
+    }
   }
 }
