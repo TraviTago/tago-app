@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/view/landing_screen.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_center_screen.dart';
@@ -56,6 +57,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/splash',
           name: SplashScreen.routeName,
           builder: (_, __) => const SplashScreen(),
+        ),
+        GoRoute(
+          path: '/landing',
+          name: LandingScreen.routeName,
+          builder: (_, __) => const LandingScreen(),
         ),
         GoRoute(
           path: '/login',
@@ -193,26 +199,22 @@ class AuthProvider extends ChangeNotifier {
   String? redirectLogic(GoRouterState state) {
     final UserModelBase? user = ref.read(userProvider);
     final bool timerCompleted = ref.read(splashScreenTimerProvider);
-    final logginIn = state.location == '/login' || state.location == '/signup';
+    final landing = state.location == '/landing';
+    final logginIn = state.location == '/login';
+    final signingUp = state.location == '/signup' || state.location == '/form1';
+    final splash = state.location == '/splash';
 
     if (!timerCompleted) {
       return null;
     }
     //유저 정보가 없을 때 로그인 중이면 로그인 페이지로, 만약 로그인 중이 아니라면 로그인 페이지로 이동
     if (user == null) {
-      return logginIn ? null : '/login';
+      return logginIn || landing || signingUp ? null : '/landing';
     }
     //유저 정보가 있을 때
     if (user is UserModel) {
-      //로그인 중이거나, 앱 시작인 경우 회원가입 되어있다면 홈으로, 아니면 회원가입 폼으로
-      if (logginIn || state.location == '/splash') {
-        return (user.profile != null) ? '/' : '/form1';
-      }
-      //회원가입 중이라면, 회원가입 완료 되어있다면 홈으로, 아니면 다시 로그인 폼으로
-      else if (state.location == '/form1') {
-        return (user.profile != null) ? '/' : '/form1';
-      } else {
-        return null;
+      if (landing || logginIn || signingUp || splash) {
+        return '/';
       }
     }
     if (user is UserModelError) {

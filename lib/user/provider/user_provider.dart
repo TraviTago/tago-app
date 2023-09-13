@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
-import 'package:tago_app/signup/model/sign_up_model.dart';
 import 'package:tago_app/signup/model/sign_up_response.dart';
-import 'package:tago_app/login/model/social_login_model.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
 import 'package:tago_app/user/repository/user_repository.dart';
@@ -54,16 +51,27 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   }
 
   Future<SignUpResponse> signUp({
-    required SignUpModel signUpModel,
+    required String number,
+    required String name,
+    required String imgUrl,
+    required int ageRange,
+    required String gender,
+    required String mbti,
+    required List<String> favorites,
+    required List<String> tripTypes,
   }) async {
     state = UserModelLoading();
 
     SignUpResponse response = await authRepository.signUp(
-        ageRange: signUpModel.ageRange,
-        gender: signUpModel.gender,
-        mbti: signUpModel.mbti,
-        favorites: signUpModel.favorites,
-        tripTypes: signUpModel.tripTypes);
+      number: number,
+      name: name,
+      imgUrl: imgUrl,
+      ageRange: ageRange,
+      gender: gender,
+      mbti: mbti,
+      favorites: favorites,
+      tripTypes: tripTypes,
+    );
 
     final userResp = await repository.getMe();
     state = userResp;
@@ -74,32 +82,26 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
 
   // 로그인을 시도했을 때 어떤 상태인지 모르기 때문에 UserModelBase로 상태를 특정한다.
   Future<UserModelBase> login({
-    required SocialLogin loginModel,
+    required String number,
   }) async {
     try {
       state = UserModelLoading();
 
-      UserModelBase userModel = await loginModel.login();
+      final resp = await authRepository.login(
+        number: number,
+      );
 
-      if (userModel is UserModel) {
-        final resp = await authRepository.login(
-          oauthProvider: userModel.oauthProvider,
-          email: userModel.email,
-          imgUrl: userModel.imgUrl,
-          name: userModel.name,
-        );
+      await storage.write(
+          key: REFRESH_TOKEN_KEY, value: resp.tokens.refreshToken);
+      await storage.write(
+          key: ACCESS_TOKEN_KEY, value: resp.tokens.accessToken);
 
-        await storage.write(key: REFRESH_TOKEN_KEY, value: resp.refreshToken);
-        await storage.write(key: ACCESS_TOKEN_KEY, value: resp.accessToken);
+      // 로그인 후 토큰에 대한 사용자 저장 + 토큰 유효성 검증
+      final userResp = await repository.getMe();
 
-        // 로그인 후 토큰에 대한 사용자 저장 + 토큰 유효성 검증
-        final userResp = await repository.getMe();
-        state = userResp;
-        print('로그인 성공');
-        return userModel;
-      } else {
-        throw Exception();
-      }
+      state = userResp;
+      print('로그인 성공');
+      return userResp;
     } catch (e) {
       print(e);
       print('로그인 실패');
@@ -111,35 +113,14 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   }
 
   Future<void> logout() async {
-    SNSPlatform? platform;
-
-    // state의 값을 UserModel 타입으로 확인
-    if (state is UserModel) {
-      platform = SNSPlatform.values.firstWhere(
-        (e) => describeEnum(e) == (state as UserModel).oauthProvider,
-      );
-    }
-
     // 가장 먼저 state을 null로 만들어서
     // 로그인 페이지로 보낸다.
     state = null;
 
-    if (platform == null) {
-      state = null;
-      await Future.wait([
-        storage.delete(key: REFRESH_TOKEN_KEY),
-        storage.delete(key: ACCESS_TOKEN_KEY),
-      ]);
-      throw Exception("Unable to determine the oauthProvider for logout");
-    }
-
-    //storage 토큰 삭제
+    state = null;
     await Future.wait([
       storage.delete(key: REFRESH_TOKEN_KEY),
       storage.delete(key: ACCESS_TOKEN_KEY),
     ]);
-
-    //카카오 토큰 삭제
-    await platform.loginHandler.logout();
   }
 }

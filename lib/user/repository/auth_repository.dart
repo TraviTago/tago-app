@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/login/model/login_response.dart';
 import 'package:tago_app/signup/model/sign_up_response.dart';
+import 'package:tago_app/user/model/sms_model.dart';
 import 'package:tago_app/user/model/token_response.dart';
 
 import '../../../common/const/data.dart';
@@ -23,34 +24,58 @@ class AuthRepository {
   });
 
   Future<LoginResponse> login({
-    required String oauthProvider,
-    required String email,
-    required String? imgUrl,
-    required String? name,
+    required String number,
   }) async {
     final resp = await dio.post(
       '$baseUrl/login',
       data: {
-        'oauthProvider': oauthProvider,
-        'imgUrl': imgUrl,
-        'email': email,
-        'name': name,
+        'number': number,
       },
     );
-
     return LoginResponse.fromJson(
       resp.data,
     );
   }
 
+  Future<dynamic> smsSending({
+    required String number,
+  }) async {
+    final resp = await dio.post(
+      '$baseUrl/sms',
+      data: {
+        'number': number,
+      },
+    );
+    return resp;
+  }
+
+  Future<SmsVerifyResponse> smsVerify({
+    required String number,
+    required String code,
+  }) async {
+    final resp = await dio.post(
+      '$baseUrl/sms/verify-code',
+      data: {
+        'number': number,
+        'code': code,
+      },
+    );
+    return SmsVerifyResponse.fromJson(
+      resp.data,
+    );
+  }
+
   Future<SignUpResponse> signUp({
+    required String number,
+    required String name,
+    required String imgUrl,
     required int ageRange,
     required String gender,
     required String mbti,
     required List<String> favorites,
     required List<String> tripTypes,
   }) async {
-    final resp = await dio.patch(
+    final resp = await dio.post(
       '$baseUrl/sign-up',
       data: {
         'ageRange': ageRange,

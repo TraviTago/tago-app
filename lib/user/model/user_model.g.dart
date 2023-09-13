@@ -7,19 +7,25 @@ part of 'user_model.dart';
 // **************************************************************************
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
-      oauthProvider: json['oauthProvider'] as String,
-      email: json['email'] as String,
-      imgUrl: json['imgUrl'] as String?,
-      name: json['name'] as String?,
-      profile: json['profile'] == null
-          ? null
-          : SignUpModel.fromJson(json['profile'] as Map<String, dynamic>),
+      number: json['number'] as String,
+      imgUrl: json['imgUrl'] as String,
+      name: json['name'] as String,
+      ageRange: json['ageRange'] as int,
+      gender: json['gender'] as String,
+      mbti: json['mbti'] as String,
+      favorites:
+          (json['favorites'] as List<dynamic>).map((e) => e as String).toList(),
+      tripTypes:
+          (json['tripTypes'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
-      'oauthProvider': instance.oauthProvider,
-      'email': instance.email,
+      'number': instance.number,
       'imgUrl': instance.imgUrl,
       'name': instance.name,
-      'profile': instance.profile,
+      'ageRange': instance.ageRange,
+      'gender': instance.gender,
+      'mbti': instance.mbti,
+      'favorites': instance.favorites,
+      'tripTypes': instance.tripTypes,
     };

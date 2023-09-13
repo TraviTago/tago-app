@@ -1,9 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tago_app/signup/model/sign_up_model.dart';
 
 part 'user_model.g.dart';
-
-enum SNSPlatform { APPLE, KAKAO }
 
 abstract class UserModelBase {}
 
@@ -16,18 +13,24 @@ class UserModelLoading extends UserModelBase {}
 //유저 로딩 성공
 @JsonSerializable()
 class UserModel extends UserModelBase {
-  final String oauthProvider;
-  final String email;
-  final String? imgUrl;
-  final String? name;
-  final SignUpModel? profile;
+  final String number;
+  final String imgUrl;
+  final String name;
+  final int ageRange;
+  final String gender;
+  final String mbti;
+  List<String> favorites;
+  List<String> tripTypes;
 
   UserModel({
-    required this.oauthProvider,
-    required this.email,
+    required this.number,
     required this.imgUrl,
     required this.name,
-    required this.profile,
+    required this.ageRange,
+    required this.gender,
+    required this.mbti,
+    required this.favorites,
+    required this.tripTypes,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
