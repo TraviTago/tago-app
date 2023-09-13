@@ -5,8 +5,6 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
-import 'package:tago_app/signup/model/sign_up_model.dart';
-import 'package:tago_app/user/provider/user_provider.dart';
 
 class LastFormScreen extends ConsumerStatefulWidget {
   static String get routeName => 'form4';
@@ -143,17 +141,17 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                           var queryParams =
                               GoRouterState.of(context).queryParameters;
 
-                          await ref.read(userProvider.notifier).signUp(
-                                signUpModel: SignUpModel(
-                                  ageRange:
-                                      int.tryParse(queryParams['ageRange']!)!,
-                                  gender: queryParams['gender']!,
-                                  mbti: queryParams['mbti']!,
-                                  favorites:
-                                      queryParams['favorites']!.split(','),
-                                  tripTypes: _selectedTripTypes,
-                                ),
-                              );
+                          // await ref.read(userProvider.notifier).signUp(
+                          //       signUpModel: SignUpModel(
+                          //         ageRange:
+                          //             int.tryParse(queryParams['ageRange']!)!,
+                          //         gender: queryParams['gender']!,
+                          //         mbti: queryParams['mbti']!,
+                          //         favorites:
+                          //             queryParams['favorites']!.split(','),
+                          //         tripTypes: _selectedTripTypes,
+                          //       ),
+                          //     );
                           if (isPatching) {
                             context.go('/profile');
                           }

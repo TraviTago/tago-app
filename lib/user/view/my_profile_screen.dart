@@ -46,17 +46,17 @@ class MyProfileScreen extends ConsumerWidget {
                   children: [
                     InfoRow(
                       label: 'MBTI',
-                      value: user.profile!.mbti,
+                      value: user.mbti,
                       border: true,
                     ),
                     InfoRow(
                       label: '좋아하는 것',
-                      value: user.profile!.favorites.join(', '),
+                      value: user.favorites.join(', '),
                       border: true,
                     ),
                     InfoRow(
                       label: '여행스타일',
-                      value: user.profile!.tripTypes.join('\n'),
+                      value: user.tripTypes.join('\n'),
                       border: false,
                     ),
                     const SizedBox(
@@ -90,7 +90,7 @@ class _ProfileBox extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(20.0),
           child: Image.network(
-            userModel.imgUrl!,
+            userModel.imgUrl,
             fit: BoxFit.cover,
             width: 90,
             height: 90,
@@ -105,7 +105,7 @@ class _ProfileBox extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Text(
-          userModel.name!,
+          userModel.name,
           style: const TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 15.0,
@@ -116,7 +116,7 @@ class _ProfileBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "${userModel.profile!.ageRange}대",
+              "${userModel.ageRange}대",
               style: const TextStyle(
                 fontSize: 13.0,
                 color: LABEL_TEXT_SUB_COLOR,
@@ -124,7 +124,7 @@ class _ProfileBox extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             Text(
-              DataUtils.genderPrinter(userModel.profile!.gender),
+              DataUtils.genderPrinter(userModel.gender),
               style: const TextStyle(
                 fontSize: 13.0,
                 color: LABEL_TEXT_SUB_COLOR,
@@ -153,8 +153,8 @@ class PatchButton extends StatelessWidget {
         onPressed: () {
           context.push(
             Uri(path: '/form2', queryParameters: {
-              'ageRange': userModel.profile!.ageRange.toString(),
-              'gender': DataUtils.genderPrinter(userModel.profile!.gender),
+              'ageRange': userModel.ageRange.toString(),
+              'gender': DataUtils.genderPrinter(userModel.gender),
               'isPatching': "true",
             }).toString(),
           );

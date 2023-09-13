@@ -122,7 +122,7 @@ class _ProfileCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: Image.network(
-              userModel.imgUrl!,
+              userModel.imgUrl,
               fit: BoxFit.cover,
               width: 90,
               height: 90,
@@ -144,7 +144,7 @@ class _ProfileCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      userModel.name!,
+                      userModel.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,
@@ -154,7 +154,7 @@ class _ProfileCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 3),
                       child: Text(
-                        userModel.profile!.mbti,
+                        userModel.mbti,
                         style: const TextStyle(
                           color: PRIMARY_COLOR,
                           fontWeight: FontWeight.w600,
@@ -167,7 +167,7 @@ class _ProfileCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "${userModel.profile!.ageRange}대",
+                      "${userModel.ageRange}대",
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: LABEL_TEXT_SUB_COLOR,
@@ -175,7 +175,7 @@ class _ProfileCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      DataUtils.genderPrinter(userModel.profile!.gender),
+                      DataUtils.genderPrinter(userModel.gender),
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: LABEL_TEXT_SUB_COLOR,

@@ -1,350 +1,184 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/login/component/phone_number_field.dart';
+import 'package:tago_app/user/repository/auth_repository.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   static String get routeName => 'signup';
 
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
-  bool phoneCheckSended = false;
-  String email = '';
-  String password = '';
-  String name = '';
-  String phoneNumber = '';
-  String phoneNumberCheck = '';
-  bool isEmailValid = true;
-  bool isPasswordValid = true;
-  bool isNameValid = true;
-  bool isPhoneNumberValid = true;
-  bool isPhoneNumberCheckValid = true;
-
+class _SignupScreenState extends ConsumerState<SignupScreen> {
+  String phoneNumber = "";
+  String verificationCode = "";
+  bool isPhoneNumberEnabled = true;
+  bool showVerificationField = false;
+  bool isVerifyMode = false;
   String? errorText;
-  bool _areAllFieldsValid() {
-    return isEmailValid && isPasswordValid && isNameValid && isPhoneNumberValid;
-  }
-
-  void _updateErrorText() {
-    List<String> errors = [];
-    if (!isEmailValid) {
-      errors.add('올바르지 않은 이메일 형식입니다');
-    }
-    if (!isPasswordValid) {
-      errors.add('숫자, 영문, 특수문자 8~16자로 입력해주세요');
-    }
-    if (!isNameValid) {
-      errors.add('이름을 제대로 입력해주세요');
-    }
-    if (!isPhoneNumberValid) {
-      errors.add('올바르지 않은 전화번호 형식입니다');
-    }
-    if (phoneCheckSended && !isPhoneNumberCheckValid) {
-      errors.add('올바르지 않은 인증번호 형식입니다');
-    }
-    errorText = errors.join('\n');
-  }
-
-  // 이메일 유효성 검사 함수
-  void _validateEmail(String value) {
-    if (value.isEmpty || !value.contains('@')) {
-      isEmailValid = false;
-    } else {
-      isEmailValid = true;
-      errorText = null;
-    }
-    setState(() {
-      _updateErrorText();
-    });
-    email = value;
-  }
-
-  // 비밀번호 유효성 검사 함수
-  void _validatePassword(String value) {
-    RegExp passwordPattern =
-        RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$&*~]).{8,16}$');
-    if (!passwordPattern.hasMatch(value) || value.isEmpty) {
-      isPasswordValid = false;
-    } else {
-      isPasswordValid = true;
-      errorText = null;
-    }
-    setState(() {
-      _updateErrorText();
-    });
-    password = value;
-  }
-
-  // 이름 유효성 검사 함수
-  void _validateName(String value) {
-    if (value.isEmpty) {
-      isNameValid = false;
-    } else {
-      isNameValid = true;
-      errorText = null;
-    }
-    setState(() {
-      _updateErrorText();
-    });
-    name = value;
-  }
-
-  // 전화번호 유효성 검사 함수
-  void _validatePhoneNumber(String value) {
-    RegExp phonePattern = RegExp(r'^\d{11}$');
-    if (!phonePattern.hasMatch(value) || value.isEmpty) {
-      isPhoneNumberValid = false;
-    } else {
-      isPhoneNumberValid = true;
-      errorText = null;
-    }
-    setState(() {
-      _updateErrorText();
-    });
-    phoneNumber = value;
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        titleComponet: const Text(
-          '회원가입',
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: PRIMARY_COLOR,
-            fontSize: 20,
+      titleComponet: const Text(
+        '',
+      ),
+      child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '안녕하세요!\n휴대폰 번호로 회원가입 해주세요',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(
+                height: 5.0,
+              ),
+              const Text(
+                '휴대폰 번호는 안전하게 보관되고 공개되지않아요',
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 40.0,
+              ),
+              PhoneNumberField(
+                hintText: "휴대폰번호 (- 없이 숫자만 입력)",
+                isPhoneNumber: true,
+                enabled: isPhoneNumberEnabled,
+                valid: true,
+                onChanged: (phone) {
+                  setState(() {
+                    phoneNumber = phone;
+                  });
+                },
+              ),
+              if (showVerificationField)
+                PhoneNumberField(
+                  hintText: "인증번호 6자리 입력",
+                  isPhoneNumber: false,
+                  valid: true,
+                  errorText: errorText,
+                  onChanged: (phone) {
+                    setState(() {
+                      verificationCode = phone;
+                    });
+                  },
+                ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              if (!isVerifyMode)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width, 40)),
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(LABEL_BG_COLOR),
+                  ),
+                  onPressed: handleSmsSending,
+                  child: Text(
+                    '인증문자 받기',
+                    style: TextStyle(
+                        color: phoneNumber.length == 13
+                            ? PRIMARY_COLOR
+                            : LABEL_TEXT_COLOR,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0),
+                  ),
+                ),
+              if (isVerifyMode)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width, 45)),
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: verificationCode.length == 6
+                        ? MaterialStateProperty.all(PRIMARY_COLOR)
+                        : MaterialStateProperty.all(LABEL_BG_COLOR),
+                  ),
+                  onPressed: handleSmsVerify,
+                  child: Text(
+                    '다음',
+                    style: TextStyle(
+                        color: verificationCode.length == 6
+                            ? Colors.white
+                            : LABEL_TEXT_COLOR,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0),
+                  ),
+                ),
+            ],
           ),
         ),
-        child: SafeArea(
-          bottom: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-              vertical: 20.0,
-            ),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    CustomSignupFormField(
-                        hintText: '이메일',
-                        icon: Icons.email_outlined,
-                        obscureText: false,
-                        onChanged: _validateEmail,
-                        valid: isEmailValid,
-                        enabled: !phoneCheckSended),
-                    CustomSignupFormField(
-                        hintText: '비밀번호',
-                        icon: Icons.lock_outline,
-                        obscureText: true,
-                        onChanged: _validatePassword,
-                        valid: isPasswordValid,
-                        enabled: !phoneCheckSended),
-                    CustomSignupFormField(
-                        hintText: '이름',
-                        icon: Icons.person,
-                        onChanged: _validateName,
-                        obscureText: false,
-                        valid: isNameValid,
-                        enabled: !phoneCheckSended),
-                    CustomSignupFormField(
-                        hintText: '휴대폰번호',
-                        icon: Icons.phone_iphone_outlined,
-                        onChanged: _validatePhoneNumber,
-                        obscureText: false,
-                        valid: isPhoneNumberValid,
-                        enabled: !phoneCheckSended),
-                    if (phoneCheckSended == true)
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: CustomSignupFormField(
-                              hintText: '인증번호',
-                              onChanged: (phoneNumberCheck) =>
-                                  this.phoneNumberCheck = phoneNumberCheck,
-                              obscureText: false,
-                              valid: isPhoneNumberCheckValid,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
-                                child: TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        const MaterialStatePropertyAll(
-                                            PRIMARY_COLOR),
-                                    overlayColor: MaterialStateProperty
-                                        .resolveWith<Color?>(
-                                      (Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.pressed)) {
-                                          return null;
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    //TOFIX: 인증번호 재전송 로직
-                                  },
-                                  child: const Text(
-                                    '재전송',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        ],
-                      ),
-                    if (errorText != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            errorText!,
-                            style: const TextStyle(
-                              color: PRIMARY_COLOR,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-                const Spacer(),
-                Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width, 45)),
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor: MaterialStateProperty.all(PRIMARY_COLOR),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    onPressed: () {
-                      _validateEmail(email);
-                      _validateName(name);
-                      _validatePassword(password);
-                      _validatePhoneNumber(phoneNumber);
-                      if (!_areAllFieldsValid()) {
-                        return;
-                      }
-                      //TOFIX: 문자 인증 요청.
-                      setState(() {
-                        phoneCheckSended = true;
-                      });
-                    },
-                    child: Text(
-                      phoneCheckSended == false ? '인증 요청' : '회원 가입',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.0),
-                    ),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
-}
 
-class CustomSignupFormField extends StatelessWidget {
-  final String? hintText;
-  final String? errorText;
-  final bool obscureText;
-  final bool valid;
-  final IconData? icon;
-  final bool autofocus;
-  final ValueChanged<String>? onChanged;
-  final bool enabled;
-  const CustomSignupFormField({
-    required this.onChanged,
-    required this.valid,
-    this.icon,
-    this.hintText,
-    this.errorText,
-    this.obscureText = false,
-    this.autofocus = false,
-    super.key,
-    this.enabled = true,
-  });
+  void handleSmsSending() {
+    if (phoneNumber.length == 13) {
+      String formattedNumber = phoneNumber.replaceAll('-', '');
 
-  @override
-  Widget build(BuildContext context) {
-    const baseBorder = UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: LABEL_BG_COLOR,
-        width: 1.0,
-      ),
-    );
+      ref.read(authRepositoryProvider).smsSending(number: formattedNumber);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        children: [
-          if (icon != null)
-            Expanded(
-                flex: 1,
-                child: Icon(
-                  icon,
-                  color: LABEL_TEXT_COLOR,
-                )),
-          Expanded(
-            flex: 6,
-            child: TextFormField(
-              enabled: enabled,
-              cursorColor: PRIMARY_COLOR,
-              //비밀번호 입력할 때
-              obscureText: obscureText,
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(10),
-                hintText: hintText,
-                errorText: errorText,
-                hintStyle: const TextStyle(
-                  color: LABEL_TEXT_COLOR,
-                  fontSize: 15.0,
-                ),
-                fillColor: Colors.white,
-                filled: true,
-                border: baseBorder,
-                focusedBorder: baseBorder.copyWith(
-                  borderSide: baseBorder.borderSide.copyWith(
-                    color: PRIMARY_COLOR,
-                  ),
-                ),
-                enabledBorder: baseBorder,
-              ),
-            ),
-          ),
-          if (valid == false)
-            const Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.warning_amber_rounded,
-                  color: PRIMARY_COLOR,
-                )),
-        ],
-      ),
-    );
+      setState(() {
+        isPhoneNumberEnabled = false;
+        showVerificationField = true;
+        isVerifyMode = true;
+      });
+    }
+  }
+
+  void handleSmsVerify() async {
+    // 인증 번호를 확인합니다.
+    if (verificationCode.length == 6) {
+      String formattedNumber = phoneNumber.replaceAll('-', '');
+      try {
+        final smsVerify = await ref
+            .read(authRepositoryProvider)
+            .smsVerify(number: formattedNumber, code: verificationCode);
+        if (smsVerify.verify) {
+          //문자 인증 성공일 경우
+          context.go(
+            Uri(
+              path: '/form1',
+              queryParameters: {
+                'number': phoneNumber,
+              },
+            ).toString(),
+          );
+          //TODO: 문자 인증 성공이지만 이미 회원일 경우: 로그인 시켜서 홈으로
+        }
+      } catch (e) {
+        //1. 인증번호 틀렸을 경우
+        setState(() {
+          errorText = "인증번호를 다시 입력해주세요";
+        });
+        //2. 시간초과일 경우
+      }
+    }
   }
 }
