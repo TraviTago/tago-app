@@ -10,6 +10,8 @@ import 'package:tago_app/customer_service/view/customer_service_report_screen.da
 import 'package:tago_app/login/view/signup_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/place/view/place_search_screen.dart';
+import 'package:tago_app/signup/view/profile_image_select_screen.dart';
+import 'package:tago_app/signup/view/profile_signup_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
@@ -72,6 +74,16 @@ class AuthProvider extends ChangeNotifier {
           path: '/signup',
           name: SignupScreen.routeName,
           builder: (_, __) => const SignupScreen(),
+        ),
+        GoRoute(
+          path: '/signup2',
+          name: ProfileSignupScreen.routeName,
+          builder: (_, __) => const ProfileSignupScreen(),
+        ),
+        GoRoute(
+          path: '/imageSelect',
+          name: ProfileImageSelectScreen.routeName,
+          builder: (_, __) => const ProfileImageSelectScreen(),
         ),
         GoRoute(
           path: '/form1',
@@ -199,9 +211,18 @@ class AuthProvider extends ChangeNotifier {
   String? redirectLogic(GoRouterState state) {
     final UserModelBase? user = ref.read(userProvider);
     final bool timerCompleted = ref.read(splashScreenTimerProvider);
+
     final landing = state.location == '/landing';
     final logginIn = state.location == '/login';
-    final signingUp = state.location == '/signup' || state.location == '/form1';
+    final signingUp = state.location == '/signup' ||
+        state.location == '/form1' ||
+        state.location == '/signup2' ||
+        Uri.parse(state.location).path == '/imageSelect';
+
+    final profileForm = Uri.parse(state.location).path == '/form1' ||
+        Uri.parse(state.location).path == '/form2' ||
+        Uri.parse(state.location).path == '/form3' ||
+        Uri.parse(state.location).path == '/form4';
     final splash = state.location == '/splash';
 
     if (!timerCompleted) {
@@ -209,11 +230,13 @@ class AuthProvider extends ChangeNotifier {
     }
     //유저 정보가 없을 때 로그인 중이면 로그인 페이지로, 만약 로그인 중이 아니라면 로그인 페이지로 이동
     if (user == null) {
-      return logginIn || landing || signingUp ? null : '/landing';
+      return logginIn || landing || signingUp || profileForm
+          ? null
+          : '/landing';
     }
     //유저 정보가 있을 때
     if (user is UserModel) {
-      if (landing || logginIn || signingUp || splash) {
+      if (landing || logginIn || splash) {
         return '/';
       }
     }
