@@ -10,8 +10,10 @@ class ButtonGroup extends StatefulWidget {
   final bool isMultipleSelection;
   final double mainAxisSpacing;
   final double crossAxisSpacing;
-  final Function(List<String>)
-      onButtonSelected; // 이전: Function(List<int>) onButtonSelected;
+  final bool prefix;
+  final bool isProfileStyle;
+
+  final Function(List<String>) onButtonSelected;
   final bool isModal;
   final List<int>? initialSelectedIndexes;
 
@@ -21,7 +23,9 @@ class ButtonGroup extends StatefulWidget {
     required this.buttonTexts,
     required this.crossAxisCount,
     required this.childAspectRatio,
+    this.prefix = false,
     this.buttonImgs,
+    this.isProfileStyle = false,
     this.isMultipleSelection = false,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 10,
@@ -110,6 +114,9 @@ class _ButtonGroupState extends State<ButtonGroup> {
                 )
               : OutlinedButton(
                   style: ButtonStyle(
+                    padding: widget.isProfileStyle
+                        ? MaterialStateProperty.all(EdgeInsets.zero)
+                        : null,
                     backgroundColor: MaterialStateProperty.all(
                       selectedButtons.contains(index)
                           ? Colors.white
@@ -117,10 +124,20 @@ class _ButtonGroupState extends State<ButtonGroup> {
                     ),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     side: MaterialStateProperty.resolveWith((states) {
-                      if (selectedButtons.contains(index)) {
-                        return const BorderSide(color: PRIMARY_COLOR, width: 3);
+                      if (widget.isProfileStyle) {
+                        if (selectedButtons.contains(index)) {
+                          return const BorderSide(
+                              color: PRIMARY_COLOR, width: 5);
+                        } else {
+                          return const BorderSide(color: Colors.transparent);
+                        }
                       } else {
-                        return const BorderSide(color: Colors.transparent);
+                        if (selectedButtons.contains(index)) {
+                          return const BorderSide(
+                              color: PRIMARY_COLOR, width: 3);
+                        } else {
+                          return const BorderSide(color: Colors.transparent);
+                        }
                       }
                     }),
                   ),
@@ -149,27 +166,64 @@ class _ButtonGroupState extends State<ButtonGroup> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Opacity(
-                          opacity: selectedButtons.contains(index) ? 1.0 : 0.5,
-                          child: Image.asset(
-                            'asset/img/${widget.buttonImgs![index]}.png',
-                            width: 45.0,
-                            height: 45.0,
+                        if (!widget.isProfileStyle)
+                          Opacity(
+                            opacity:
+                                selectedButtons.contains(index) ? 1.0 : 0.5,
+                            child: Image.asset(
+                              widget.prefix
+                                  ? 'asset/img/${widget.buttonImgs![index]}'
+                                  : 'asset/img/${widget.buttonImgs![index]}.png',
+                              width: 50.0,
+                              height: 50.0,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          widget.buttonTexts[index],
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: selectedButtons.contains(index)
-                                ? FontWeight.w500
-                                : FontWeight.w500,
-                            color: selectedButtons.contains(index)
-                                ? LABEL_TEXT_SUB_COLOR
-                                : LABEL_TEXT_COLOR,
+                        if (widget.isProfileStyle)
+                          Stack(
+                            children: [
+                              Image.asset(
+                                widget.prefix
+                                    ? 'asset/img/${widget.buttonImgs![index]}'
+                                    : 'asset/img/${widget.buttonImgs![index]}.png',
+                              ),
+                              if (selectedButtons.contains(index))
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.5),
+                                        borderRadius:
+                                            const BorderRadius.only()),
+                                    child: const Center(
+                                      child: Text(
+                                        '선택',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
-                        ),
+                        if (!widget.isProfileStyle) const SizedBox(height: 10),
+                        if (!widget.isProfileStyle)
+                          Text(
+                            widget.buttonTexts[index],
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: selectedButtons.contains(index)
+                                  ? FontWeight.w500
+                                  : FontWeight.w500,
+                              color: selectedButtons.contains(index)
+                                  ? LABEL_TEXT_SUB_COLOR
+                                  : LABEL_TEXT_COLOR,
+                            ),
+                          ),
                       ],
                     ),
                   ));

@@ -40,6 +40,24 @@ final Map<String, String> buttonData = {
   '쇼핑': 'shopping',
 };
 
+final Map<int, String> imgUrlData = {
+  0: 'profile/1.jpg',
+  1: 'profile/2.jpg',
+  2: 'profile/3.jpeg',
+  3: 'profile/4.jpeg',
+  4: 'profile/5.jpg',
+  5: 'profile/6.jpg',
+  6: 'profile/7.jpg',
+  7: 'profile/8.jpg',
+  8: 'profile/9.jpg',
+  9: 'profile/10.jpg',
+  10: 'profile/11.jpeg',
+  11: 'profile/12.jpeg',
+  12: 'profile/13.jpeg',
+  13: 'profile/14.jpeg',
+  14: 'profile/15.jpeg',
+};
+
 final markerImages = [
   DataUtils.loadAssetAsBase64('asset/img/marker/1.png'),
   DataUtils.loadAssetAsBase64('asset/img/marker/2.png'),
