@@ -38,6 +38,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               const Text(
                 '안녕하세요!\n휴대폰 번호로 로그인 해주세요',
                 style: TextStyle(
+                  height: 1.3,
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                 ),

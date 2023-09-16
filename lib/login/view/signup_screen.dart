@@ -38,6 +38,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               const Text(
                 '안녕하세요!\n휴대폰 번호로 회원가입 해주세요',
                 style: TextStyle(
+                  height: 1.3,
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -150,6 +151,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         isVerifyMode = true;
       });
     }
+
+    context.push('/signup2');
   }
 
   void handleSmsVerify() async {
