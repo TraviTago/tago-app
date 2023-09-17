@@ -1,25 +1,32 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/place/component/place_list_card.dart';
+import 'package:tago_app/place/component/place_popular_shimmer_card.dart';
 import 'package:tago_app/place/component/place_recommend_card.dart';
+import 'package:tago_app/place/component/place_recommend_shimmer_card.dart';
 import 'package:tago_app/place/model/place_model.dart';
+import 'package:tago_app/place/repository/place_repository.dart';
 
-class PlaceMainScreen extends StatefulWidget {
+class PlaceMainScreen extends ConsumerStatefulWidget {
   final Function(String)? onImageChange;
   const PlaceMainScreen({super.key, this.onImageChange});
 
   @override
-  State<PlaceMainScreen> createState() => _PlaceMainScreenState();
+  ConsumerState<PlaceMainScreen> createState() => _PlaceMainScreenState();
 }
 
-class _PlaceMainScreenState extends State<PlaceMainScreen> {
+class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
   final currentPageNotifier = ValueNotifier<double>(0);
   late PageController pageController;
-  List<PlaceModel> places = placeList;
-  List<PlaceModel> placesSummary = placeListSummary;
+
+  PlaceListModel? recommendedPlaces;
+  List<PlaceModel>? popularPlaces;
+
+  bool isPopularLoading = true;
+  bool isRecommendLoading = true;
 
   @override
   void initState() {
@@ -27,8 +34,31 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
 
     pageController = PageController();
     pageController.addListener(() {
-      currentPageNotifier.value =
-          pageController.page ?? 0; // 리스너에서는 currentPageNotifier만 업데이트합니다.
+      currentPageNotifier.value = pageController.page ?? 0;
+    });
+    _fetchRecommendPlaces();
+    _fetchPopularPlaces();
+  }
+
+  _fetchRecommendPlaces() async {
+    try {
+      recommendedPlaces =
+          await ref.read(placeRepositoryProvider).getRecommendPlaces();
+    } catch (error) {
+      // 에러 처리를 원하는대로 할 수 있습니다.
+    }
+    setState(() {
+      isRecommendLoading = false;
+    });
+  }
+
+  _fetchPopularPlaces() async {
+    try {
+      popularPlaces =
+          await ref.read(placeRepositoryProvider).getPopularPlaces();
+    } catch (error) {}
+    setState(() {
+      isPopularLoading = false;
     });
   }
 
@@ -39,40 +69,58 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
-                child: Swiper(
-                  loop: false,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20.0, bottom: 30.0, left: 5.0, // 좌측 패딩 추가
-                        right: 5.0,
+              const Padding(
+                padding: EdgeInsets.only(left: 30.0, top: 20.0),
+                child: Row(
+                  children: [
+                    Text(
+                      '당신을 기다리고 있는 여행지',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w700,
                       ),
-                      child: PlaecRecommendCard.fromModel(model: places[index]),
-                    );
-                  },
-                  onIndexChanged: (int index) {
-                    if (widget.onImageChange != null) {
-                      widget.onImageChange!(places[index].imageUrl);
-                    }
-                  },
-                  indicatorLayout: PageIndicatorLayout.SCALE,
-                  pagination: const SwiperPagination(
-                    margin: EdgeInsets.only(top: 60),
-                    builder: DotSwiperPaginationBuilder(
-                      size: 8,
-                      activeColor: PRIMARY_COLOR,
-                      color: SELECTED_BOX_BG_COLOR,
                     ),
-                  ),
-                  itemCount: places.length,
-                  viewportFraction: (MediaQuery.of(context).size.width - 60) /
-                      MediaQuery.of(context).size.width,
-                  scale: 1,
+                  ],
                 ),
               ),
+              if (isRecommendLoading) const PlaceRecommendShimmerCard(),
+              if (!isRecommendLoading)
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width,
+                  child: Swiper(
+                    loop: false,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          top: 20.0, bottom: 30.0, left: 5.0, // 좌측 패딩 추가
+                          right: 5.0,
+                        ),
+                        child: PlaecRecommendCard.fromModel(
+                            model: recommendedPlaces!.places[index]),
+                      );
+                    },
+                    onIndexChanged: (int index) {
+                      if (widget.onImageChange != null) {
+                        widget.onImageChange!(
+                            recommendedPlaces!.places[index].imageUrl);
+                      }
+                    },
+                    indicatorLayout: PageIndicatorLayout.SCALE,
+                    pagination: const SwiperPagination(
+                      margin: EdgeInsets.only(top: 60),
+                      builder: DotSwiperPaginationBuilder(
+                        size: 8,
+                        activeColor: PRIMARY_COLOR,
+                        color: SELECTED_BOX_BG_COLOR,
+                      ),
+                    ),
+                    itemCount: recommendedPlaces!.places.length,
+                    viewportFraction: (MediaQuery.of(context).size.width - 60) /
+                        MediaQuery.of(context).size.width,
+                    scale: 1,
+                  ),
+                ),
               Column(
                 children: [
                   Padding(
@@ -139,19 +187,33 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                           children: [
                             for (int i = 0; i < 2; i++)
                               Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10.0),
-                                  child: index * 2 + i < places.length
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 10.0, bottom: 30),
-                                          child: PlaceListCard.fromModel(
-                                              model: placeListSummary[
-                                                  index * 2 + i]),
-                                        )
-                                      : Container(), // if there's no item left, add an empty container
-                                ),
+                                child: !isPopularLoading
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, right: 10.0),
+                                        child: index * 2 + i <
+                                                popularPlaces!.length
+                                            ? Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10.0, bottom: 30),
+                                                child: PlaceListCard.fromModel(
+                                                    model: popularPlaces![
+                                                        index * 2 + i]),
+                                              )
+                                            : Container(), // if there's no item left, add an empty container
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, right: 10.0),
+                                        child: index * 2 + i < 2
+                                            ? const Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 10.0, bottom: 30),
+                                                child:
+                                                    PlacePopularShimmerCard(),
+                                              )
+                                            : Container(), // if there's no item left, add an empty container
+                                      ),
                               ),
                           ],
                         );
@@ -168,7 +230,9 @@ class _PlaceMainScreenState extends State<PlaceMainScreen> {
                           color: SELECTED_BOX_BG_COLOR,
                         ),
                       ),
-                      itemCount: (places.length / 2).ceil(),
+                      itemCount: !isPopularLoading
+                          ? (popularPlaces!.length / 2).ceil()
+                          : 1,
                       viewportFraction: 0.9,
                       scale: 1,
                     ),
