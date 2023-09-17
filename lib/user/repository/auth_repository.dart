@@ -78,6 +78,9 @@ class AuthRepository {
     final resp = await dio.post(
       '$baseUrl/sign-up',
       data: {
+        'number': number,
+        'imgUrl': imgUrl,
+        'name': name,
         'ageRange': ageRange,
         'gender': gender,
         'mbti': mbti,

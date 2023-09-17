@@ -73,6 +73,11 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
       tripTypes: tripTypes,
     );
 
+    await storage.write(
+        key: REFRESH_TOKEN_KEY, value: response.tokens.refreshToken);
+    await storage.write(
+        key: ACCESS_TOKEN_KEY, value: response.tokens.accessToken);
+
     final userResp = await repository.getMe();
     state = userResp;
     print('회원가입 성공');
@@ -115,8 +120,6 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   Future<void> logout() async {
     // 가장 먼저 state을 null로 만들어서
     // 로그인 페이지로 보낸다.
-    state = null;
-
     state = null;
     await Future.wait([
       storage.delete(key: REFRESH_TOKEN_KEY),
