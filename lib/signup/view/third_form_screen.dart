@@ -91,6 +91,12 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
                                 'isPatching': GoRouterState.of(context)
                                     .queryParameters['isPatching'],
                                 'favorites': _selectedFavorites.join(','),
+                                'number': GoRouterState.of(context)
+                                    .queryParameters['number'],
+                                'name': GoRouterState.of(context)
+                                    .queryParameters['name'],
+                                'imagePath': GoRouterState.of(context)
+                                    .queryParameters['imagePath'],
                               },
                             ).toString(),
                           ),

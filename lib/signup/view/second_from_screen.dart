@@ -162,6 +162,12 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
                                     .queryParameters['ageRange'],
                                 'gender': GoRouterState.of(context)
                                     .queryParameters['gender'],
+                                'name': GoRouterState.of(context)
+                                    .queryParameters['name'],
+                                'imagePath': GoRouterState.of(context)
+                                    .queryParameters['imagePath'],
+                                'number': GoRouterState.of(context)
+                                    .queryParameters['number'],
                                 'mbti': mbti,
                                 'isPatching': GoRouterState.of(context)
                                     .queryParameters['isPatching'],

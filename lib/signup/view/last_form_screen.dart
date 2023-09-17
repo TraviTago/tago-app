@@ -5,6 +5,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
 class LastFormScreen extends ConsumerStatefulWidget {
   static String get routeName => 'form4';
@@ -136,22 +137,30 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                             selectedTripType3
                           ]);
 
-                          print(_selectedTripTypes);
-                          // 카카오 로그인 성공 여부
                           var queryParams =
                               GoRouterState.of(context).queryParameters;
 
-                          // await ref.read(userProvider.notifier).signUp(
-                          //       signUpModel: SignUpModel(
-                          //         ageRange:
-                          //             int.tryParse(queryParams['ageRange']!)!,
-                          //         gender: queryParams['gender']!,
-                          //         mbti: queryParams['mbti']!,
-                          //         favorites:
-                          //             queryParams['favorites']!.split(','),
-                          //         tripTypes: _selectedTripTypes,
-                          //       ),
-                          //     );
+                          print(int.tryParse(queryParams['ageRange']!)!);
+                          print(_selectedTripTypes);
+
+                          print(queryParams['number']!);
+                          print(queryParams['imagePath']!);
+                          print(queryParams['gender']!);
+                          print(queryParams['mbti']!);
+                          print(queryParams['favorites']!.split(','));
+                          print(queryParams['name']!);
+
+                          await ref.read(userProvider.notifier).signUp(
+                                ageRange:
+                                    int.tryParse(queryParams['ageRange']!)!,
+                                gender: queryParams['gender']!,
+                                mbti: queryParams['mbti']!,
+                                favorites: queryParams['favorites']!.split(','),
+                                name: queryParams['name']!,
+                                number: queryParams['number']!,
+                                imgUrl: queryParams['imagePath']!,
+                                tripTypes: _selectedTripTypes,
+                              );
                           if (isPatching) {
                             context.go('/profile');
                           }

@@ -30,6 +30,10 @@ class _FirstFormScreenState extends State<FirstFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String name = GoRouterState.of(context).queryParameters['name']!;
+    String imagePath = GoRouterState.of(context).queryParameters['imagePath']!;
+    String number = GoRouterState.of(context).queryParameters['number']!;
+
     return DefaultLayout(
       child: SafeArea(
         top: true,
@@ -151,6 +155,9 @@ class _FirstFormScreenState extends State<FirstFormScreen> {
                                     'ageRange': _selectedAgeRange.toString(),
                                     'gender': _selectedGender,
                                     'isPatching': "false",
+                                    'name': name,
+                                    'imagePath': imagePath,
+                                    'number': number,
                                   },
                                 ).toString(),
                               );

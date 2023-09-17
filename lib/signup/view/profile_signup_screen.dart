@@ -19,6 +19,8 @@ class _ProfileSignupScreenState extends State<ProfileSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String number = GoRouterState.of(context).queryParameters['number']!;
+
     const baseBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: LABEL_BG_COLOR,
@@ -175,6 +177,7 @@ class _ProfileSignupScreenState extends State<ProfileSignupScreen> {
                             queryParameters: {
                               'imagePath': selectedImagePath,
                               'name': name,
+                              'number': number,
                             },
                           ).toString(),
                         );

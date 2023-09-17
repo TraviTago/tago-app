@@ -151,8 +151,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         isVerifyMode = true;
       });
     }
-
-    context.push('/signup2');
   }
 
   void handleSmsVerify() async {
@@ -167,7 +165,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           //문자 인증 성공일 경우
           context.go(
             Uri(
-              path: '/form1',
+              path: '/signup2',
               queryParameters: {
                 'number': phoneNumber,
               },
