@@ -4,8 +4,8 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/place/component/place_list_card.dart';
+import 'package:tago_app/place/model/place_model.dart';
 import 'package:tago_app/place/provider/place_provider.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
 
 class PlaceSearchScreen extends ConsumerStatefulWidget {
   static String get routeName => 'places';
@@ -104,7 +104,7 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
                   } else if (state is CursorPaginationError) {
                     return Text('Error: ${state.message}');
                   } else if (state is CursorPagination) {
-                    final places = state.contents as List<PlaceSummaryModel>;
+                    final places = state.contents as List<PlaceModel>;
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0),

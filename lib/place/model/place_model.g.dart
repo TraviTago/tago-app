@@ -11,8 +11,7 @@ PlaceModel _$PlaceModelFromJson(Map<String, dynamic> json) => PlaceModel(
       title: json['title'] as String,
       overview: json['overview'] as String,
       imageUrl: json['imageUrl'] as String,
-      mapX: (json['mapX'] as num).toDouble(),
-      mapY: (json['mapY'] as num).toDouble(),
+      address: json['address'] as String?,
     );
 
 Map<String, dynamic> _$PlaceModelToJson(PlaceModel instance) =>
@@ -21,6 +20,5 @@ Map<String, dynamic> _$PlaceModelToJson(PlaceModel instance) =>
       'title': instance.title,
       'overview': instance.overview,
       'imageUrl': instance.imageUrl,
-      'mapX': instance.mapX,
-      'mapY': instance.mapY,
+      'address': instance.address,
     };

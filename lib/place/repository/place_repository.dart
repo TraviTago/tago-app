@@ -6,7 +6,7 @@ import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_model.dart';
 
 part 'place_repository.g.dart';
 
@@ -24,7 +24,7 @@ abstract class PlaceRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<CursorPagination<PlaceSummaryModel>> getPlaces({
+  Future<CursorPagination<PlaceModel>> getPlaces({
     @Queries() PaginationParams? paginationParams,
   });
 

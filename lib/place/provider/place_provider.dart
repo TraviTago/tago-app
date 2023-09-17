@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
+import 'package:tago_app/place/model/place_model.dart';
 import 'package:tago_app/place/repository/place_repository.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
 
 final placeProvider =
     StateNotifierProvider<PlaceStateNotifier, CursorPaginationBase>(
@@ -19,7 +19,7 @@ final placeProvider =
 class PlaceStateNotifier extends StateNotifier<CursorPaginationBase> {
   final PlaceRepository repository;
 
-  List<PlaceSummaryModel> _originalPlaces = [];
+  List<PlaceModel> _originalPlaces = [];
 
   PlaceStateNotifier({
     required this.repository,

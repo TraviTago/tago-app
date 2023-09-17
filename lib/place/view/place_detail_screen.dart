@@ -85,7 +85,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                             DetailImage(imageUrl: detailModel.imageUrl),
                             const SizedBox(height: 20.0),
                             Text(
-                              detailModel.address,
+                              detailModel.address!,
                               style: const TextStyle(
                                 fontSize: 17.0,
                                 color: LABEL_TEXT_SUB_COLOR,

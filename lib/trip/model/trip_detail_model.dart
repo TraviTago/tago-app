@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tago_app/place/model/place_model.dart';
+import 'package:tago_app/place/model/place_trip_model.dart';
 
 part 'trip_detail_model.g.dart';
 
@@ -8,7 +8,7 @@ class TripDetailModel {
   final String tripName;
   final int currentCnt;
   final int maxCnt;
-  final List<PlaceModel> places;
+  final List<PlaceTripModel> places;
   final bool isJoined;
 
   TripDetailModel({

@@ -12,7 +12,7 @@ TripDetailModel _$TripDetailModelFromJson(Map<String, dynamic> json) =>
       currentCnt: json['currentCnt'] as int,
       maxCnt: json['maxCnt'] as int,
       places: (json['places'] as List<dynamic>)
-          .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => PlaceTripModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       isJoined: json['isJoined'] as bool,
     );

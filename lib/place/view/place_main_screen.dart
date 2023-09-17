@@ -5,8 +5,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/place/component/place_list_card.dart';
 import 'package:tago_app/place/component/place_recommend_card.dart';
-import 'package:tago_app/place/model/place_recommend_model.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_model.dart';
 
 class PlaceMainScreen extends StatefulWidget {
   final Function(String)? onImageChange;
@@ -19,8 +18,8 @@ class PlaceMainScreen extends StatefulWidget {
 class _PlaceMainScreenState extends State<PlaceMainScreen> {
   final currentPageNotifier = ValueNotifier<double>(0);
   late PageController pageController;
-  List<PlaceRecommendModel> places = placeList;
-  List<PlaceSummaryModel> placesSummary = placeListSummary;
+  List<PlaceModel> places = placeList;
+  List<PlaceModel> placesSummary = placeListSummary;
 
   @override
   void initState() {

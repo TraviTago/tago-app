@@ -2,30 +2,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/place/model/place_summary_model.dart';
+import 'package:tago_app/place/model/place_model.dart';
 
 class PlaceListCard extends StatelessWidget {
   final int id;
   final String address;
   final String title;
   final String imageUrl;
+  final String overview;
 
   const PlaceListCard({
     required this.id,
     required this.title,
     required this.address,
     required this.imageUrl,
+    required this.overview,
     Key? key,
   }) : super(key: key);
 
   factory PlaceListCard.fromModel({
-    required PlaceSummaryModel model,
+    required PlaceModel model,
   }) {
     return PlaceListCard(
       id: model.id,
-      address: model.address,
+      address: model.address!,
       title: model.title,
       imageUrl: model.imageUrl,
+      overview: model.overview,
     );
   }
   @override

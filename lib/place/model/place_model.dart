@@ -8,16 +8,14 @@ class PlaceModel {
   final String title;
   final String overview;
   final String imageUrl;
-  final double mapX;
-  final double mapY;
+  final String? address;
 
   PlaceModel({
     required this.id,
     required this.title,
     required this.overview,
     required this.imageUrl,
-    required this.mapX,
-    required this.mapY,
+    required this.address,
   });
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) =>
