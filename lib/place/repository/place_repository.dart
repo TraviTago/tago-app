@@ -35,4 +35,16 @@ abstract class PlaceRepository {
   Future<PlaceDetailModel> getDetailPlace({
     @Path() required int placeId,
   });
+
+  @GET('/places/recommend')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<PlaceListModel> getRecommendPlaces();
+
+  @GET('/places/popular')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<List<PlaceModel>> getPopularPlaces();
 }
