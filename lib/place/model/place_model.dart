@@ -15,11 +15,25 @@ class PlaceModel {
     required this.title,
     required this.overview,
     required this.imageUrl,
-    required this.address,
+    this.address,
   });
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) =>
       _$PlaceModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaceModelToJson(this);
+}
+
+@JsonSerializable()
+class PlaceListModel {
+  final List<PlaceModel> places;
+
+  PlaceListModel({
+    required this.places,
+  });
+
+  factory PlaceListModel.fromJson(Map<String, dynamic> json) =>
+      _$PlaceListModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlaceListModelToJson(this);
 }

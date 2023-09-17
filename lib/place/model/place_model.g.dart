@@ -22,3 +22,15 @@ Map<String, dynamic> _$PlaceModelToJson(PlaceModel instance) =>
       'imageUrl': instance.imageUrl,
       'address': instance.address,
     };
+
+PlaceListModel _$PlaceListModelFromJson(Map<String, dynamic> json) =>
+    PlaceListModel(
+      places: (json['places'] as List<dynamic>)
+          .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$PlaceListModelToJson(PlaceListModel instance) =>
+    <String, dynamic>{
+      'places': instance.places,
+    };
