@@ -215,8 +215,7 @@ class AuthProvider extends ChangeNotifier {
     final landing = state.location == '/landing';
     final logginIn = state.location == '/login';
     final signingUp = state.location == '/signup' ||
-        state.location == '/form1' ||
-        state.location == '/signup2' ||
+        Uri.parse(state.location).path == '/signup2' ||
         Uri.parse(state.location).path == '/imageSelect';
 
     final profileForm = Uri.parse(state.location).path == '/form1' ||
@@ -236,7 +235,11 @@ class AuthProvider extends ChangeNotifier {
     }
     //유저 정보가 있을 때
     if (user is UserModel) {
-      if (landing || logginIn || splash) {
+      if (landing ||
+          logginIn ||
+          signingUp ||
+          splash ||
+          state.location == 'form4') {
         return '/';
       }
     }
