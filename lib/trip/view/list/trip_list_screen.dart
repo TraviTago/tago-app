@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/component/trip_card.dart';
 import 'package:tago_app/trip/component/trip_list_skeleton.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
+import 'package:tago_app/trip/component/trip_recommend_shimmer_card.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/provider/trip_provider.dart';
+import 'package:tago_app/trip/repository/trip_repository.dart';
 
 class TripListScreen extends ConsumerStatefulWidget {
   const TripListScreen({super.key});
@@ -19,12 +21,29 @@ class TripListScreen extends ConsumerStatefulWidget {
 
 class _TripListScreenState extends ConsumerState<TripListScreen> {
   final ScrollController controller = ScrollController();
+  late ValueNotifier<TripModel?> tripRecommendDataNotifier =
+      ValueNotifier<TripModel?>(null);
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.addListener(scrollListener);
+    _fetchRecommendedTrip();
+  }
+
+  Future<void> _fetchRecommendedTrip() async {
+    try {
+      final data = await ref.read(tripRepositoryProvider).getRecommendTrip();
+      tripRecommendDataNotifier.value = data;
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @override
+  void dispose() {
+    tripRecommendDataNotifier.dispose();
+    super.dispose();
   }
 
   void scrollListener() {
@@ -122,9 +141,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
 
                     final bool shouldShowDate = previousDate == null ||
                         !DataUtils.isSameDate(
-                            previousDate,
-                            cp.contents[index]
-                                .dateTime); // 도우미 함수를 사용하여 같은 날짜인지 확인
+                            previousDate, cp.contents[index].dateTime);
 
                     if (index == 0) {
                       return Column(
@@ -140,7 +157,16 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                           const SizedBox(
                             height: 10.0,
                           ),
-                          TripRecommendCard.fromModel(model: tripData),
+                          ValueListenableBuilder<TripModel?>(
+                            valueListenable: tripRecommendDataNotifier,
+                            builder: (context, tripRecommendData, child) {
+                              if (tripRecommendData == null) {
+                                return const TripRecommendShimmerCard();
+                              }
+                              return TripRecommendCard.fromModel(
+                                  model: tripRecommendData);
+                            },
+                          ),
                           const SizedBox(
                             height: 20.0,
                           ),
