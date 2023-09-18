@@ -31,6 +31,12 @@ abstract class TripRepository {
     @Queries() PaginationParams? paginationParams,
   });
 
+  @GET('/recommend')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripModel> getRecommendTrip();
+
   @GET('/{tripId}')
   @Headers({
     'accessToken': 'true',
