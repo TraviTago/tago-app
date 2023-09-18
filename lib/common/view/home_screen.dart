@@ -28,7 +28,7 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
     );
     _animationController.addListener(() {
-      setState(() {}); // 여기서 setState를 호출해줍니다.
+      setState(() {});
     });
     _colorAnimation = ColorTween(
       begin: Colors.white,
@@ -117,7 +117,7 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                         fontSize: 18.0,
                       ),
                       indicator: const UnderlineTabIndicator(
-                        insets: EdgeInsets.symmetric(horizontal: 6.0),
+                        insets: EdgeInsets.symmetric(horizontal: 0.0),
                         borderRadius: BorderRadius.all(Radius.circular(1.0)),
                         borderSide: BorderSide(
                           width: 3.0,
