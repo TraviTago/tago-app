@@ -44,6 +44,10 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
     try {
       recommendedPlaces =
           await ref.read(placeRepositoryProvider).getRecommendPlaces();
+      if (recommendedPlaces!.places.isNotEmpty) {
+        widget.onImageChange
+            ?.call(recommendedPlaces!.places[0].imageUrl); // Add this line
+      }
     } catch (error) {
       // 에러 처리를 원하는대로 할 수 있습니다.
     }

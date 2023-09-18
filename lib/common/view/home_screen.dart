@@ -16,8 +16,7 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Color?> _colorAnimation;
 
-  String backgroundImageUrl =
-      'http://tong.visitkorea.or.kr/cms/resource/67/2612467_image2_1.jpg';
+  String? backgroundImageUrl;
   @override
   void initState() {
     super.initState();
@@ -64,12 +63,16 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Container(
                 height: 500,
                 width: double.maxFinite,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(backgroundImageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: backgroundImageUrl != null
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(backgroundImageUrl!),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : const BoxDecoration(
+                        color: Colors.white,
+                      ),
                 child: DecoratedBox(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
