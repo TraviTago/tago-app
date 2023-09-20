@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
-import 'package:tago_app/trip/model/my_trip_response_model.dart';
+import 'package:tago_app/trip/model/trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';
 

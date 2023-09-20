@@ -46,7 +46,7 @@ class _TripFifthFormScreenState extends State<TripFifthFormScreen> {
               Expanded(
                 child: ButtonGroup(
                   isMultipleSelection: true,
-                  buttonCount: 18,
+                  buttonCount: 16,
                   buttonTexts: buttonData.keys.toList(),
                   buttonImgs: buttonData.values.toList(),
                   crossAxisCount: 3,
