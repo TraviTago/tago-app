@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
@@ -7,8 +8,8 @@ import 'package:tago_app/place/component/place_list_card.dart';
 import 'package:tago_app/place/component/place_popular_shimmer_card.dart';
 import 'package:tago_app/place/component/place_recommend_card.dart';
 import 'package:tago_app/place/component/place_recommend_shimmer_card.dart';
-import 'package:tago_app/place/model/place_model.dart';
-import 'package:tago_app/place/repository/place_repository.dart';
+import 'package:tago_app/place/provider/place_popular_provider.dart';
+import 'package:tago_app/place/provider/place_recommend_provider.dart';
 
 class PlaceMainScreen extends ConsumerStatefulWidget {
   final Function(String)? onImageChange;
@@ -20,13 +21,8 @@ class PlaceMainScreen extends ConsumerStatefulWidget {
 
 class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
   final currentPageNotifier = ValueNotifier<double>(0);
+
   late PageController pageController;
-
-  PlaceListModel? recommendedPlaces;
-  List<PlaceModel>? popularPlaces;
-
-  bool isPopularLoading = true;
-  bool isRecommendLoading = true;
 
   @override
   void initState() {
@@ -36,38 +32,18 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
     pageController.addListener(() {
       currentPageNotifier.value = pageController.page ?? 0;
     });
-    _fetchRecommendPlaces();
-    _fetchPopularPlaces();
-  }
-
-  _fetchRecommendPlaces() async {
-    try {
-      recommendedPlaces =
-          await ref.read(placeRepositoryProvider).getRecommendPlaces();
-      if (recommendedPlaces!.places.isNotEmpty) {
-        widget.onImageChange
-            ?.call(recommendedPlaces!.places[0].imageUrl); // Add this line
-      }
-    } catch (error) {
-      // 에러 처리를 원하는대로 할 수 있습니다.
-    }
-    setState(() {
-      isRecommendLoading = false;
-    });
-  }
-
-  _fetchPopularPlaces() async {
-    try {
-      popularPlaces =
-          await ref.read(placeRepositoryProvider).getPopularPlaces();
-    } catch (error) {}
-    setState(() {
-      isPopularLoading = false;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(placeRecommendProvider.notifier)
+          .fetchRecommendPlaces(widget.onImageChange);
+      ref.read(placePopularProvider.notifier).fetchPopularPlaces();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final placeRecommendData = ref.watch(placeRecommendProvider);
+    final placePopularData = ref.watch(placePopularProvider);
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -87,8 +63,8 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                   ],
                 ),
               ),
-              if (isRecommendLoading) const PlaceRecommendShimmerCard(),
-              if (!isRecommendLoading)
+              if (placeRecommendData == null) const PlaceRecommendShimmerCard(),
+              if (placeRecommendData != null)
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width,
@@ -101,13 +77,13 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                           right: 5.0,
                         ),
                         child: PlaecRecommendCard.fromModel(
-                            model: recommendedPlaces!.places[index]),
+                            model: placeRecommendData.places[index]),
                       );
                     },
                     onIndexChanged: (int index) {
                       if (widget.onImageChange != null) {
                         widget.onImageChange!(
-                            recommendedPlaces!.places[index].imageUrl);
+                            placeRecommendData.places[index].imageUrl);
                       }
                     },
                     indicatorLayout: PageIndicatorLayout.SCALE,
@@ -119,7 +95,7 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                         color: SELECTED_BOX_BG_COLOR,
                       ),
                     ),
-                    itemCount: recommendedPlaces!.places.length,
+                    itemCount: placeRecommendData.places.length,
                     viewportFraction: (MediaQuery.of(context).size.width - 60) /
                         MediaQuery.of(context).size.width,
                     scale: 1,
@@ -191,17 +167,17 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                           children: [
                             for (int i = 0; i < 2; i++)
                               Expanded(
-                                child: !isPopularLoading
+                                child: placePopularData != null
                                     ? Padding(
                                         padding: const EdgeInsets.only(
                                             left: 10.0, right: 10.0),
                                         child: index * 2 + i <
-                                                popularPlaces!.length
+                                                placePopularData.length
                                             ? Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 10.0, bottom: 30),
                                                 child: PlaceListCard.fromModel(
-                                                    model: popularPlaces![
+                                                    model: placePopularData[
                                                         index * 2 + i]),
                                               )
                                             : Container(), // if there's no item left, add an empty container
@@ -234,8 +210,8 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                           color: SELECTED_BOX_BG_COLOR,
                         ),
                       ),
-                      itemCount: !isPopularLoading
-                          ? (popularPlaces!.length / 2).ceil()
+                      itemCount: placePopularData != null
+                          ? (placePopularData.length / 2).ceil()
                           : 1,
                       viewportFraction: 0.9,
                       scale: 1,

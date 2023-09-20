@@ -10,7 +10,7 @@ import 'package:tago_app/trip/component/trip_recommend_card.dart';
 import 'package:tago_app/trip/component/trip_recommend_shimmer_card.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/provider/trip_provider.dart';
-import 'package:tago_app/trip/repository/trip_repository.dart';
+import 'package:tago_app/trip/provider/trip_recommend_provider.dart';
 
 class TripListScreen extends ConsumerStatefulWidget {
   const TripListScreen({super.key});
@@ -28,16 +28,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
   void initState() {
     super.initState();
     controller.addListener(scrollListener);
-    _fetchRecommendedTrip();
-  }
-
-  Future<void> _fetchRecommendedTrip() async {
-    try {
-      final data = await ref.read(tripRepositoryProvider).getRecommendTrip();
-      tripRecommendDataNotifier.value = data;
-    } catch (error) {
-      print(error);
-    }
+    ref.read(recommendProvider.notifier).fetchRecommendTrip();
   }
 
   @override
@@ -57,6 +48,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
   @override
   Widget build(BuildContext context) {
     final contents = ref.watch(tripProvider);
+    final tripRecommendData = ref.watch(recommendProvider);
 
     if (contents is CursorPaginationLoading) {
       return const TripListSkeleton();
@@ -157,16 +149,10 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                           const SizedBox(
                             height: 10.0,
                           ),
-                          ValueListenableBuilder<TripModel?>(
-                            valueListenable: tripRecommendDataNotifier,
-                            builder: (context, tripRecommendData, child) {
-                              if (tripRecommendData == null) {
-                                return const TripRecommendShimmerCard();
-                              }
-                              return TripRecommendCard.fromModel(
-                                  model: tripRecommendData);
-                            },
-                          ),
+                          tripRecommendData == null
+                              ? const TripRecommendShimmerCard()
+                              : TripRecommendCard.fromModel(
+                                  model: tripRecommendData),
                           const SizedBox(
                             height: 20.0,
                           ),
