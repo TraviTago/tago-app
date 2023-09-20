@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'my_trip_response_model.dart';
+part of 'trip_response_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -17,4 +17,14 @@ Map<String, dynamic> _$MyTripResponseModelToJson(
         MyTripResponseModel instance) =>
     <String, dynamic>{
       'trips': instance.trips,
+    };
+
+TripCreateResponse _$TripCreateResponseFromJson(Map<String, dynamic> json) =>
+    TripCreateResponse(
+      tripId: json['tripId'] as int,
+    );
+
+Map<String, dynamic> _$TripCreateResponseToJson(TripCreateResponse instance) =>
+    <String, dynamic>{
+      'tripId': instance.tripId,
     };
