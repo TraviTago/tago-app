@@ -7,6 +7,32 @@ import 'package:html/parser.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class DataUtils {
+  static int listToint(String data) {
+    String replacedData = data.replaceAll('[', '').replaceAll(']', '');
+
+    if (replacedData == "") {
+      return -1;
+    }
+
+    return int.parse(replacedData.trim());
+  }
+
+  static List<String> stringToList(String? data) {
+    if (data == null) {
+      return [];
+    } else {
+      String replacedData = data.replaceAll('[', '').replaceAll(']', '');
+
+      if (replacedData == "") {
+        return [];
+      } else {
+        List<String> list =
+            replacedData.split(',').map((s) => s.trim()).toList();
+        return list;
+      }
+    }
+  }
+
   static String formatDuration(int durationInSeconds) {
     int hours = durationInSeconds ~/ 60;
     int minutes = (durationInSeconds % 60);

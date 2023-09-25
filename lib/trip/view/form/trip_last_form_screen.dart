@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/course/repository/course_repository.dart';
 
 class TripLastFormScreen extends ConsumerStatefulWidget {
@@ -126,32 +127,15 @@ class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
                 onPressed: tripNameCount == 0
                     ? null
                     : () {
-                        String? mustPlacesString = GoRouterState.of(context)
-                            .queryParameters['mustPlaces'];
+                        final int parsedPlaceId = DataUtils.listToint(
+                            GoRouterState.of(context)
+                                .queryParameters['mustPlaces']!);
 
-                        String? typesString =
-                            GoRouterState.of(context).queryParameters['types'];
-
-                        if (mustPlacesString != null && typesString != null) {
-                          final int parsedPlaceId = int.parse(mustPlacesString
-                              .replaceAll('[', '')
-                              .replaceAll(']', '')
-                              .trim());
-
-                          final List<String> parsedTripTags = typesString
-                              .replaceAll('[', '')
-                              .replaceAll(']', '')
-                              .split(',')
-                              .map((s) => s.trim())
-                              .toList();
-
-                          print(parsedPlaceId);
-                          print(parsedTripTags);
-
-                          ref
-                              .read(courseRepositoryProvider)
-                              .recommendCourse(placeId: 1, tags: ["자연"]);
-                        } else {}
+                        final List<String> parsedTripTags =
+                            DataUtils.stringToList(GoRouterState.of(context)
+                                .queryParameters['types']);
+                        ref.read(courseRepositoryProvider).recommendCourse(
+                            placeId: parsedPlaceId, tags: parsedTripTags);
                         context.go(Uri(
                           path: '/tripComplete',
                           queryParameters: {
