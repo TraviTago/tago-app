@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/model/cursor_pagination_model.dart';
+import 'package:tago_app/place/model/place_model.dart';
+import 'package:tago_app/place/provider/place_provider.dart';
 
 class TripFourthFormScreen extends StatefulWidget {
   const TripFourthFormScreen({super.key});
@@ -24,26 +29,13 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
   bool isRecommended = false;
   List<int> selectedPlaceIndexes = [];
   DateTime? selectedDateTime;
+  List<PlaceModel> selectedMustPlaces = [];
 
-  List<String> startPlaces = [
-    '부산역 4번출구',
-    '서면역 2번출구',
-    '해운대역 4번출구',
-    '광안역',
-  ];
-  Map<String, bool> allPlaces = {
-    '해운대해수욕장': false,
-    '해운대나무': false,
-    '해운대광안리': false,
-    '헤원사': false,
-    '히히히': false,
-    '하하하': false,
-    '호호호': false,
-    '라라라': false,
-  }; // 초기값은 모두 선택되지 않은 상태입니다.
-  void _updatePlaces(Map<String, bool> newPlaces) {
+  void _updatePlaces(PlaceModel newPlace) {
     setState(() {
-      allPlaces = newPlaces;
+      //TOFIX: 현재는 무조건 place는 하나
+      selectedMustPlaces.clear();
+      selectedMustPlaces.add(newPlace);
     });
   }
 
@@ -117,58 +109,54 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                     SizedBox(
                       key: _buttonkey,
                       height: 35,
-                      child: allPlaces.values.any((value) => value)
+                      child: selectedMustPlaces.isNotEmpty
                           ? ListView(
                               scrollDirection: Axis.horizontal,
-                              children: allPlaces.entries
-                                  .where((entry) => entry.value == true)
-                                  .expand((entry) => [
-                                        Container(
-                                          alignment: Alignment.center,
-                                          decoration: const BoxDecoration(
-                                            color: LABEL_BG_COLOR,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(
-                                              10.0,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  entry.key,
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: PRIMARY_COLOR,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                    width:
-                                                        5.0), // Add a little space between the text and the icon
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      allPlaces[entry.key] =
-                                                          false;
-                                                    });
-                                                  },
-                                                  child: const Icon(Icons.close,
-                                                      size: 14,
-                                                      color:
-                                                          BUTTON_BG_COLOR), // Add 'close' icon
-                                                ),
-                                              ],
-                                            ),
+                              children: selectedMustPlaces
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                return Container(
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                    color: LABEL_BG_COLOR,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                      10.0,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          entry.value.title,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: PRIMARY_COLOR,
                                           ),
                                         ),
                                         const SizedBox(
                                             width:
-                                                10.0), // Add space between the containers
-                                      ])
-                                  .toList(),
+                                                5.0), // Add a little space between the text and the icon
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedMustPlaces.clear();
+                                            });
+                                          },
+                                          child: const Icon(Icons.close,
+                                              size: 14,
+                                              color:
+                                                  BUTTON_BG_COLOR), // Add 'close' icon
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             )
                           : const Text(
                               '가고싶은 장소를 추가해 보세요 :-)',
@@ -184,6 +172,7 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                     ),
                     TextButton(
                       onPressed: () {
+                        setState(() {});
                         final RenderBox renderBox = _buttonkey.currentContext!
                             .findRenderObject() as RenderBox;
                         Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -196,7 +185,7 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                           builder: (context) {
                             return SearchModal(
                                 controller: _controller,
-                                allPlaces: allPlaces,
+                                selectedPlaces: selectedMustPlaces,
                                 offset: offset,
                                 updatePlaces: _updatePlaces);
                           },
@@ -229,41 +218,8 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Transform.scale(
-                          // Checkbox 크기 조정
-                          scale: 1.2,
-                          child: Checkbox(
-                            activeColor: PRIMARY_COLOR,
-                            side: const BorderSide(
-                              width: 1,
-                              color: SELECTED_BOX_BG_COLOR,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            value: isRecommended,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                isRecommended = newValue ?? false;
-                              });
-                            },
-                          ),
-                        ),
-                        const Text(
-                          '전부 추천해주세요!',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 100.0,
                     ),
                     const Text(
                       '집결 장소와 시간',
@@ -361,7 +317,7 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                               context: context,
                               builder: (context) {
                                 return _PlaceModal(
-                                  startPlaces: startPlaces,
+                                  startPlaces: meetPlaces,
                                   offset: offset,
                                   selectedPlaceIndexes: selectedPlaceIndexes,
                                   onPlaceSelected: (indexes) {
@@ -387,7 +343,7 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                             child: Text(
                               selectedPlaceIndexes.isEmpty
                                   ? '장소 선택하기'
-                                  : startPlaces[selectedPlaceIndexes[0]],
+                                  : meetPlaces[selectedPlaceIndexes[0]],
                               style: TextStyle(
                                 color: selectedPlaceIndexes.isEmpty
                                     ? Colors.black
@@ -431,11 +387,46 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                         selectedDateTime == null
                     ? null
                     : () {
-                        print('Selected Start Place : $selectedPlaceIndexes');
-                        print('Selected Start Date: $selectedDateTime');
-                        print(
-                            'Selected Mus places: ${allPlaces.entries.where((entry) => entry.value == true).map((entry) => entry.key).join(', ')}');
-                        context.goNamed('tripForm5');
+                        int selectedHour = selectedDateTime!.hour;
+                        int selectedMinute = selectedDateTime!.minute;
+
+                        String currentDateTimeString = GoRouterState.of(context)
+                            .queryParameters['dateTime']!;
+                        DateTime currentDateTime =
+                            DateTime.parse(currentDateTimeString);
+                        DateTime updatedDateTime = DateTime(
+                            currentDateTime.year,
+                            currentDateTime.month,
+                            currentDateTime.day,
+                            selectedHour,
+                            selectedMinute);
+
+                        String updatedDateTimeString =
+                            updatedDateTime.toIso8601String();
+
+                        print(updatedDateTimeString);
+                        context.push(
+                          Uri(
+                            path: '/tripForm5',
+                            queryParameters: {
+                              'dateTime': updatedDateTimeString,
+                              'currentCnt': GoRouterState.of(context)
+                                  .queryParameters['currentCnt'],
+                              'maxCnt': GoRouterState.of(context)
+                                  .queryParameters['maxCnt'],
+                              'sameGender': GoRouterState.of(context)
+                                  .queryParameters['sameGender'],
+                              'sameAge': GoRouterState.of(context)
+                                  .queryParameters['sameAge'],
+                              'isPet': GoRouterState.of(context)
+                                  .queryParameters['isPet'],
+                              'meetPlace': meetPlaces[selectedPlaceIndexes[0]],
+                              'mustPlaces': selectedMustPlaces.isNotEmpty
+                                  ? [selectedMustPlaces.first.id].toString()
+                                  : [].toString()
+                            },
+                          ).toString(),
+                        );
                       },
                 child: const Text(
                   '다음',
@@ -653,44 +644,37 @@ class _PlaceModalState extends State<_PlaceModal> {
   }
 }
 
-class SearchModal extends StatefulWidget {
+class SearchModal extends ConsumerStatefulWidget {
   final TextEditingController controller;
-  final Map<String, bool> allPlaces;
   final Offset offset;
-  final Function(Map<String, bool>) updatePlaces;
+  final List<PlaceModel> selectedPlaces;
+  final Function updatePlaces;
 
   const SearchModal(
       {super.key,
       required this.controller,
-      required this.allPlaces,
+      required this.selectedPlaces,
       required this.offset,
       required this.updatePlaces});
   @override
+  // ignore: library_private_types_in_public_api
   _SearchModalState createState() => _SearchModalState();
 }
 
-class _SearchModalState extends State<SearchModal> {
-  Map<String, bool> searchResults = {};
-  Map<String, bool> selectedPlaces = {};
-
-  void _onSearchChanged() {
-    setState(() {
-      searchResults = Map.fromEntries(widget.allPlaces.entries
-          .where((entry) => entry.key.contains(widget.controller.text)));
-    });
-  }
+class _SearchModalState extends ConsumerState<SearchModal> {
+  List<PlaceModel> selectedPlacesInModal = [];
 
   @override
   void initState() {
+    if (widget.selectedPlaces.isNotEmpty) {
+      selectedPlacesInModal.add(widget.selectedPlaces.first);
+    }
+
     super.initState();
-    widget.controller.addListener(_onSearchChanged);
-    selectedPlaces = Map<String, bool>.from(widget.allPlaces);
-    _onSearchChanged();
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_onSearchChanged);
     super.dispose();
   }
 
@@ -717,7 +701,7 @@ class _SearchModalState extends State<SearchModal> {
             TextField(
               controller: widget.controller,
               onChanged: (value) {
-                _onSearchChanged();
+                ref.read(placeProvider.notifier).filterPlaces(value);
               },
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
@@ -756,69 +740,92 @@ class _SearchModalState extends State<SearchModal> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: ListView.builder(
-                  itemCount: searchResults.length,
-                  itemBuilder: (context, index) {
-                    String key = searchResults.keys.elementAt(index); // key 접근
-                    // String value = searchResults.values.elementAt(index); // 만약 value에 접근하려면 이렇게 사용
+              child: Consumer(
+                builder: (context, watch, child) {
+                  final state = ref.watch(placeProvider);
 
-                    return ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            key, // key를 사용하여 출력
-                          ),
-                          SizedBox(
-                            width: 25,
-                            height: 25,
-                            child: OutlinedButton(
-                              onPressed: () {
-                                // 버튼을 클릭할 때마다 해당 관광지의 선택 상태를 toggle
-                                setState(() {
-                                  selectedPlaces[key] = // key를 사용하여 접근
-                                      !selectedPlaces[key]!;
-                                });
-                              },
-                              style: ButtonStyle(
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero),
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    return selectedPlaces[key]! // key를 사용하여 접근
-                                        ? SELECTED_PLACE_BG_COLOR
-                                        : Colors.white;
-                                  },
+                  if (state is CursorPaginationLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is CursorPaginationError) {
+                    return Text('Error: ${state.message}');
+                  } else if (state is CursorPagination) {
+                    final places = state.contents as List<PlaceModel>;
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: ListView.builder(
+                        itemCount: places.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  places[index].title,
                                 ),
-                                foregroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    return selectedPlaces[key]! // key를 사용하여 접근
-                                        ? Colors.white
-                                        : SELECTED_BOX_BG_COLOR;
-                                  },
-                                ),
-                                side: MaterialStateProperty.all(
-                                  BorderSide.none, // border 제거
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
+                                SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        selectedPlacesInModal
+                                            .clear(); //TOFIX: 일단 한개의 place만.
+                                        selectedPlacesInModal
+                                            .add(places[index]);
+                                      });
+                                    },
+                                    style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.zero),
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          return selectedPlacesInModal.isEmpty
+                                              ? Colors.white
+                                              : selectedPlacesInModal
+                                                          .first.id ==
+                                                      places[index].id
+                                                  ? SELECTED_PLACE_BG_COLOR
+                                                  : Colors.white;
+                                        },
+                                      ),
+                                      foregroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          return selectedPlacesInModal.isEmpty
+                                              ? SELECTED_BOX_BG_COLOR
+                                              : selectedPlacesInModal
+                                                          .first.id ==
+                                                      places[index].id
+                                                  ? Colors.white
+                                                  : SELECTED_BOX_BG_COLOR;
+                                        },
+                                      ),
+                                      side: MaterialStateProperty.all(
+                                        BorderSide.none, // border 제거
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Icon(Icons.add),
                                   ),
                                 ),
-                              ),
-                              child: const Icon(Icons.add),
+                              ],
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     );
-                  },
-                ),
+                  } else {
+                    return const Text('No data found.');
+                  }
+                },
               ),
             ),
             ElevatedButton(
@@ -834,8 +841,12 @@ class _SearchModalState extends State<SearchModal> {
                 backgroundColor: MaterialStateProperty.all(Colors.white),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
-              onPressed: () =>
-                  {widget.updatePlaces(selectedPlaces), Navigator.pop(context)},
+              onPressed: selectedPlacesInModal.isNotEmpty
+                  ? () {
+                      widget.updatePlaces(selectedPlacesInModal[0]);
+                      Navigator.pop(context);
+                    }
+                  : null,
               child: const Text(
                 '추가하기',
                 style: TextStyle(

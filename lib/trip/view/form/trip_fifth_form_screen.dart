@@ -56,7 +56,6 @@ class _TripFifthFormScreenState extends State<TripFifthFormScreen> {
                     setState(() {
                       likes = selectedButtons;
                     });
-                    print('Selected buttons: $selectedButtons');
                   },
                 ),
               ),
@@ -77,8 +76,28 @@ class _TripFifthFormScreenState extends State<TripFifthFormScreen> {
                 onPressed: likes.isEmpty
                     ? null
                     : () {
-                        print('Selected like Place : $likes');
-                        context.goNamed('tripForm6');
+                        context.push(Uri(
+                          path: '/tripForm6',
+                          queryParameters: {
+                            'dateTime': GoRouterState.of(context)
+                                .queryParameters['dateTime'],
+                            'currentCnt': GoRouterState.of(context)
+                                .queryParameters['currentCnt'],
+                            'maxCnt': GoRouterState.of(context)
+                                .queryParameters['maxCnt'],
+                            'sameGender': GoRouterState.of(context)
+                                .queryParameters['sameGender'],
+                            'sameAge': GoRouterState.of(context)
+                                .queryParameters['sameAge'],
+                            'isPet': GoRouterState.of(context)
+                                .queryParameters['isPet'],
+                            'meetPlace': GoRouterState.of(context)
+                                .queryParameters['meetPlace'],
+                            'mustPlaces': GoRouterState.of(context)
+                                .queryParameters['mustPlaces'],
+                            'types': likes.toString(),
+                          },
+                        ).toString());
                       },
                 child: const Text(
                   '다음',

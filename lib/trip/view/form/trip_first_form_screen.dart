@@ -144,8 +144,14 @@ class _TripFirstFormScreenState extends State<TripFirstFormScreen> {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 onPressed: () {
-                  print(_selectedDay);
-                  context.goNamed('tripForm2');
+                  context.push(
+                    Uri(
+                      path: '/tripForm2',
+                      queryParameters: {
+                        'dateTime': _selectedDay.toIso8601String(),
+                      },
+                    ).toString(),
+                  );
                 },
                 child: const Text(
                   '다음',

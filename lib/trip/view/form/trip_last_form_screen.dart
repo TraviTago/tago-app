@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/course/repository/course_repository.dart';
 
-class TripLastFormScreen extends StatefulWidget {
+class TripLastFormScreen extends ConsumerStatefulWidget {
   const TripLastFormScreen({super.key});
   static String get routeName => 'tripForm6';
 
   @override
-  State<TripLastFormScreen> createState() => _TripLastFormScreenState();
+  ConsumerState<TripLastFormScreen> createState() => _TripLastFormScreenState();
 }
 
-class _TripLastFormScreenState extends State<TripLastFormScreen> {
+class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
   int tripNameCount = 0;
   final textController = TextEditingController();
 
@@ -124,8 +126,56 @@ class _TripLastFormScreenState extends State<TripLastFormScreen> {
                 onPressed: tripNameCount == 0
                     ? null
                     : () {
-                        print('Selected like Place : $textController.text');
-                        context.goNamed('tripComplete');
+                        String? mustPlacesString = GoRouterState.of(context)
+                            .queryParameters['mustPlaces'];
+
+                        String? typesString =
+                            GoRouterState.of(context).queryParameters['types'];
+
+                        if (mustPlacesString != null && typesString != null) {
+                          final int parsedPlaceId = int.parse(mustPlacesString
+                              .replaceAll('[', '')
+                              .replaceAll(']', '')
+                              .trim());
+
+                          final List<String> parsedTripTags = typesString
+                              .replaceAll('[', '')
+                              .replaceAll(']', '')
+                              .split(',')
+                              .map((s) => s.trim())
+                              .toList();
+
+                          print(parsedPlaceId);
+                          print(parsedTripTags);
+
+                          ref
+                              .read(courseRepositoryProvider)
+                              .recommendCourse(placeId: 1, tags: ["자연"]);
+                        } else {}
+                        context.go(Uri(
+                          path: '/tripComplete',
+                          queryParameters: {
+                            'dateTime': GoRouterState.of(context)
+                                .queryParameters['dateTime'],
+                            'currentCnt': GoRouterState.of(context)
+                                .queryParameters['currentCnt'],
+                            'maxCnt': GoRouterState.of(context)
+                                .queryParameters['maxCnt'],
+                            'sameGender': GoRouterState.of(context)
+                                .queryParameters['sameGender'],
+                            'sameAge': GoRouterState.of(context)
+                                .queryParameters['sameAge'],
+                            'isPet': GoRouterState.of(context)
+                                .queryParameters['isPet'],
+                            'meetPlace': GoRouterState.of(context)
+                                .queryParameters['meetPlace'],
+                            'types': GoRouterState.of(context)
+                                .queryParameters['types'],
+                            'places': GoRouterState.of(context)
+                                .queryParameters['mustPlaces'],
+                            'name': textController.text
+                          },
+                        ).toString());
                       },
                 child: const Text(
                   '완료',

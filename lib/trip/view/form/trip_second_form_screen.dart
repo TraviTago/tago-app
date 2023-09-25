@@ -237,7 +237,20 @@ class _TripSecondFormScreenState extends State<TripSecondFormScreen> {
                 onPressed: selectedButtons.isEmpty
                     ? null
                     : () {
-                        context.goNamed('tripForm3');
+                        context.push(
+                          Uri(
+                            path: '/tripForm3',
+                            queryParameters: {
+                              'dateTime': GoRouterState.of(context)
+                                  .queryParameters['dateTime'],
+                              'currentCnt': totalNum.toString(),
+                              'maxCnt': (selectedButtons[0] ==
+                                      tripSecondFormBtnText[0])
+                                  ? maxNum.toString()
+                                  : maxNumWithTotal.toString(),
+                            },
+                          ).toString(),
+                        );
                       },
                 child: const Text(
                   '다음',

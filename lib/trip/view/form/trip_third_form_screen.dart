@@ -177,11 +177,31 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                           selectedPetButtons.isEmpty
                       ? null
                       : () {
-                          print(
-                              'Selected gender buttons: $selectedGenderButtons');
-                          print('Selected age buttons: $selectedAgeButtons');
-                          print('Selected pet buttons: $selectedPetButtons');
-                          context.goNamed('tripForm4');
+                          context.push(
+                            Uri(
+                              path: '/tripForm4',
+                              queryParameters: {
+                                'dateTime': GoRouterState.of(context)
+                                    .queryParameters['dateTime'],
+                                'currentCnt': GoRouterState.of(context)
+                                    .queryParameters['currentCnt'],
+                                'maxCnt': GoRouterState.of(context)
+                                    .queryParameters['maxCnt'],
+                                'sameGender': selectedGenderButtons[0] ==
+                                        tripThirdFormBtnText[0][0]
+                                    ? "true"
+                                    : "false",
+                                'sameAge': selectedAgeButtons[0] ==
+                                        tripThirdFormBtnText[1][0]
+                                    ? "true"
+                                    : "false",
+                                'isPet': selectedPetButtons[0] ==
+                                        tripThirdFormBtnText[2][0]
+                                    ? "true"
+                                    : "false",
+                              },
+                            ).toString(),
+                          );
                         },
                   child: const Text(
                     '다음',
