@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tago_app/place/model/place_model.dart';
+import 'package:tago_app/place/model/place_trip_model.dart';
 
 part 'course_reponse_model.g.dart';
 
@@ -7,7 +7,7 @@ part 'course_reponse_model.g.dart';
 class CourseResponseModel {
   final String imgUrl;
   final int totalTime;
-  final List<PlaceModel> places;
+  final List<PlaceTripModel> places;
 
   CourseResponseModel({
     required this.imgUrl,

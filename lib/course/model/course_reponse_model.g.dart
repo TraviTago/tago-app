@@ -11,7 +11,7 @@ CourseResponseModel _$CourseResponseModelFromJson(Map<String, dynamic> json) =>
       imgUrl: json['imgUrl'] as String,
       totalTime: json['totalTime'] as int,
       places: (json['places'] as List<dynamic>)
-          .map((e) => PlaceModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => PlaceTripModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
