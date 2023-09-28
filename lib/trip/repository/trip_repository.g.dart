@@ -48,13 +48,13 @@ class _TripRepository implements TripRepository {
   }
 
   @override
-  Future<TripCreateResponse> createTrip({required params}) async {
+  Future<TripCreateResponse> createTrip(tripData) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(params.toJson());
+    _data.addAll(tripData);
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TripCreateResponse>(Options(
       method: 'POST',
