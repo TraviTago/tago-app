@@ -11,8 +11,8 @@ class TripRecommendCard extends StatelessWidget {
   final String name;
   final String imageUrl;
   final List<String> places;
-  final int maxMember; //최대 인원
-  final int currentMember; //현재 인원
+  final int maxMember;
+  final int currentMember;
   final int totalTime;
 
   const TripRecommendCard({

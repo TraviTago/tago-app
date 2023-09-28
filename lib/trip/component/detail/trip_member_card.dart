@@ -37,78 +37,83 @@ class TripMemberCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          '현재 모집된 멤버는',
-                          style: TextStyle(fontSize: 14.0),
-                        ),
-                        if (statusModel.femaleCnt == 0)
-                          Text(
-                            '남자 ${statusModel.maleCnt}명',
-                            style: const TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.w500),
+                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            '현재 모집된 멤버는',
+                            style: TextStyle(fontSize: 14.0),
                           ),
-                        if (statusModel.maleCnt == 0)
-                          Text(
-                            '여자 ${statusModel.femaleCnt}명',
-                            style: const TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.w500),
-                          ),
-                        if (statusModel.maleCnt != 0 &&
-                            statusModel.femaleCnt != 0)
-                          Text(
-                            '남자 ${statusModel.maleCnt}명 / 여자 ${statusModel.femaleCnt}명',
-                            style: const TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.w500),
-                          ),
-                      ],
+                          if (statusModel.maleCnt != 0 &&
+                              statusModel.femaleCnt == 0)
+                            Text(
+                              '남자 ${statusModel.maleCnt}명',
+                              style: const TextStyle(
+                                  fontSize: 14.0, fontWeight: FontWeight.w500),
+                            ),
+                          if (statusModel.femaleCnt != 0 &&
+                              statusModel.maleCnt == 0)
+                            Text(
+                              '여자 ${statusModel.femaleCnt}명',
+                              style: const TextStyle(
+                                  fontSize: 14.0, fontWeight: FontWeight.w500),
+                            ),
+                          if (statusModel.maleCnt != 0 &&
+                              statusModel.femaleCnt != 0)
+                            Text(
+                              '남자 ${statusModel.maleCnt}명 / 여자 ${statusModel.femaleCnt}명',
+                              style: const TextStyle(
+                                  fontSize: 14.0, fontWeight: FontWeight.w500),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30.0, right: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          '연령대는',
-                          style: TextStyle(fontSize: 14.0),
-                        ),
-                        Row(
-                          children: [
-                            for (var age in [...statusModel.ageGroup]..sort())
-                              Container(
-                                margin: EdgeInsets.only(
-                                    right: age != statusModel.ageGroup.last
-                                        ? 5.0
-                                        : 0.0),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
-                                  vertical: 5.0,
-                                ),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadiusDirectional.all(
-                                      Radius.circular(20.0)),
-                                ),
-                                child: Text(
-                                  '$age대',
-                                  style: const TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
+                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                    const SizedBox(
+                      height: 15.0,
                     ),
-                  ),
+                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30.0, right: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            '연령대는',
+                            style: TextStyle(fontSize: 14.0),
+                          ),
+                          Row(
+                            children: [
+                              for (var age in [...statusModel.ageGroup]..sort())
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      right: age != statusModel.ageGroup.last
+                                          ? 5.0
+                                          : 0.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                    vertical: 5.0,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadiusDirectional.all(
+                                        Radius.circular(20.0)),
+                                  ),
+                                  child: Text(
+                                    '$age대',
+                                    style: const TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   const SizedBox(
                     height: 15.0,
                   ),
