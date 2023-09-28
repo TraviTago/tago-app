@@ -12,9 +12,11 @@ import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/place/view/place_search_screen.dart';
 import 'package:tago_app/signup/view/profile_image_select_screen.dart';
 import 'package:tago_app/signup/view/profile_signup_screen.dart';
+import 'package:tago_app/trip/model/trip_edit_model.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
+import 'package:tago_app/trip/view/detail/trip_edit_screen.dart';
 import 'package:tago_app/trip/view/form/trip_fifth_form_screen.dart';
 import 'package:tago_app/trip/view/form/trip_first_form_screen.dart';
 import 'package:tago_app/trip/view/form/trip_fourth_from_screen.dart';
@@ -157,45 +159,42 @@ class AuthProvider extends ChangeNotifier {
               builder: (_, __) => const TripCompleteScreen(),
             ),
             GoRoute(
+              path: 'tripEdit',
+              name: TripEditScreen.routeName,
+              builder: (_, state) {
+                final editModel = state.extra as TripEditModel;
+                return TripEditScreen(editModel: editModel);
+              },
+            ),
+            GoRoute(
               path: 'tripForm1',
               name: TripFirstFormScreen.routeName,
               builder: (_, __) => const TripFirstFormScreen(),
-              routes: [
-                GoRoute(
-                  path: 'tripForm2',
-                  name: TripSecondFormScreen.routeName,
-                  builder: (_, __) => const TripSecondFormScreen(),
-                  routes: [
-                    GoRoute(
-                      path: 'tripForm3',
-                      name: TripThirdFormScreen.routeName,
-                      builder: (_, __) => const TripThirdFormScreen(),
-                      routes: [
-                        GoRoute(
-                          path: 'tripForm4',
-                          name: TripFourthFormScreen.routeName,
-                          builder: (_, __) => const TripFourthFormScreen(),
-                          routes: [
-                            GoRoute(
-                              path: 'tripForm5',
-                              name: TripFifthFormScreen.routeName,
-                              builder: (_, __) => const TripFifthFormScreen(),
-                              routes: [
-                                GoRoute(
-                                  path: 'tripForm6',
-                                  name: TripLastFormScreen.routeName,
-                                  builder: (_, __) =>
-                                      const TripLastFormScreen(),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+            ),
+            GoRoute(
+              path: 'tripForm2',
+              name: TripSecondFormScreen.routeName,
+              builder: (_, __) => const TripSecondFormScreen(),
+            ),
+            GoRoute(
+              path: 'tripForm3',
+              name: TripThirdFormScreen.routeName,
+              builder: (_, __) => const TripThirdFormScreen(),
+            ),
+            GoRoute(
+              path: 'tripForm4',
+              name: TripFourthFormScreen.routeName,
+              builder: (_, __) => const TripFourthFormScreen(),
+            ),
+            GoRoute(
+              path: 'tripForm5',
+              name: TripFifthFormScreen.routeName,
+              builder: (_, __) => const TripFifthFormScreen(),
+            ),
+            GoRoute(
+              path: 'tripForm6',
+              name: TripLastFormScreen.routeName,
+              builder: (_, __) => const TripLastFormScreen(),
             ),
           ],
         ),
