@@ -1,26 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
-import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/trip/component/trip_recommend_card.dart';
+import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/course/model/course_reponse_model.dart';
+import 'package:tago_app/course/provider/course_provider.dart';
+import 'package:tago_app/trip/component/trip_complete_card.dart';
+import 'package:tago_app/trip/repository/trip_repository.dart';
 
-class TripCompleteScreen extends StatefulWidget {
+class TripCompleteScreen extends ConsumerStatefulWidget {
   static String get routeName => 'tripComplete';
 
   const TripCompleteScreen({super.key});
 
   @override
-  State<TripCompleteScreen> createState() => _TripCompleteScreenState();
+  ConsumerState<TripCompleteScreen> createState() => _TripCompleteScreenState();
 }
 
-bool isCheckedTrip = false;
+class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
+  bool isCheckedTrip = false;
 
-class _TripCompleteScreenState extends State<TripCompleteScreen> {
-  @override
   @override
   Widget build(BuildContext context) {
+    CourseResponseModel? courseState = ref.watch(courseProvider);
+
+    print(courseState!.places[0].title);
     return DefaultLayout(
       backBtnComponent: true,
       child: SafeArea(
@@ -53,9 +58,13 @@ class _TripCompleteScreenState extends State<TripCompleteScreen> {
                   const SizedBox(
                     height: 30.0,
                   ),
-                  TripRecommendCard.fromModel(
-                    model: tripData,
-                  ),
+                  TripCompleteCard(
+                      dateTime: DateTime.parse(GoRouterState.of(context)
+                          .queryParameters['dateTime']!),
+                      name: GoRouterState.of(context).queryParameters['name']!,
+                      imageUrl: courseState.imgUrl,
+                      places: courseState.places,
+                      totalTime: courseState.totalTime),
                   const SizedBox(
                     height: 20.0,
                   ),
@@ -116,8 +125,30 @@ class _TripCompleteScreenState extends State<TripCompleteScreen> {
                   onPressed: !isCheckedTrip
                       ? null
                       : () {
-                          //TOFIX: 코스 추가 로직
-                          context.go('/');
+                          ref.read(tripRepositoryProvider).createTrip({
+                            "name": GoRouterState.of(context)
+                                .queryParameters['name'],
+                            "dateTime": GoRouterState.of(context)
+                                .queryParameters['dateTime'],
+                            "currentCnt": int.parse(GoRouterState.of(context)
+                                .queryParameters['currentCnt']!),
+                            "maxCnt": int.parse(GoRouterState.of(context)
+                                .queryParameters['maxCnt']!),
+                            "sameGender": bool.parse(GoRouterState.of(context)
+                                .queryParameters['sameGender']!),
+                            "sameAge": bool.parse(GoRouterState.of(context)
+                                .queryParameters['sameAge']!),
+                            "isPet": bool.parse(GoRouterState.of(context)
+                                .queryParameters['isPet']!),
+                            "meetPlace": GoRouterState.of(context)
+                                .queryParameters['meetPlace'],
+                            "types": DataUtils.stringToList(
+                                GoRouterState.of(context)
+                                    .queryParameters['types']),
+                            "places": [
+                              {"placeId": 1, "order": 0}
+                            ]
+                          });
                         },
                   child: Text(
                     '내 여행으로 추가하기',
