@@ -24,4 +24,12 @@ abstract class UserMeRepository {
     'accessToken': 'true',
   })
   Future<UserModel> getMe();
+
+  @PATCH('/me')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<void> patchMe(
+    @Body() Map<String, dynamic> meData,
+  );
 }
