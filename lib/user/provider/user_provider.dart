@@ -50,6 +50,27 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     state = resp;
   }
 
+  Future<void> patchProfile({
+    required String mbti,
+    required List<String> favorites,
+    required List<String> tripTypes,
+  }) async {
+    state = UserModelLoading();
+
+    final userResp = await repository.getMe();
+
+    await repository.patchMe({
+      "imgUrl": userResp.imgUrl,
+      "mbti": mbti,
+      "favorites": favorites,
+      "tripTypes": tripTypes,
+    });
+
+    final userRespAfterPatch = await repository.getMe();
+
+    state = userRespAfterPatch;
+  }
+
   Future<SignUpResponse> signUp({
     required String number,
     required String name,
