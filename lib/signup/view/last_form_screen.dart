@@ -140,29 +140,27 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                           var queryParams =
                               GoRouterState.of(context).queryParameters;
 
-                          print(int.tryParse(queryParams['ageRange']!)!);
-                          print(_selectedTripTypes);
-
-                          print(queryParams['number']!);
-                          print(queryParams['imagePath']!);
-                          print(queryParams['gender']!);
-                          print(queryParams['mbti']!);
-                          print(queryParams['favorites']!.split(','));
-                          print(queryParams['name']!);
-
-                          await ref.read(userProvider.notifier).signUp(
-                                ageRange:
-                                    int.tryParse(queryParams['ageRange']!)!,
-                                gender: queryParams['gender']!,
-                                mbti: queryParams['mbti']!,
-                                favorites: queryParams['favorites']!.split(','),
-                                name: queryParams['name']!,
-                                number: queryParams['number']!,
-                                imgUrl: queryParams['imagePath']!,
-                                tripTypes: _selectedTripTypes,
-                              );
                           if (isPatching) {
+                            await ref.read(userProvider.notifier).patchProfile(
+                                  mbti: queryParams['mbti']!,
+                                  favorites:
+                                      queryParams['favorites']!.split(','),
+                                  tripTypes: _selectedTripTypes,
+                                );
                             context.go('/profile');
+                          } else {
+                            await ref.read(userProvider.notifier).signUp(
+                                  ageRange:
+                                      int.tryParse(queryParams['ageRange']!)!,
+                                  gender: queryParams['gender']!,
+                                  mbti: queryParams['mbti']!,
+                                  favorites:
+                                      queryParams['favorites']!.split(','),
+                                  name: queryParams['name']!,
+                                  number: queryParams['number']!,
+                                  imgUrl: queryParams['imagePath']!,
+                                  tripTypes: _selectedTripTypes,
+                                );
                           }
                         },
                   child: Text(
