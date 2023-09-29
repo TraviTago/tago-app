@@ -5,9 +5,12 @@ import 'package:tago_app/place/model/place_model.dart';
 class PlaceEditCard extends StatelessWidget {
   final PlaceModel place;
   final int index;
+  final VoidCallback onRemove;
+
   const PlaceEditCard({
     required this.place,
     required this.index,
+    required this.onRemove,
     Key? key,
   }) : super(key: key);
 
@@ -42,7 +45,7 @@ class PlaceEditCard extends StatelessWidget {
                           width: 20,
                           height: 20,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: onRemove,
                             style: ButtonStyle(
                               padding:
                                   MaterialStateProperty.all(EdgeInsets.zero),

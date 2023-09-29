@@ -25,7 +25,6 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
   Widget build(BuildContext context) {
     CourseResponseModel? courseState = ref.watch(courseProvider);
 
-    print(courseState!.places[0].title);
     return DefaultLayout(
       backBtnComponent: true,
       child: SafeArea(
@@ -62,7 +61,7 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                       dateTime: DateTime.parse(GoRouterState.of(context)
                           .queryParameters['dateTime']!),
                       name: GoRouterState.of(context).queryParameters['name']!,
-                      imageUrl: courseState.imgUrl,
+                      imageUrl: courseState!.imgUrl,
                       places: courseState.places,
                       totalTime: courseState.totalTime),
                   const SizedBox(
@@ -124,8 +123,8 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                   ),
                   onPressed: !isCheckedTrip
                       ? null
-                      : () {
-                          ref.read(tripRepositoryProvider).createTrip({
+                      : () async {
+                          await ref.read(tripRepositoryProvider).createTrip({
                             "name": GoRouterState.of(context)
                                 .queryParameters['name'],
                             "dateTime": GoRouterState.of(context)
@@ -145,10 +144,10 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                             "types": DataUtils.stringToList(
                                 GoRouterState.of(context)
                                     .queryParameters['types']),
-                            "places": [
-                              {"placeId": 1, "order": 0}
-                            ]
+                            "places":
+                                DataUtils.convertPlaces(courseState.places),
                           });
+                          _showTripCompletionDialog(context);
                         },
                   child: Text(
                     '내 여행으로 추가하기',
@@ -170,4 +169,60 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
       ),
     );
   }
+}
+
+void _showTripCompletionDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        title: const Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Text(
+              '멋진 여행을 추가하셨네요!',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15.0,
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          Center(
+            child: Container(
+              width: double.infinity,
+              height: 50.0,
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: LABEL_BG_COLOR,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+              child: MaterialButton(
+                child: const Text(
+                  '홈으로',
+                  style: TextStyle(
+                    color: PRIMARY_COLOR,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                onPressed: () {
+                  // 여기에 여행을 보러가는 로직을 추가
+                  Navigator.of(context).pop();
+                  context.go('/');
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

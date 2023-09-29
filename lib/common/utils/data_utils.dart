@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
+import 'package:tago_app/place/model/place_trip_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class DataUtils {
@@ -15,6 +16,14 @@ class DataUtils {
     }
 
     return int.parse(replacedData.trim());
+  }
+
+  static List<Map<String, dynamic>> convertPlaces(List<PlaceTripModel> places) {
+    return places.asMap().entries.map((entry) {
+      int order = entry.key;
+      PlaceTripModel place = entry.value;
+      return {"placeId": place.id, "order": order};
+    }).toList();
   }
 
   static List<String> stringToList(String? data) {
