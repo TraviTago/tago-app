@@ -132,7 +132,7 @@ class TripDetailMembersScreen extends ConsumerWidget {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      DataUtils.genderPrinter(member.gender),
+                                      member.gender,
                                       style: const TextStyle(
                                         fontSize: 12.0,
                                         color: LABEL_TEXT_SUB_COLOR,
