@@ -69,6 +69,14 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
+  @DELETE('/{tripId}/leave')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripJoinResponseModel> leaveTrip({
+    @Path() required int tripId,
+  });
+
   @GET('/{tripId}/members')
   @Headers({
     'accessToken': 'true',
