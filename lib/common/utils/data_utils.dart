@@ -55,10 +55,16 @@ class DataUtils {
   static TripStatus getTripStatus(DateTime tripDate, int tripTime) {
     DateTime now = DateTime.now();
     DateTime endOfTrip = tripDate.add(Duration(minutes: tripTime));
+    DateTime oneDayBeforeTrip = tripDate.subtract(const Duration(days: 1));
+
     TripStatus status;
 
     if (now.isBefore(tripDate)) {
-      status = TripStatus.upcoming;
+      if (now.isAfter(oneDayBeforeTrip)) {
+        status = TripStatus.upcomingSoon;
+      } else {
+        status = TripStatus.upcoming;
+      }
     } else if (now.isAfter(endOfTrip)) {
       status = TripStatus.completed;
     } else {

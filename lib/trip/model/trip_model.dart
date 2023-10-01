@@ -4,6 +4,7 @@ part 'trip_model.g.dart';
 
 enum TripStatus {
   upcoming, // 예정된 여행
+  upcomingSoon, // 예정된 여행 중 곧 임박 여행
   ongoing, // 진행중인 여행
   completed // 지나간 여행
 }
