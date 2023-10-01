@@ -37,7 +37,7 @@ class TripMemberCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Column(
                 children: [
-                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                  if (statusModel.maleCnt != 0 || statusModel.femaleCnt != 0)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Row(
@@ -71,11 +71,11 @@ class TripMemberCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                  if (statusModel.maleCnt != 0 || statusModel.femaleCnt != 0)
                     const SizedBox(
                       height: 15.0,
                     ),
-                  if (statusModel.maleCnt != 0 && statusModel.femaleCnt != 0)
+                  if (statusModel.maleCnt != 0 || statusModel.femaleCnt != 0)
                     Padding(
                       padding: const EdgeInsets.only(left: 30.0, right: 25.0),
                       child: Row(
@@ -114,9 +114,10 @@ class TripMemberCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
+                  if (statusModel.maleCnt != 0 || statusModel.femaleCnt != 0)
+                    const SizedBox(
+                      height: 15.0,
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(
