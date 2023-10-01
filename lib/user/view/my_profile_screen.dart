@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tago_app/common/component/shimmer_box.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
@@ -35,12 +34,12 @@ class MyProfileScreen extends ConsumerWidget {
           children: [
             if (user is UserModel)
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: _ProfileBox(userModel: user),
               ),
             if (user is UserModel)
               Expanded(
-                flex: 2,
+                flex: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -75,7 +74,7 @@ class MyProfileScreen extends ConsumerWidget {
   }
 }
 
-class _ProfileBox extends StatelessWidget {
+class _ProfileBox extends ConsumerWidget {
   final UserModel userModel;
 
   const _ProfileBox({
@@ -83,24 +82,58 @@ class _ProfileBox extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Image.network(
-            userModel.imgUrl,
-            fit: BoxFit.cover,
-            width: 90,
-            height: 90,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return const ShimmerBox(width: 90.0, height: 90.0);
-            },
+        InkWell(
+          onTap: () {
+            context.push(
+              Uri(
+                path: '/imageSelect',
+                queryParameters: {
+                  'imagePath': userModel.imgUrl,
+                  'isPatch': "true",
+                },
+              ).toString(),
+            );
+          },
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.network(
+                  userModel.imgUrl,
+                  fit: BoxFit.cover,
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5), // 예시 색상
+
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      )),
+                  height: 150 / 4,
+                  child: const Center(
+                    child: Text(
+                      '사진 선택하기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ), // 필요한 콘텐츠 추가
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 15),
@@ -108,7 +141,7 @@ class _ProfileBox extends StatelessWidget {
           userModel.name,
           style: const TextStyle(
             fontWeight: FontWeight.w700,
-            fontSize: 15.0,
+            fontSize: 18.0,
           ),
         ),
         const SizedBox(height: 5),
@@ -118,7 +151,7 @@ class _ProfileBox extends StatelessWidget {
             Text(
               "${userModel.ageRange}대",
               style: const TextStyle(
-                fontSize: 13.0,
+                fontSize: 15.0,
                 color: LABEL_TEXT_SUB_COLOR,
               ),
             ),
@@ -220,7 +253,7 @@ class InfoRow extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   color: LABEL_TEXT_SUB_COLOR,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   fontSize: 15.0,
                 ),
               ),

@@ -11,7 +11,7 @@ class DefaultLayout extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
   final Widget? titleCompnentWithPrimaryColor;
-  final popMethod;
+  final VoidCallback? popMethod;
 
   const DefaultLayout({
     required this.child,
@@ -63,9 +63,7 @@ class DefaultLayout extends StatelessWidget {
               color: Colors.black,
               size: 34,
             ),
-            onPressed: () {
-              popMethod();
-            },
+            onPressed: popMethod,
           ),
         ),
         title: titleComponet,

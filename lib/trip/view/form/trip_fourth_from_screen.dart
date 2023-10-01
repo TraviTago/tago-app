@@ -402,7 +402,6 @@ class _TripFourthFormScreenState extends State<TripFourthFormScreen> {
                         String updatedDateTimeString =
                             updatedDateTime.toIso8601String();
 
-                        print(updatedDateTimeString);
                         context.push(
                           Uri(
                             path: '/tripForm5',
