@@ -170,22 +170,27 @@ class _ButtonGroupState extends State<ButtonGroup> {
                           Opacity(
                             opacity:
                                 selectedButtons.contains(index) ? 1.0 : 0.5,
-                            child: Image.asset(
-                              widget.prefix
-                                  ? 'asset/img/${widget.buttonImgs![index]}'
-                                  : 'asset/img/${widget.buttonImgs![index]}.png',
-                              width: 50.0,
-                              height: 50.0,
-                            ),
+                            child: widget.prefix
+                                ? Image.network(
+                                    widget.buttonImgs![index],
+                                  )
+                                : Image.asset(
+                                    'asset/img/${widget.buttonImgs![index]}.png',
+                                    width: 50.0,
+                                    height: 50.0,
+                                  ),
                           ),
                         if (widget.isProfileStyle)
                           Stack(
                             children: [
-                              Image.asset(
-                                widget.prefix
-                                    ? 'asset/img/${widget.buttonImgs![index]}'
-                                    : 'asset/img/${widget.buttonImgs![index]}.png',
-                              ),
+                              if (widget.prefix)
+                                Image.network(
+                                  widget.buttonImgs![index],
+                                ),
+                              if (!widget.prefix)
+                                Image.asset(
+                                  'asset/img/${widget.buttonImgs![index]}.png',
+                                ),
                               if (selectedButtons.contains(index))
                                 Positioned(
                                   left: 0,

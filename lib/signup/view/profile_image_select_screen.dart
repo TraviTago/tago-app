@@ -1,34 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
-class ProfileImageSelectScreen extends StatefulWidget {
+class ProfileImageSelectScreen extends ConsumerStatefulWidget {
   static String get routeName => 'profileImageSelect';
 
   const ProfileImageSelectScreen({super.key});
 
   @override
-  State<ProfileImageSelectScreen> createState() =>
+  ConsumerState<ProfileImageSelectScreen> createState() =>
       _ProfileImageSelectScreenState();
 }
 
-class _ProfileImageSelectScreenState extends State<ProfileImageSelectScreen> {
+class _ProfileImageSelectScreenState
+    extends ConsumerState<ProfileImageSelectScreen> {
   List<String> selectedImg = [];
 
   @override
   Widget build(BuildContext context) {
     String imagePath = GoRouterState.of(context).queryParameters['imagePath']!;
+    String? isPatch = GoRouterState.of(context).queryParameters['isPatch'];
     int? key = getKeyFromValue(imgUrlData, imagePath);
 
     return DefaultLayout(
       popMethod: () {
-        if (selectedImg.isNotEmpty) {
-          context.pop(imgUrlData[int.parse(selectedImg[0])]);
+        if (isPatch != null) {
+          if (selectedImg.isNotEmpty) {
+            ref.read(userProvider.notifier).patchProfileImage(
+                  imgUrl: imgUrlData[int.parse(selectedImg[0])]!,
+                );
+            context.pop();
+          } else {
+            context.pop();
+          }
         } else {
-          context.pop(imagePath);
+          if (selectedImg.isNotEmpty) {
+            context.pop(imgUrlData[int.parse(selectedImg[0])]);
+          } else {
+            context.pop(imagePath);
+          }
         }
       },
       child: SafeArea(

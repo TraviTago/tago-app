@@ -214,12 +214,12 @@ class AuthProvider extends ChangeNotifier {
     final landing = state.location == '/landing';
     final logginIn = state.location == '/login';
     final signingUp = state.location == '/signup' ||
-        Uri.parse(state.location).path == '/signup2' ||
-        Uri.parse(state.location).path == '/imageSelect';
+        Uri.parse(state.location).path == '/signup2';
 
     final profileForm = Uri.parse(state.location).path == '/form1' ||
         Uri.parse(state.location).path == '/form2' ||
         Uri.parse(state.location).path == '/form3' ||
+        Uri.parse(state.location).path == '/imageSelect' ||
         Uri.parse(state.location).path == '/form4';
     final splash = state.location == '/splash';
 
