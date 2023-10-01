@@ -37,6 +37,26 @@ class TripMemberCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('집결지는'),
+                        Text(
+                          statusModel.meatPlace,
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w700,
+                            color: PRIMARY_COLOR,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
                   if (statusModel.maleCnt != 0 || statusModel.femaleCnt != 0)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
