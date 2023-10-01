@@ -6,12 +6,14 @@ part 'trip_status_model.g.dart';
 class TripStatusModel {
   final int femaleCnt;
   final int maleCnt;
+  final String meatPlace;
   final List<int> ageGroup;
   final String startTime;
   final String endTime;
 
   TripStatusModel({
     required this.femaleCnt,
+    required this.meatPlace,
     required this.maleCnt,
     required this.ageGroup,
     required this.startTime,
