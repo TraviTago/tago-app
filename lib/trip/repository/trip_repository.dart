@@ -61,6 +61,14 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
+  @POST('/{tripId}/join')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripJoinResponseModel> joinTrip({
+    @Path() required int tripId,
+  });
+
   @GET('/{tripId}/members')
   @Headers({
     'accessToken': 'true',

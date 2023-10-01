@@ -145,6 +145,30 @@ class _TripRepository implements TripRepository {
   }
 
   @override
+  Future<TripJoinResponseModel> joinTrip({required tripId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TripJoinResponseModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/${tripId}/join',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TripJoinResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<TripMembersList> getMembersTrip({required tripId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
