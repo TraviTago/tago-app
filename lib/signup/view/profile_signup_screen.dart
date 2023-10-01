@@ -83,8 +83,8 @@ class _ProfileSignupScreenState extends State<ProfileSignupScreen> {
                                   height: 150,
                                   color: LABEL_BG_COLOR,
                                 )
-                              : Image.asset(
-                                  'asset/img/$selectedImagePath',
+                              : Image.network(
+                                  selectedImagePath!,
                                   fit: BoxFit.cover,
                                   width: 150,
                                   height: 150,
