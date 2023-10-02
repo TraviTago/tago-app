@@ -4,18 +4,6 @@ import 'package:tago_app/trip/model/trip_model.dart';
 part 'trip_response_model.g.dart';
 
 @JsonSerializable()
-class TripJoinResponseModel {
-  final int tripId;
-
-  TripJoinResponseModel({required this.tripId});
-
-  factory TripJoinResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$TripJoinResponseModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TripJoinResponseModelToJson(this);
-}
-
-@JsonSerializable()
 class MyTripResponseModel {
   final List<TripModel> trips;
 

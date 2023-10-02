@@ -6,18 +6,6 @@ part of 'trip_response_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TripJoinResponseModel _$TripJoinResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    TripJoinResponseModel(
-      tripId: json['tripId'] as int,
-    );
-
-Map<String, dynamic> _$TripJoinResponseModelToJson(
-        TripJoinResponseModel instance) =>
-    <String, dynamic>{
-      'tripId': instance.tripId,
-    };
-
 MyTripResponseModel _$MyTripResponseModelFromJson(Map<String, dynamic> json) =>
     MyTripResponseModel(
       trips: (json['trips'] as List<dynamic>)
