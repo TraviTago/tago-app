@@ -6,18 +6,20 @@ part 'trip_status_model.g.dart';
 class TripStatusModel {
   final int femaleCnt;
   final int maleCnt;
-  final String meatPlace;
+  final String meetPlace;
   final List<int> ageGroup;
   final String startTime;
   final String endTime;
+  final bool pet;
 
   TripStatusModel({
     required this.femaleCnt,
-    required this.meatPlace,
+    required this.meetPlace,
     required this.maleCnt,
     required this.ageGroup,
     required this.startTime,
     required this.endTime,
+    required this.pet,
   });
 
   factory TripStatusModel.fromJson(Map<String, dynamic> json) =>
