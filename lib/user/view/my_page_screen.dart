@@ -9,6 +9,7 @@ import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/user/component/menu_list.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyPageScreen extends ConsumerWidget {
   const MyPageScreen({Key? key}) : super(key: key);
@@ -91,9 +92,8 @@ class _ServiceCenter extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(color: Colors.white),
       child: MenuList(
-        titles: const ['자주 묻는 질문', '고객센터', '실시간 불편 신고'],
+        titles: const ['고객센터', '실시간 불편 신고'],
         onTaps: [
-          () => {context.go('/customerQuestion')},
           () => {context.go('/customerCenter')},
           () => {context.go('/customerReport')},
         ],
@@ -228,8 +228,22 @@ class _Information extends StatelessWidget {
         onTaps: [
           () => {},
           () => {},
-          () => {},
-          () => {},
+          () async {
+            const url =
+                'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';
+
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            } else {}
+          },
+          () async {
+            const url =
+                'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';
+
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            } else {}
+          },
         ],
       ),
     );
