@@ -55,7 +55,7 @@ class DataUtils {
   static TripStatus getTripStatus(DateTime tripDate, int tripTime) {
     DateTime now = DateTime.now();
     DateTime endOfTrip = tripDate.add(Duration(minutes: tripTime));
-    DateTime oneDayBeforeTrip = tripDate.subtract(const Duration(days: 1));
+    DateTime oneDayBeforeTrip = tripDate.subtract(const Duration(days: 2));
 
     TripStatus status;
 
