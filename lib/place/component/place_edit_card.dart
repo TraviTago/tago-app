@@ -88,7 +88,7 @@ class PlaceEditCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                ReorderableDelayedDragStartListener(
+                ReorderableDragStartListener(
                   index: index, // 여기서 'index'는 ListView.builder의 index입니다.
                   child: const Icon(
                     Icons.menu,
