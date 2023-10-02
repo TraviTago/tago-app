@@ -44,7 +44,7 @@ class TripMemberCard extends StatelessWidget {
                       children: [
                         const Text('집결지는'),
                         Text(
-                          statusModel.meatPlace,
+                          statusModel.meetPlace,
                           style: const TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w700,
@@ -111,8 +111,8 @@ class TripMemberCard extends StatelessWidget {
                                 Container(
                                   margin: EdgeInsets.only(
                                       right: age != statusModel.ageGroup.last
-                                          ? 5.0
-                                          : 0.0),
+                                          ? 3.0
+                                          : 1.0),
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0,
                                     vertical: 5.0,
@@ -166,6 +166,25 @@ class TripMemberCard extends StatelessWidget {
                           statusModel.endTime,
                           style: const TextStyle(
                               fontSize: 14.0, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('반려동물은'),
+                        Text(
+                          statusModel.pet ? "좋아요!" : "싫어요!",
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),

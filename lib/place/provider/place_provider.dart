@@ -30,7 +30,7 @@ class PlaceStateNotifier extends StateNotifier<CursorPaginationBase> {
       final places = await repository.getPlaces(
         paginationParams: const PaginationParams(
           cursorId: 0,
-          limit: 300,
+          limit: 500,
         ),
       );
 

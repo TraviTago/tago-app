@@ -5,7 +5,7 @@ import 'package:tago_app/common/component/progress_bar.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/course/repository/course_repository.dart';
+import 'package:tago_app/course/provider/course_provider.dart';
 
 class TripLastFormScreen extends ConsumerStatefulWidget {
   const TripLastFormScreen({super.key});
@@ -126,7 +126,7 @@ class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
                 ),
                 onPressed: tripNameCount == 0
                     ? null
-                    : () {
+                    : () async {
                         final int parsedPlaceId = DataUtils.listToint(
                             GoRouterState.of(context)
                                 .queryParameters['mustPlaces']!);
@@ -134,8 +134,9 @@ class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
                         final List<String> parsedTripTags =
                             DataUtils.stringToList(GoRouterState.of(context)
                                 .queryParameters['types']);
-                        ref.read(courseRepositoryProvider).recommendCourse(
+                        await ref.read(courseProvider.notifier).recommendCourse(
                             placeId: parsedPlaceId, tags: parsedTripTags);
+
                         context.go(Uri(
                           path: '/tripComplete',
                           queryParameters: {

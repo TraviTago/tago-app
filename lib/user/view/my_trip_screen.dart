@@ -5,7 +5,7 @@ import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
 import 'package:tago_app/trip/model/trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
-import 'package:tago_app/trip/repository/trip_repository.dart';
+import 'package:tago_app/trip/provider/trip_me_provider.dart';
 
 class MyTripScreen extends ConsumerWidget {
   const MyTripScreen({Key? key}) : super(key: key);
@@ -29,11 +29,13 @@ class MyTripScreen extends ConsumerWidget {
           ),
         ),
       ),
-      child: FutureBuilder<MyTripResponseModel>(
-        future: ref.watch(tripRepositoryProvider).getMyTrips(),
+      child: FutureBuilder<MyTripResponseModel?>(
+        future: ref.watch(tripMeProvider.notifier).getMyTrip(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // show loading indicator
+            return const Center(
+              child: CircularProgressIndicator(color: PRIMARY_COLOR),
+            ); // show loading indicator
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data!.trips.isEmpty) {
@@ -147,7 +149,7 @@ class TripsListComponent extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 30.0,
-            vertical: 20.0,
+            vertical: 10.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

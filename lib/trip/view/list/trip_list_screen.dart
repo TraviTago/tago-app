@@ -28,6 +28,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
   void initState() {
     super.initState();
     controller.addListener(scrollListener);
+
     ref.read(recommendProvider.notifier).fetchRecommendTrip();
   }
 
@@ -151,8 +152,10 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                           ),
                           tripRecommendData == null
                               ? const TripRecommendShimmerCard()
-                              : TripRecommendCard.fromModel(
-                                  model: tripRecommendData),
+                              : (tripRecommendData is TripModel)
+                                  ? TripRecommendCard.fromModel(
+                                      model: tripRecommendData)
+                                  : Container(),
                           const SizedBox(
                             height: 20.0,
                           ),

@@ -9,8 +9,12 @@ enum TripStatus {
   completed // 지나간 여행
 }
 
+abstract class TripBaseModel {}
+
+class TripErrorModel extends TripBaseModel {}
+
 @JsonSerializable()
-class TripModel {
+class TripModel extends TripBaseModel {
   final int tripId;
   final DateTime dateTime;
   final String name;

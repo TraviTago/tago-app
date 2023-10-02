@@ -7,6 +7,7 @@ import 'package:tago_app/user/view/my_trip_screen.dart';
 
 class RootTab extends StatefulWidget {
   const RootTab({Key? key}) : super(key: key);
+
   static String get routeName => 'home';
 
   @override
