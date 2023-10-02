@@ -5,6 +5,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   static String get routeName => 'signup';
@@ -22,6 +23,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   bool showVerificationField = false;
   bool isVerifyMode = false;
   String? errorText;
+  bool isAllChecked = false;
+  bool isServiceChecked = false;
+  bool isInfoChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -153,6 +158,33 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     }
   }
 
+  void updateState(String type) {
+    if (type == "all") {
+      isAllChecked = !isAllChecked;
+      if (isAllChecked) {
+        isServiceChecked = true;
+        isInfoChecked = true;
+      } else {
+        isServiceChecked = false;
+        isInfoChecked = false;
+      }
+    } else if (type == "service") {
+      isServiceChecked = !isServiceChecked;
+      if (isInfoChecked && isServiceChecked) {
+        isAllChecked = true;
+      } else {
+        isAllChecked = false;
+      }
+    } else {
+      isInfoChecked = !isInfoChecked;
+      if (isInfoChecked && isServiceChecked) {
+        isAllChecked = true;
+      } else {
+        isAllChecked = false;
+      }
+    }
+  }
+
   void handleSmsVerify() async {
     // 인증 번호를 확인합니다.
     if (verificationCode.length == 6) {
@@ -163,15 +195,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             .smsVerify(number: formattedNumber, code: verificationCode);
         if (smsVerify.verify) {
           //문자 인증 성공일 경우
-          context.go(
-            Uri(
-              path: '/signup2',
-              queryParameters: {
-                'number': phoneNumber,
-              },
-            ).toString(),
-          );
-          //TODO: 문자 인증 성공이지만 이미 회원일 경우: 로그인 시켜서 홈으로
+          _checkPolicy();
         }
       } catch (e) {
         //1. 인증번호 틀렸을 경우
@@ -181,5 +205,187 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         //2. 시간초과일 경우
       }
     }
+  }
+
+  void _checkPolicy() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 15.0,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(
+                            checkColor: PRIMARY_COLOR,
+                            activeColor: Colors.white,
+                            side: const BorderSide(
+                              width: 1,
+                              color: SELECTED_BOX_BG_COLOR,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            value: isAllChecked,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                updateState("all");
+                              });
+                            },
+                          ),
+                          const Text(
+                            '약관 전체 동의',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 30.0),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.chevron_right_rounded,
+                            color: LABEL_TEXT_COLOR,
+                          ),
+                          onPressed: () async {
+                            const url =
+                                'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';
+
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              await launchUrl(Uri.parse(url));
+                            } else {}
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        checkColor: PRIMARY_COLOR,
+                        activeColor: Colors.white,
+                        side: const BorderSide(
+                          width: 1,
+                          color: SELECTED_BOX_BG_COLOR,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        value: isServiceChecked,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            updateState("service");
+                          });
+                        },
+                      ),
+                      const Text(
+                        '(필수) 서비스 이용약관 동의',
+                        style: TextStyle(
+                          color: LABEL_TEXT_SUB_COLOR,
+                          fontSize: 11.0,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        checkColor: PRIMARY_COLOR,
+                        activeColor: Colors.white,
+                        side: const BorderSide(
+                          width: 1,
+                          color: SELECTED_BOX_BG_COLOR,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        value: isInfoChecked,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            updateState("info");
+                          });
+                        },
+                      ),
+                      const Text(
+                        '(필수) 개인정보 수집/이용 및 제3자 제공 동의',
+                        style: TextStyle(
+                          color: LABEL_TEXT_SUB_COLOR,
+                          fontSize: 11.0,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            iconPadding: EdgeInsets.zero,
+            buttonPadding: EdgeInsets.zero,
+            titlePadding: EdgeInsets.zero,
+            actionsPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            actions: [
+              Container(
+                width: double.infinity,
+                height: 50.0,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: LABEL_BG_COLOR,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: MaterialButton(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(15.0)),
+                        ),
+                        onPressed: isAllChecked
+                            ? () {
+                                context.go(
+                                  Uri(
+                                    path: '/signup2',
+                                    queryParameters: {
+                                      'number': phoneNumber,
+                                    },
+                                  ).toString(),
+                                );
+                              }
+                            : null,
+                        child: Text(
+                          '시작하기',
+                          style: TextStyle(
+                            color:
+                                isAllChecked ? PRIMARY_COLOR : LABEL_TEXT_COLOR,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 }

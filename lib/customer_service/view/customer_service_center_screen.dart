@@ -111,21 +111,6 @@ class CustomerServiceCenterScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '자주 묻는 질문이 궁금하다면?',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 13.0,
-                      ),
-                    ),
-                    RedirectButton(
-                      buttonType: "question",
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
                       '여행 중 문제가 생겼다면?',
                       style: TextStyle(
                         color: Colors.black,
