@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
+import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/place/model/place_trip_model.dart';
@@ -26,7 +27,8 @@ class TripEditDetailMapScreen extends StatelessWidget {
       future: Future.wait([loadedMarkerImages, loadHtmlAsset()]),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(color: PRIMARY_COLOR));
         }
         String baseHtmlScript = snapshot.data![1];
         final customScript = '''

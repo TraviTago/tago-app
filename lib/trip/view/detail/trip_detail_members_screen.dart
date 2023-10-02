@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/shimmer_box.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
-import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/model/trip_member_model.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';
 
@@ -23,7 +22,7 @@ class TripDetailMembersScreen extends ConsumerWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const DefaultLayout(
               child: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: PRIMARY_COLOR),
               ),
             );
           }

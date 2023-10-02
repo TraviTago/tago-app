@@ -100,7 +100,8 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
                   final state = ref.watch(placeProvider);
 
                   if (state is CursorPaginationLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(color: PRIMARY_COLOR));
                   } else if (state is CursorPaginationError) {
                     return Text('Error: ${state.message}');
                   } else if (state is CursorPagination) {

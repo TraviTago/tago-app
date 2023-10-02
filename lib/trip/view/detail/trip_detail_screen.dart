@@ -51,7 +51,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const DefaultLayout(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: PRIMARY_COLOR),
             ),
           );
         }
