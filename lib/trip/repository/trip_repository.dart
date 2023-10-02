@@ -65,7 +65,7 @@ abstract class TripRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<TripJoinResponseModel> joinTrip({
+  Future<void> joinTrip({
     @Path() required int tripId,
   });
 
@@ -73,7 +73,7 @@ abstract class TripRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<TripJoinResponseModel> leaveTrip({
+  Future<void> leaveTrip({
     @Path() required int tripId,
   });
 
