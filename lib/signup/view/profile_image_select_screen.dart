@@ -56,6 +56,7 @@ class _ProfileImageSelectScreenState
             children: [
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 14.0,
                   prefix: true,
                   isMultipleSelection: false,
                   buttonCount: 15,

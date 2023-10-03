@@ -46,6 +46,7 @@ class _ThirdFormScreenState extends State<ThirdFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 11.0,
                   isMultipleSelection: true,
                   buttonCount: 16,
                   buttonTexts: buttonData.keys.toList(),

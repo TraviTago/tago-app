@@ -593,6 +593,7 @@ class _PlaceModalState extends State<_PlaceModal> {
           children: [
             Expanded(
               child: ButtonGroup(
+                fontSize: 14.0,
                 buttonCount: 4,
                 buttonTexts: widget.startPlaces,
                 crossAxisCount: 2,

@@ -56,6 +56,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 14.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
@@ -75,6 +76,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 14.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
@@ -94,6 +96,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 14.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,

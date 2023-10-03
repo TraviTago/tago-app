@@ -226,8 +226,22 @@ class _Information extends StatelessWidget {
           '개인 정보 처리 방침',
         ],
         onTaps: [
-          () => {},
-          () => {},
+          () async {
+            const url =
+                'https://aquamarine-green-f8d.notion.site/4e971784c48c4be19ba73743436afb53';
+
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            } else {}
+          },
+          () async {
+            const url =
+                'https://aquamarine-green-f8d.notion.site/af8ffc59bb3a4a368702513e32ca1b25?pvs=4';
+
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url));
+            } else {}
+          },
           () async {
             const url =
                 'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';

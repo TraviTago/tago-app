@@ -76,6 +76,7 @@ class PlaceListCard extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                           maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           address,

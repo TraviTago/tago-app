@@ -80,6 +80,7 @@ class _FirstFormScreenState extends State<FirstFormScreen> {
                   SizedBox(
                     height: 150,
                     child: ButtonGroup(
+                      fontSize: 15.0,
                       buttonCount: 6,
                       buttonTexts: const [
                         '10대',
@@ -116,6 +117,7 @@ class _FirstFormScreenState extends State<FirstFormScreen> {
                   SizedBox(
                     height: 150,
                     child: ButtonGroup(
+                      fontSize: 15.0,
                       buttonCount: 2,
                       buttonTexts: const ['남성', '여성'],
                       crossAxisCount: 2,

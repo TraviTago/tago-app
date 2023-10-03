@@ -58,7 +58,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                       '참여하기',
                       style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
@@ -155,7 +155,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                       '내 여행메이트 정보 보러가기 ',
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w900,
+                                        fontWeight: FontWeight.w700,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -194,7 +194,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                         '내 여행 취소하기',
                                         style: TextStyle(
                                           fontSize: 16.0,
-                                          fontWeight: FontWeight.w900,
+                                          fontWeight: FontWeight.w700,
                                           color: LABEL_TEXT_SUB_COLOR,
                                         ),
                                       ),
@@ -230,7 +230,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                       '실시간 불편신고',
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w900,
+                                        fontWeight: FontWeight.w700,
                                         color: LABEL_TEXT_SUB_COLOR,
                                       ),
                                     ),
@@ -358,7 +358,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
 
   void _showAfterDialog(BuildContext context, bool isJoin, WidgetRef ref) {
     showDialog(
-      barrierDismissible: true,
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -414,6 +414,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                           await ref
                               .read(recommendProvider.notifier)
                               .fetchRecommendTrip();
+                          context.pop();
                           context.go('/');
                         },
                       ),
@@ -444,37 +445,6 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                       child: MaterialButton(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(15.0)),
-                        ),
-                        child: const Text(
-                          '내여행 보기',
-                          style: TextStyle(
-                            color: PRIMARY_COLOR,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onPressed: () async {
-                          await ref
-                              .read(tripRepositoryProvider)
-                              .joinTrip(tripId: tripId);
-                          await ref
-                              .read(recommendProvider.notifier)
-                              .fetchRecommendTrip();
-                          await ref.read(tripProvider.notifier).paginate();
-                          context.go('/');
-                        },
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
-                    ),
-                    Expanded(
-                      child: MaterialButton(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(15.0)),
                         ),
                         child: const Text(
@@ -493,6 +463,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                               .read(recommendProvider.notifier)
                               .fetchRecommendTrip();
                           await ref.read(tripProvider.notifier).paginate();
+                          context.pop();
                           context.go('/');
                         },
                       ),

@@ -102,7 +102,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                         fontSize: 18.0,
                       ),
                       labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18.0,
                       ),
                       indicator: const UnderlineTabIndicator(

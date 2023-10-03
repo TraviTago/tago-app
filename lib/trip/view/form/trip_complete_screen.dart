@@ -40,7 +40,7 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                     '짜잔! 완성되었어요',
                     style: TextStyle(
                       fontSize: 23.0,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(
@@ -94,7 +94,7 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                         '코스 상세정보를 모두 확인했어요',
                         style: TextStyle(
                           color: LABEL_TEXT_SUB_COLOR,
-                          fontSize: 13.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

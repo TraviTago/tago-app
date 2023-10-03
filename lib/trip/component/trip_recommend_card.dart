@@ -50,7 +50,7 @@ class TripRecommendCard extends StatelessWidget {
             .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
       },
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(20.0),
         child: Stack(
           children: <Widget>[
             Image.network(
@@ -96,7 +96,7 @@ class TripRecommendCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 11.0,
+                          fontSize: 13.0,
                         ),
                       ),
                     ],

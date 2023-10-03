@@ -45,6 +45,7 @@ class _TripFifthFormScreenState extends State<TripFifthFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
+                  fontSize: 11.0,
                   isMultipleSelection: true,
                   buttonCount: 16,
                   buttonTexts: buttonData.keys.toList(),

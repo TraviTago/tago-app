@@ -41,9 +41,9 @@ class PlaecRecommendCard extends StatelessWidget {
       child: Material(
         // Material 위젯 추가
         elevation: 8.0, // 그림자 깊이 설정
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(20.0),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(20.0),
           child: Stack(
             children: <Widget>[
               Image.network(

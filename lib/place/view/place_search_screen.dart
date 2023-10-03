@@ -46,7 +46,7 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
+          horizontal: 20.0,
         ),
         child: Column(
           children: [

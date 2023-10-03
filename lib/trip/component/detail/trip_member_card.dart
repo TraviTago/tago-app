@@ -42,7 +42,9 @@ class TripMemberCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('집결지는'),
+                        const Text(
+                          '집결지는',
+                        ),
                         Text(
                           statusModel.meetPlace,
                           style: const TextStyle(
