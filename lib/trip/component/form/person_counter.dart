@@ -27,8 +27,8 @@ class PersonCounterState extends State<PersonCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 110,
-      height: 35,
+      width: 120,
+      height: 40,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
@@ -58,7 +58,7 @@ class PersonCounterState extends State<PersonCounter> {
             Text(
               '${widget.count}',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: widget.textColor,
               ),
