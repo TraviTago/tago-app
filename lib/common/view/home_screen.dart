@@ -105,19 +105,20 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                     alignment: Alignment.centerLeft,
                     child: TabBar(
                       isScrollable: true,
-                      padding: const EdgeInsets.only(left: 30.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       controller: _tabController,
                       labelColor: Colors.black,
                       unselectedLabelStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 18.0,
                       ),
+                      indicatorPadding:
+                          const EdgeInsets.symmetric(horizontal: 10.0),
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18.0,
                       ),
                       indicator: const UnderlineTabIndicator(
-                        insets: EdgeInsets.symmetric(horizontal: 0.0),
                         borderRadius: BorderRadius.all(Radius.circular(1.0)),
                         borderSide: BorderSide(
                           width: 3.0,
@@ -125,8 +126,24 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       tabs: const <Widget>[
-                        Tab(text: '참여하기'),
-                        Tab(text: '둘러보기'),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Tab(
+                            height: 30.0,
+                            child: Text(
+                              '참여하기',
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Tab(
+                            height: 30.0,
+                            child: Text(
+                              '둘러보기',
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
