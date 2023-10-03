@@ -110,13 +110,15 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                       labelColor: Colors.black,
                       unselectedLabelStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 18.0,
+                        fontFamily: "Pretendard",
+                        fontSize: 16.0,
                       ),
                       indicatorPadding:
                           const EdgeInsets.symmetric(horizontal: 10.0),
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 18.0,
+                        fontFamily: "Pretendard",
+                        fontSize: 17.0,
                       ),
                       indicator: const UnderlineTabIndicator(
                         borderRadius: BorderRadius.all(Radius.circular(1.0)),
