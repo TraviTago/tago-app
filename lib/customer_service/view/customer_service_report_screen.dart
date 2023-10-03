@@ -31,97 +31,101 @@ class _CustomerServiceReportScreenState
           color: Colors.black,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _buildReportButton("👫", ReportType.TRAVEL_MATE_ISSUE),
-                  _buildReportButton("😧", ReportType.TAXI_DRIVER_ISSUE),
-                  _buildReportButton("🙅‍♂️", ReportType.PLAN_ISSUE),
-                  _buildReportButton("💬", ReportType.OTHERS),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40.0),
-              child: Container(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              SizedBox(
                 width: double.infinity,
-                height: 200.0,
-                decoration: BoxDecoration(
-                  color: LABEL_BG_COLOR,
-                  borderRadius: BorderRadius.circular(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    _buildReportButton("👫", ReportType.TRAVEL_MATE_ISSUE),
+                    _buildReportButton("😧", ReportType.TAXI_DRIVER_ISSUE),
+                    _buildReportButton("🙅‍♂️", ReportType.PLAN_ISSUE),
+                    _buildReportButton("💬", ReportType.OTHERS),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 200.0,
+                  decoration: BoxDecoration(
+                    color: LABEL_BG_COLOR,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextField(
+                      onChanged: (text) {
+                        setState(() {});
+                      },
+                      controller: _reportController,
+                      maxLines: null,
+                      expands: true,
+                      style: const TextStyle(
+                        color: LABEL_TEXT_SUB_COLOR,
+                        fontSize: 13.0,
+                      ),
+                      decoration: const InputDecoration(
+                        hintText: '상황을 상세하게 알려주세요',
+                        hintStyle: TextStyle(
+                          color: LABEL_TEXT_COLOR,
+                          fontSize: 13.0,
+                        ),
+                        contentPadding: EdgeInsets.all(10.0),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: (_selectedButtonText != null &&
+                        _reportController.text.trim().isNotEmpty)
+                    ? () async {
+                        _reportContents = _reportController.text.trim();
+
+                        await ref
+                            .read(customerServiceRepositoryProvider)
+                            .report(
+                              type: _selectedButtonText!,
+                              detail: _reportContents!,
+                            );
+
+                        _showReportConfirmationDialog(); // Call the dialog function here
+                      }
+                    : null,
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  backgroundColor: (_selectedButtonText != null &&
+                          _reportController.text.trim().isNotEmpty)
+                      ? PRIMARY_COLOR
+                      : LABEL_BG_COLOR,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: TextField(
-                    onChanged: (text) {
-                      setState(() {});
-                    },
-                    controller: _reportController,
-                    maxLines: null,
-                    expands: true,
-                    style: const TextStyle(
-                      color: LABEL_TEXT_SUB_COLOR,
-                      fontSize: 12.0,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: '상황을 상세하게 알려주세요',
-                      hintStyle: TextStyle(
-                        color: LABEL_TEXT_COLOR,
-                        fontSize: 12.0,
-                      ),
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: InputBorder.none,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 60.0, vertical: 5.0),
+                  child: Text(
+                    "신고 보내기",
+                    style: TextStyle(
+                      color: (_selectedButtonText != null &&
+                              _reportController.text.trim().isNotEmpty)
+                          ? Colors.white
+                          : PRIMARY_COLOR,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: (_selectedButtonText != null &&
-                      _reportController.text.trim().isNotEmpty)
-                  ? () async {
-                      _reportContents = _reportController.text.trim();
-
-                      await ref.read(customerServiceRepositoryProvider).report(
-                            type: _selectedButtonText!,
-                            detail: _reportContents!,
-                          );
-
-                      _showReportConfirmationDialog(); // Call the dialog function here
-                    }
-                  : null,
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                backgroundColor: (_selectedButtonText != null &&
-                        _reportController.text.trim().isNotEmpty)
-                    ? PRIMARY_COLOR
-                    : LABEL_BG_COLOR,
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60.0, vertical: 5.0),
-                child: Text(
-                  "신고 보내기",
-                  style: TextStyle(
-                    color: (_selectedButtonText != null &&
-                            _reportController.text.trim().isNotEmpty)
-                        ? Colors.white
-                        : PRIMARY_COLOR,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -155,7 +159,7 @@ class _CustomerServiceReportScreenState
               buttonText,
               style: TextStyle(
                 color: isSelected ? Colors.white : PRIMARY_COLOR,
-                fontSize: 12.0,
+                fontSize: 13.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
