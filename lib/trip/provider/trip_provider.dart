@@ -27,6 +27,8 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
     int fetchCount = 20,
     bool fetchMore = false,
     bool forceRefetch = false,
+    bool isPet = false,
+    bool sameGender = false,
   }) async {
     try {
       if (state is CursorPagination && !forceRefetch) {
@@ -47,6 +49,8 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
 
       PaginationParams paginationParams = PaginationParams(
           limit: fetchCount,
+          isPet: isPet,
+          sameGender: sameGender,
           cursorId: 0,
           cursorDate: DataUtils.formatDateTimeToParams(DateTime.now()));
 
