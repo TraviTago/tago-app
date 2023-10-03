@@ -11,6 +11,8 @@ PaginationParams _$PaginationParamsFromJson(Map<String, dynamic> json) =>
       limit: json['limit'] as int?,
       cursorId: json['cursorId'] as int?,
       cursorDate: json['cursorDate'] as String?,
+      sameGender: json['sameGender'] as bool?,
+      isPet: json['isPet'] as bool?,
     );
 
 Map<String, dynamic> _$PaginationParamsToJson(PaginationParams instance) =>
@@ -18,4 +20,6 @@ Map<String, dynamic> _$PaginationParamsToJson(PaginationParams instance) =>
       'limit': instance.limit,
       'cursorId': instance.cursorId,
       'cursorDate': instance.cursorDate,
+      'sameGender': instance.sameGender,
+      'isPet': instance.isPet,
     };
