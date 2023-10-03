@@ -17,6 +17,8 @@ class ButtonGroup extends StatefulWidget {
   final bool isModal;
   final List<int>? initialSelectedIndexes;
 
+  final double fontSize;
+
   const ButtonGroup({
     Key? key,
     required this.buttonCount,
@@ -31,6 +33,7 @@ class ButtonGroup extends StatefulWidget {
     this.crossAxisSpacing = 10,
     this.isModal = false,
     this.initialSelectedIndexes,
+    required this.fontSize,
     required this.onButtonSelected, // 콜백 함수 필요
   }) : super(key: key);
 
@@ -79,7 +82,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                   child: Text(
                     widget.buttonTexts[index],
                     style: TextStyle(
-                      fontSize: widget.isModal ? 14 : 12,
+                      fontSize: widget.fontSize,
                       fontWeight: selectedButtons.contains(index)
                           ? FontWeight.w700
                           : FontWeight.w500,
