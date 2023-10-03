@@ -3,7 +3,12 @@ import 'package:shimmer/shimmer.dart';
 import 'package:tago_app/common/component/shimmer_text.dart';
 
 class TripListSkeleton extends StatelessWidget {
-  const TripListSkeleton({super.key});
+  const TripListSkeleton({
+    super.key,
+    required this.isRecommend,
+  });
+
+  final bool isRecommend;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class TripListSkeleton extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, index) {
-                if (index == 0) {
+                if (index == 0 && isRecommend) {
                   // First item is similar to the TripRecommendCard
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +47,8 @@ class TripListSkeleton extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (index == 1) const ShimmerText(width: 50, height: 20),
+                    if (index == 1 || index == 0)
+                      const ShimmerText(width: 50, height: 20),
                     const SizedBox(height: 10.0),
                     SizedBox(
                       height: 120,
