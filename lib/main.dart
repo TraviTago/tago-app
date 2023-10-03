@@ -30,7 +30,7 @@ class _App extends ConsumerWidget {
 
     return MaterialApp.router(
       theme: ThemeData(
-        fontFamily: 'Inter',
+        fontFamily: 'Pretendard',
         splashColor: LABEL_BG_COLOR,
         highlightColor: Colors.transparent,
       ),

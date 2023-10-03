@@ -100,25 +100,25 @@ flutter:
   # example:
   # fonts:
   fonts:
-    - family: Inter
+    - family: Pretendard
       fonts:
-        - asset: asset/fonts/Inter-Black.ttf
+        - asset: asset/fonts/Pretendard-Black.ttf
           weight: 900
-        - asset: asset/fonts/Inter-ExtraBold.ttf
+        - asset: asset/fonts/Pretendard-ExtraBold.ttf
           weight: 800
-        - asset: asset/fonts/Inter-Bold.ttf
+        - asset: asset/fonts/Pretendard-Bold.ttf
           weight: 700
-        - asset: asset/fonts/Inter-SemiBold.ttf
+        - asset: asset/fonts/Pretendard-SemiBold.ttf
           weight: 600
-        - asset: asset/fonts/Inter-Medium.ttf
+        - asset: asset/fonts/Pretendard-Medium.ttf
           weight: 500
-        - asset: asset/fonts/Inter-Regular.ttf
+        - asset: asset/fonts/Pretendard-Regular.ttf
           weight: 400
-        - asset: asset/fonts/Inter-Light.ttf
+        - asset: asset/fonts/Pretendard-Light.ttf
           weight: 300
-        - asset: asset/fonts/Inter-ExtraLight.ttf
+        - asset: asset/fonts/Pretendard-ExtraLight.ttf
           weight: 200
-        - asset: asset/fonts/Inter-Thin.ttf
+        - asset: asset/fonts/Pretendard-Thin.ttf
           weight: 100
 
   #   - family: Schyler
