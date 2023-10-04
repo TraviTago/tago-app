@@ -143,13 +143,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (phoneNumber.length == 13) {
       String formattedNumber = phoneNumber.replaceAll('-', '');
 
-      ref.read(authRepositoryProvider).smsSending(number: formattedNumber);
+      //TOFIX: DEMO 아이디
+      if (formattedNumber == "01011111111") {
+        setState(() {
+          isPhoneNumberEnabled = false;
+          showVerificationField = true;
+          isVerifyMode = true;
+        });
+      } else {
+        ref.read(authRepositoryProvider).smsSending(number: formattedNumber);
 
-      setState(() {
-        isPhoneNumberEnabled = false;
-        showVerificationField = true;
-        isVerifyMode = true;
-      });
+        setState(() {
+          isPhoneNumberEnabled = false;
+          showVerificationField = true;
+          isVerifyMode = true;
+        });
+      }
     }
   }
 
@@ -157,18 +166,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // 인증 번호를 확인합니다.
     if (verificationCode.length == 6) {
       String formattedNumber = phoneNumber.replaceAll('-', '');
-      try {
-        final smsVerify = await ref
-            .read(authRepositoryProvider)
-            .smsVerify(number: formattedNumber, code: verificationCode);
-        if (smsVerify.verify) {
+      //TOFIX: DEMO 아이디
+      if (formattedNumber == "01011111111") {
+        if (verificationCode == "000000") {
           await ref.read(userProvider.notifier).login(number: phoneNumber);
         }
-      } catch (e) {
-        //1. 인증번호 틀렸을 경우
-        errorText = "인증번호를 다시 입력해주세요";
-        setState(() {});
-        //2. 시간초과일 경우
+      } else {
+        try {
+          final smsVerify = await ref
+              .read(authRepositoryProvider)
+              .smsVerify(number: formattedNumber, code: verificationCode);
+          if (smsVerify.verify) {
+            await ref.read(userProvider.notifier).login(number: phoneNumber);
+          }
+        } catch (e) {
+          //1. 인증번호 틀렸을 경우
+          errorText = "인증번호를 다시 입력해주세요";
+          setState(() {});
+          //2. 시간초과일 경우
+        }
       }
     }
   }
