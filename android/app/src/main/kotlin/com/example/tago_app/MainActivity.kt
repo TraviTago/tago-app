@@ -1,4 +1,4 @@
-package com.example.tago_app
+package com.travi.tago_app
 
 import io.flutter.embedding.android.FlutterActivity
 
