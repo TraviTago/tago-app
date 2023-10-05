@@ -56,7 +56,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
-                  fontSize: 14.0,
+                  fontSize: 13.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
@@ -76,7 +76,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
-                  fontSize: 14.0,
+                  fontSize: 12.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
@@ -96,13 +96,13 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
               ),
               Expanded(
                 child: ButtonGroup(
-                  fontSize: 14.0,
+                  fontSize: 13.0,
                   buttonCount: 2,
                   mainAxisSpacing: 25.0,
                   crossAxisSpacing: 15.0,
                   buttonTexts: const [
                     '최신유행은 가봐야지',
-                    '사람이 많지않은 좋은곳',
+                    '사람이 많지않은 좋은 곳',
                   ],
                   crossAxisCount: 2,
                   childAspectRatio: 3,
