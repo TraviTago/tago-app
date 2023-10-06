@@ -1,24 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
+import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';
 
 final tripProvider =
     StateNotifierProvider<TripStateNotifier, CursorPaginationBase>(
   (ref) {
     final repository = ref.watch(tripRepositoryProvider);
+    final storage = ref.watch(secureStorageProvider);
 
-    final notifier = TripStateNotifier(repository: repository);
+    final notifier = TripStateNotifier(
+      repository: repository,
+      storage: storage,
+    );
     return notifier;
   },
 );
 
 class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
   final TripRepository repository;
+  final FlutterSecureStorage storage;
 
   TripStateNotifier({
     required this.repository,
+    required this.storage,
   }) : super(CursorPaginationLoading()) {
     paginate();
   }
@@ -30,6 +40,9 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
     bool isPet = false,
     bool sameGender = false,
   }) async {
+    final userType = await storage.read(key: USER_TYPE_KEY);
+    CursorPagination<TripModel> resp;
+
     try {
       if (state is CursorPagination && !forceRefetch) {
         final pState = state as CursorPagination;
@@ -84,9 +97,15 @@ class TripStateNotifier extends StateNotifier<CursorPaginationBase> {
         }
       }
 
-      final resp = await repository.paginate(
-        paginationParams: paginationParams,
-      );
+      if (userType == "USER") {
+        resp = await repository.paginate(
+          paginationParams: paginationParams,
+        );
+      } else {
+        resp = await repository.paginateDriverTrip(
+          paginationParams: paginationParams,
+        );
+      }
 
       if (state is CursorPaginationFetchingMore) {
         final pState = state as CursorPaginationFetchingMore;
