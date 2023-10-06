@@ -105,7 +105,7 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                     alignment: Alignment.centerLeft,
                     child: TabBar(
                       isScrollable: true,
-                      padding: const EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 10.0),
                       controller: _tabController,
                       labelColor: Colors.black,
                       unselectedLabelStyle: const TextStyle(
@@ -129,18 +129,18 @@ class _HomeState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                       tabs: const <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(top: 5.0),
+                          padding: EdgeInsets.only(top: 10.0),
                           child: Tab(
-                            height: 30.0,
+                            height: 32.0,
                             child: Text(
                               '참여하기',
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 5.0),
+                          padding: EdgeInsets.only(top: 10.0),
                           child: Tab(
-                            height: 30.0,
+                            height: 32.0,
                             child: Text(
                               '둘러보기',
                             ),

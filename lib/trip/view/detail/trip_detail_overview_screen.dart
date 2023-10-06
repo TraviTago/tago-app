@@ -53,7 +53,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                   elevation: 0,
                   child: const Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                     child: Text(
                       '참여하기',
                       style: TextStyle(
@@ -88,131 +88,90 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                   ),
                 ),
 
-      child: SafeArea(
-        bottom: true,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: ListView.builder(
-            itemCount: detailModel.places.length + 1, // 1을 추가
-            itemBuilder: (context, index) {
-              if (index < detailModel.places.length) {
-                final place = detailModel.places[index];
-                return PlaceCard(place: place, index: index);
-              } else {
-                return Column(
-                  children: [
-                    if (tripStatus == TripStatus.upcoming ||
-                        tripStatus == TripStatus.upcomingSoon)
-                      FutureBuilder<TripStatusModel>(
-                        future: statusModel,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            }
-                            final statusModelData = snapshot.data;
-                            return TripMemberCard(
-                                statusModel: statusModelData!);
-                          } else {
-                            return const CircularProgressIndicator(
-                                color: PRIMARY_COLOR);
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: ListView.builder(
+          itemCount: detailModel.places.length + 1, // 1을 추가
+          itemBuilder: (context, index) {
+            if (index < detailModel.places.length) {
+              final place = detailModel.places[index];
+              return PlaceCard(place: place, index: index);
+            } else {
+              return Column(
+                children: [
+                  if (tripStatus == TripStatus.upcoming ||
+                      tripStatus == TripStatus.upcomingSoon)
+                    FutureBuilder<TripStatusModel>(
+                      future: statusModel,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
                           }
-                        },
-                      ),
-                    SizedBox(
-                      width: double.infinity,
-                      //TOFIX: 하단 버튼 출력 케이스
-                      //내 여행이 아닐 경우 하단 버튼 없음
-                      //내 여행일 경우:
-                      //현재 진행중인 여행일 경우 실시간 신고 버튼까지 출력
-                      //지나간 여행 또는 다가오는 여행일 경우 메이트 보기만 출력
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          if (detailModel.isJoined == false)
-                            const SizedBox(
-                              height: 50.0,
+                          final statusModelData = snapshot.data;
+                          return TripMemberCard(statusModel: statusModelData!);
+                        } else {
+                          return const CircularProgressIndicator(
+                              color: PRIMARY_COLOR);
+                        }
+                      },
+                    ),
+                  SizedBox(
+                    width: double.infinity,
+                    //TOFIX: 하단 버튼 출력 케이스
+                    //내 여행이 아닐 경우 하단 버튼 없음
+                    //내 여행일 경우:
+                    //현재 진행중인 여행일 경우 실시간 신고 버튼까지 출력
+                    //지나간 여행 또는 다가오는 여행일 경우 메이트 보기만 출력
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (detailModel.isJoined == false)
+                          const SizedBox(
+                            height: 50.0,
+                          ),
+                        if (detailModel.isJoined == true)
+                          MaterialButton(
+                            onPressed: () {
+                              context.push("/tripDetail/$tripId/members");
+                            },
+                            color: PRIMARY_COLOR,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                          if (detailModel.isJoined == true)
-                            MaterialButton(
-                              onPressed: () {
-                                context.push("/tripDetail/$tripId/members");
-                              },
-                              color: PRIMARY_COLOR,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              elevation: 0,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5.0, vertical: 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '내 여행메이트 정보 보러가기 ',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.chevron_right_sharp,
+                            elevation: 0,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '내 여행메이트 정보 보러가기 ',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
                                       color: Colors.white,
-                                      size: 25.0,
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (detailModel.isJoined == true &&
-                              (tripStatus == TripStatus.upcoming ||
-                                  tripStatus == TripStatus.upcomingSoon))
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 5.0),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  _showLeaveDialog(context, ref, tripStatus);
-                                },
-                                color: LABEL_BG_COLOR,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                elevation: 0,
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 8.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        '내 여행 취소하기',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w700,
-                                          color: LABEL_TEXT_SUB_COLOR,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.chevron_right_sharp,
-                                        color: LABEL_TEXT_SUB_COLOR,
-                                        size: 25.0,
-                                      )
-                                    ],
                                   ),
-                                ),
+                                  Icon(
+                                    Icons.chevron_right_sharp,
+                                    color: Colors.white,
+                                    size: 25.0,
+                                  ),
+                                ],
                               ),
                             ),
-                          if (tripStatus == TripStatus.ongoing &&
-                              detailModel.isJoined == true)
-                            MaterialButton(
+                          ),
+                        if (detailModel.isJoined == true &&
+                            (tripStatus == TripStatus.upcoming ||
+                                tripStatus == TripStatus.upcomingSoon))
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: MaterialButton(
                               onPressed: () {
-                                context.go('/customerReport');
+                                _showLeaveDialog(context, ref, tripStatus);
                               },
                               color: LABEL_BG_COLOR,
                               shape: RoundedRectangleBorder(
@@ -227,7 +186,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '실시간 불편신고',
+                                      '내 여행 취소하기',
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
@@ -243,17 +202,52 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                        ],
-                      ),
+                          ),
+                        if (tripStatus == TripStatus.ongoing &&
+                            detailModel.isJoined == true)
+                          MaterialButton(
+                            onPressed: () {
+                              context.go('/customerReport');
+                            },
+                            color: LABEL_BG_COLOR,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            elevation: 0,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '실시간 불편신고',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: LABEL_TEXT_SUB_COLOR,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.chevron_right_sharp,
+                                    color: LABEL_TEXT_SUB_COLOR,
+                                    size: 25.0,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );

@@ -148,30 +148,38 @@ class TripsListComponent extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 30.0,
+            horizontal: 20.0,
             vertical: 10.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (upcomingTrips.isNotEmpty) ...[
-                const Text(
-                  '예정된 여행',
-                  style: TextStyle(
-                    color: PRIMARY_COLOR,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5.0,
-                ),
-                const Text(
-                  '곧 여행을 떠나실 예정이군요!',
-                  style: TextStyle(
-                    color: LABEL_TEXT_SUB_COLOR,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500,
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '예정된 여행',
+                        style: TextStyle(
+                          color: PRIMARY_COLOR,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(
+                        '곧 여행을 떠나실 예정이군요!',
+                        style: TextStyle(
+                          color: LABEL_TEXT_SUB_COLOR,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(

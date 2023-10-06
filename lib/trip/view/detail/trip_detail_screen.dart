@@ -94,7 +94,7 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
                     alignment: Alignment.centerLeft,
                     child: TabBar(
                       isScrollable: true,
-                      padding: const EdgeInsets.only(left: 20.0),
+                      padding: const EdgeInsets.only(left: 10.0),
                       controller: _tabController,
                       labelColor: PRIMARY_COLOR,
                       unselectedLabelStyle: const TextStyle(

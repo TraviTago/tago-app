@@ -43,7 +43,7 @@ class TripRecommendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width - 60;
+    double screenWidth = MediaQuery.of(context).size.width - 40;
     return GestureDetector(
       onTap: () {
         context

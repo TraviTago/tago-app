@@ -55,15 +55,89 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
           color: Colors.black,
         ),
       ),
-      child: SafeArea(
-        bottom: true,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              FutureBuilder<PlaceDetailModel>(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            FutureBuilder<PlaceDetailModel>(
+              future: ref
+                  .read(placeRepositoryProvider)
+                  .getDetailPlace(placeId: placeId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator(color: PRIMARY_COLOR));
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('오류: ${snapshot.error}'));
+                } else if (!snapshot.hasData) {
+                  return const Center(child: Text('데이터가 없습니다.'));
+                }
+
+                final detailModel = snapshot.data!;
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30.0, vertical: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DetailImage(imageUrl: detailModel.imageUrl),
+                          const SizedBox(height: 20.0),
+                          Text(
+                            detailModel.address!,
+                            style: const TextStyle(
+                              fontSize: 17.0,
+                              color: LABEL_TEXT_SUB_COLOR,
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Text(
+                            DataUtils.cleanOverview(detailModel.overview, true),
+                            style: const TextStyle(
+                              fontSize: 13.0,
+                              height: 1.5,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                        ],
+                      ),
+                    ),
+                    if (detailModel.telephone != null ||
+                        detailModel.restDate != null ||
+                        detailModel.parking != null ||
+                        detailModel.openTime != null ||
+                        detailModel.homepage != null)
+                      DetailInfo(detailModel: detailModel),
+                  ],
+                );
+              },
+            ),
+            const SpacerContainer(),
+            const SizedBox(
+              height: 10.0,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.0,
+                vertical: 15.0,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  '장소후기',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            FutureBuilder<PagePagination<KakaoBlogSearchModel>>(
                 future: ref
-                    .read(placeRepositoryProvider)
-                    .getDetailPlace(placeId: placeId),
+                    .watch(kakaoBlogSearchRepositoryProvider)
+                    .paginate(query: '$placeName 후기'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -74,241 +148,155 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                     return const Center(child: Text('데이터가 없습니다.'));
                   }
 
-                  final detailModel = snapshot.data!;
+                  final data = snapshot.data!;
                   return Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30.0, vertical: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DetailImage(imageUrl: detailModel.imageUrl),
-                            const SizedBox(height: 20.0),
-                            Text(
-                              detailModel.address!,
-                              style: const TextStyle(
-                                fontSize: 17.0,
-                                color: LABEL_TEXT_SUB_COLOR,
-                              ),
-                            ),
-                            const SizedBox(height: 20.0),
-                            Text(
-                              DataUtils.cleanOverview(
-                                  detailModel.overview, true),
-                              style: const TextStyle(
-                                fontSize: 13.0,
-                                height: 1.5,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(height: 20.0),
-                          ],
-                        ),
-                      ),
-                      if (detailModel.telephone != null ||
-                          detailModel.restDate != null ||
-                          detailModel.parking != null ||
-                          detailModel.openTime != null ||
-                          detailModel.homepage != null)
-                        DetailInfo(detailModel: detailModel),
-                    ],
-                  );
-                },
-              ),
-              const SpacerContainer(),
-              const SizedBox(
-                height: 10.0,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 15.0,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    '장소후기',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              FutureBuilder<PagePagination<KakaoBlogSearchModel>>(
-                  future: ref
-                      .watch(kakaoBlogSearchRepositoryProvider)
-                      .paginate(query: '$placeName 후기'),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                          child:
-                              CircularProgressIndicator(color: PRIMARY_COLOR));
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('오류: ${snapshot.error}'));
-                    } else if (!snapshot.hasData) {
-                      return const Center(child: Text('데이터가 없습니다.'));
-                    }
-
-                    final data = snapshot.data!;
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 450,
-                          child: PageView.builder(
-                            controller: pageController,
-                            itemCount: (data.documents.length / 2).ceil(),
-                            itemBuilder: (context, pageIndex) {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 2,
-                                itemBuilder: (context, itemIndex) {
-                                  final index = pageIndex * 2 + itemIndex;
-                                  if (index >= data.documents.length) {
-                                    return const SizedBox.shrink();
-                                  }
-                                  final blogItem = data.documents[index];
-                                  return Column(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          InkWell(
-                                            onTap: () async {
-                                              if (await canLaunchUrl(
+                      SizedBox(
+                        height: 450,
+                        child: PageView.builder(
+                          controller: pageController,
+                          itemCount: (data.documents.length / 2).ceil(),
+                          itemBuilder: (context, pageIndex) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 2,
+                              itemBuilder: (context, itemIndex) {
+                                final index = pageIndex * 2 + itemIndex;
+                                if (index >= data.documents.length) {
+                                  return const SizedBox.shrink();
+                                }
+                                final blogItem = data.documents[index];
+                                return Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            if (await canLaunchUrl(
+                                              Uri.parse(blogItem.url),
+                                            )) {
+                                              await launchUrl(
                                                 Uri.parse(blogItem.url),
-                                              )) {
-                                                await launchUrl(
-                                                  Uri.parse(blogItem.url),
-                                                );
-                                              } else {
-                                                print(
-                                                    'Could not launch ${blogItem.url}');
-                                              }
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 30.0,
-                                                      vertical: 8.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                      color:
-                                                          LABEL_TEXT_SUB_COLOR,
-                                                      fontSize: 13.0,
+                                              );
+                                            } else {
+                                              print(
+                                                  'Could not launch ${blogItem.url}');
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30.0,
+                                                vertical: 8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${DataUtils.extractDomain(blogItem.url)} > ${blogItem.blogname}',
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                    color: LABEL_TEXT_SUB_COLOR,
+                                                    fontSize: 13.0,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                DataUtils.processText(
+                                                    blogItem.title,
+                                                    placeName,
+                                                    false),
+                                                const SizedBox(
+                                                  height: 10.0,
+                                                ),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 5,
+                                                      child:
+                                                          DataUtils.processText(
+                                                              blogItem.contents,
+                                                              placeName,
+                                                              true),
                                                     ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8.0,
-                                                  ),
-                                                  DataUtils.processText(
-                                                      blogItem.title,
-                                                      placeName,
-                                                      false),
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 5,
-                                                        child: DataUtils
-                                                            .processText(
-                                                                blogItem
-                                                                    .contents,
-                                                                placeName,
-                                                                true),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Expanded(
-                                                        flex: 2,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                          child: Image.network(
-                                                            blogItem.thumbnail,
-                                                            fit: BoxFit.cover,
-                                                            errorBuilder:
-                                                                (BuildContext
-                                                                        context,
-                                                                    Object
-                                                                        exception,
-                                                                    StackTrace?
-                                                                        stackTrace) {
-                                                              // 이미지 로딩에 실패하면 빈 컨테이너 반환
-                                                              return Image
-                                                                  .asset(
-                                                                'asset/img/loading.png',
-                                                              );
-                                                            },
-                                                          ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        child: Image.network(
+                                                          blogItem.thumbnail,
+                                                          fit: BoxFit.cover,
+                                                          errorBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  Object
+                                                                      exception,
+                                                                  StackTrace?
+                                                                      stackTrace) {
+                                                            // 이미지 로딩에 실패하면 빈 컨테이너 반환
+                                                            return Image.asset(
+                                                              'asset/img/loading.png',
+                                                            );
+                                                          },
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    DataUtils
-                                                        .formatDateOnDateTime(
-                                                            blogItem.datetime),
-                                                    style: const TextStyle(
-                                                      fontSize: 13.0,
-                                                      color:
-                                                          LABEL_TEXT_SUB_COLOR,
                                                     ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  DataUtils
+                                                      .formatDateOnDateTime(
+                                                          blogItem.datetime),
+                                                  style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    color: LABEL_TEXT_SUB_COLOR,
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          if (itemIndex == 0) const Divider(),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                                        ),
+                                        if (itemIndex == 0) const Divider(),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                         ),
-                        ValueListenableBuilder<double>(
-                            valueListenable: currentPageNotifier,
-                            builder: (context, value, child) {
-                              return Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: DotsIndicator(
-                                  dotsCount: (data.documents.length / 2).ceil(),
-                                  position: value.round(), // .round()를 사용하여 반올림
-                                  decorator: const DotsDecorator(
-                                    activeColor: PRIMARY_COLOR,
-                                  ),
+                      ),
+                      ValueListenableBuilder<double>(
+                          valueListenable: currentPageNotifier,
+                          builder: (context, value, child) {
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: DotsIndicator(
+                                dotsCount: (data.documents.length / 2).ceil(),
+                                position: value.round(), // .round()를 사용하여 반올림
+                                decorator: const DotsDecorator(
+                                  activeColor: PRIMARY_COLOR,
                                 ),
-                              );
-                            }),
-                      ],
-                    );
-                  }),
-            ],
-          ),
+                              ),
+                            );
+                          }),
+                    ],
+                  );
+                }),
+          ],
         ),
       ),
     );

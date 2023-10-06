@@ -107,14 +107,14 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
               floating: true,
               snap: false,
               backgroundColor: Colors.white,
-              elevation: 0.0,
+              elevation: 5.0,
               flexibleSpace: FilterBar(
                 isSameGenderSelected: isSameGenderSelected,
                 isPetSelected: isPetSelected,
                 onToggleGenderFilter: _toggleGenderFilter,
                 onTogglePetFilter: _togglePetFilter,
               ),
-              expandedHeight: 70.0,
+              expandedHeight: 20.0,
             ),
             if (contents is CursorPaginationLoading &&
                 (isPetSelected || isSameGenderSelected))
@@ -130,7 +130,8 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
               )),
             if (contents is! CursorPaginationLoading)
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 10.0),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
@@ -147,7 +148,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              const SizedBox(height: 10.0),
+                              const SizedBox(height: 20.0),
                               tripRecommendData == null
                                   ? const TripRecommendShimmerCard()
                                   : (tripRecommendData is TripModel)
@@ -226,7 +227,7 @@ class FilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30.0, top: 15.0),
+      padding: const EdgeInsets.only(left: 20.0, top: 15.0),
       child: Row(
         children: [
           GestureDetector(
@@ -238,7 +239,7 @@ class FilterBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isSameGenderSelected ? PRIMARY_COLOR : LABEL_BG_COLOR,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(10),
                 ),
               ),
               child: Text(
@@ -262,7 +263,7 @@ class FilterBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isPetSelected ? PRIMARY_COLOR : LABEL_BG_COLOR,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(10),
                 ),
               ),
               child: Text(
