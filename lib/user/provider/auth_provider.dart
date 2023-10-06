@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/view/driver/driver_root_tab.dart';
 import 'package:tago_app/common/view/landing_screen.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_center_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_report_screen.dart';
+import 'package:tago_app/login/view/driver_login_screen.dart';
 import 'package:tago_app/login/view/signup_screen.dart';
 import 'package:tago_app/place/view/place_detail_screen.dart';
 import 'package:tago_app/place/view/place_search_screen.dart';
@@ -26,6 +28,7 @@ import 'package:tago_app/signup/view/first_form_screen.dart';
 import 'package:tago_app/signup/view/last_form_screen.dart';
 import 'package:tago_app/signup/view/second_from_screen.dart';
 import 'package:tago_app/signup/view/third_form_screen.dart';
+import 'package:tago_app/user/model/driver_user_model.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/login/view/login_screen.dart';
@@ -67,6 +70,11 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, __) => const LandingScreen(),
         ),
         GoRoute(
+          path: '/driverLogin',
+          name: DriverLoginScreen.routeName,
+          builder: (_, __) => const DriverLoginScreen(),
+        ),
+        GoRoute(
           path: '/login',
           name: LoginScreen.routeName,
           builder: (_, __) => const LoginScreen(),
@@ -105,6 +113,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/form4',
           name: LastFormScreen.routeName,
           builder: (_, __) => const LastFormScreen(),
+        ),
+        GoRoute(
+          path: '/driver',
+          name: DriverRootTab.routeName,
+          builder: (_, __) => const DriverRootTab(),
         ),
         GoRoute(
           path: '/',
@@ -207,6 +220,7 @@ class AuthProvider extends ChangeNotifier {
 
     final landing = state.location == '/landing';
     final logginIn = state.location == '/login';
+    final driverLogginIn = state.location == '/driverLogin';
     final signingUp = state.location == '/signup' ||
         Uri.parse(state.location).path == '/signup2';
 
@@ -222,9 +236,15 @@ class AuthProvider extends ChangeNotifier {
     }
     //유저 정보가 없을 때 로그인 중이면 로그인 페이지로, 만약 로그인 중이 아니라면 로그인 페이지로 이동
     if (user == null) {
-      return logginIn || landing || signingUp || profileForm
+      return logginIn || landing || signingUp || profileForm || driverLogginIn
           ? null
           : '/landing';
+    }
+
+    if (user is DriverUserModel) {
+      if (landing || logginIn || signingUp || splash) {
+        return '/driver';
+      }
     }
     //유저 정보가 있을 때
     if (user is UserModel) {
@@ -236,9 +256,7 @@ class AuthProvider extends ChangeNotifier {
         return '/';
       }
     }
-    if (user is UserModelError) {
-      return !logginIn ? '/login' : null;
-    }
+
     //나머지는 원래 가던곳으로 이동
     return null;
   }
