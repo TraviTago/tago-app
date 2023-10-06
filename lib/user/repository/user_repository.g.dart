@@ -33,7 +33,7 @@ class _UserMeRepository implements UserMeRepository {
     )
             .compose(
               _dio.options,
-              '/me',
+              '/members/me',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -57,12 +57,36 @@ class _UserMeRepository implements UserMeRepository {
     )
         .compose(
           _dio.options,
-          '/me',
+          '/members/me',
           queryParameters: queryParameters,
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;
+  }
+
+  @override
+  Future<DriverUserModel> getDriverMe() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<DriverUserModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/taxi/drivers/me',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DriverUserModel.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
