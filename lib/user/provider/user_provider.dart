@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
+import 'package:tago_app/login/model/login_response.dart';
 import 'package:tago_app/signup/model/sign_up_response.dart';
 import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
@@ -40,14 +41,21 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     // 요청을 보내는 최소 조건은 AccessToken과 RefreshToken이 존재하는 것
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
+    final userType = await storage.read(key: USER_TYPE_KEY);
+
+    UserModelBase user;
 
     if (refreshToken == null || accessToken == null) {
       state = null;
       return;
     }
-    final resp = await repository.getMe();
+    if (userType == "USER") {
+      user = await repository.getMe();
+    } else {
+      user = await repository.getDriverMe();
+    }
 
-    state = resp;
+    state = user;
   }
 
   Future<void> patchProfileImage({
@@ -115,6 +123,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
         key: REFRESH_TOKEN_KEY, value: response.tokens.refreshToken);
     await storage.write(
         key: ACCESS_TOKEN_KEY, value: response.tokens.accessToken);
+    await storage.write(key: USER_TYPE_KEY, value: "USER");
 
     final userResp = await repository.getMe();
     state = userResp;
@@ -126,25 +135,38 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   // 로그인을 시도했을 때 어떤 상태인지 모르기 때문에 UserModelBase로 상태를 특정한다.
   Future<UserModelBase> login({
     required String number,
+    required String userType,
   }) async {
     try {
       state = UserModelLoading();
-
-      final resp = await authRepository.login(
-        number: number,
-      );
+      LoginResponse resp;
+      UserModelBase user;
+      if (userType == "USER") {
+        resp = await authRepository.login(
+          number: number,
+        );
+      } else {
+        resp = await authRepository.driverLogin(
+          code: number,
+        );
+      }
 
       await storage.write(
           key: REFRESH_TOKEN_KEY, value: resp.tokens.refreshToken);
       await storage.write(
           key: ACCESS_TOKEN_KEY, value: resp.tokens.accessToken);
-
+      await storage.write(key: USER_TYPE_KEY, value: userType);
       // 로그인 후 토큰에 대한 사용자 저장 + 토큰 유효성 검증
-      final userResp = await repository.getMe();
 
-      state = userResp;
+      if (userType == "USER") {
+        user = await repository.getMe();
+      } else {
+        user = await repository.getDriverMe();
+      }
+
+      state = user;
       print('로그인 성공');
-      return userResp;
+      return user;
     } catch (e) {
       print(e);
       print('로그인 실패');
@@ -162,6 +184,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     await Future.wait([
       storage.delete(key: REFRESH_TOKEN_KEY),
       storage.delete(key: ACCESS_TOKEN_KEY),
+      storage.delete(key: USER_TYPE_KEY),
     ]);
   }
 }
