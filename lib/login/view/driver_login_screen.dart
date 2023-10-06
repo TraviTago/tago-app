@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 
 class DriverLoginScreen extends ConsumerStatefulWidget {
   static String get routeName => 'driverLogin';
@@ -13,7 +14,6 @@ class DriverLoginScreen extends ConsumerStatefulWidget {
 }
 
 class _DriverLoginScreenState extends ConsumerState<DriverLoginScreen> {
-  final bool _isButtonEnabled = false;
   String code = "";
 
   @override
@@ -101,7 +101,11 @@ class _DriverLoginScreenState extends ConsumerState<DriverLoginScreen> {
                           elevation: MaterialStateProperty.all(0),
                           backgroundColor:
                               MaterialStateProperty.all(PRIMARY_COLOR)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await ref
+                            .read(userProvider.notifier)
+                            .login(number: code, userType: "DRIVER");
+                      },
                       child: const Text(
                         '시작하기',
                         style: TextStyle(
