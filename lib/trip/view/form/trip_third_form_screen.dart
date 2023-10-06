@@ -69,7 +69,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                       const Text(
                         '성별은',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -79,7 +79,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                       SizedBox(
                         height: screenWidth / (4 * 2),
                         child: ButtonGroup(
-                          fontSize: 15.0,
+                          fontSize: 14.0,
                           buttonCount: 2,
                           buttonTexts: tripThirdFormBtnText[0],
                           crossAxisCount: 2,
@@ -101,7 +101,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                             const Text(
                               '나이대는',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -111,7 +111,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                             SizedBox(
                               height: screenWidth / (4 * 2),
                               child: ButtonGroup(
-                                fontSize: 15.0,
+                                fontSize: 14.0,
                                 buttonCount: 2,
                                 buttonTexts: tripThirdFormBtnText[1],
                                 crossAxisCount: 2,
@@ -132,7 +132,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                           const Text(
                             '반려동물은',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 17,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -142,7 +142,7 @@ class _TripThirdFormScreenState extends State<TripThirdFormScreen> {
                           SizedBox(
                             height: screenWidth / (4 * 2),
                             child: ButtonGroup(
-                              fontSize: 15.0,
+                              fontSize: 14.0,
                               buttonCount: 2,
                               buttonTexts: tripThirdFormBtnText[2],
                               crossAxisCount: 2,
