@@ -169,7 +169,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       //TOFIX: DEMO 아이디
       if (formattedNumber == "01011111111") {
         if (verificationCode == "000000") {
-          await ref.read(userProvider.notifier).login(number: phoneNumber);
+          await ref
+              .read(userProvider.notifier)
+              .login(number: phoneNumber, userType: "USER");
         }
       } else {
         try {
@@ -177,7 +179,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               .read(authRepositoryProvider)
               .smsVerify(number: formattedNumber, code: verificationCode);
           if (smsVerify.verify) {
-            await ref.read(userProvider.notifier).login(number: phoneNumber);
+            await ref
+                .read(userProvider.notifier)
+                .login(number: phoneNumber, userType: "USER");
           }
         } catch (e) {
           //1. 인증번호 틀렸을 경우
