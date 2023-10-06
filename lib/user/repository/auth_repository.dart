@@ -11,7 +11,7 @@ import '../../../common/const/data.dart';
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final dio = ref.watch(dioProvider);
 
-  return AuthRepository(baseUrl: '$ip/api/v1/auth', dio: dio);
+  return AuthRepository(baseUrl: '$ip/api/v1', dio: dio);
 });
 
 class AuthRepository {
@@ -27,9 +27,23 @@ class AuthRepository {
     required String number,
   }) async {
     final resp = await dio.post(
-      '$baseUrl/login',
+      '$baseUrl/auth/login',
       data: {
         'number': number,
+      },
+    );
+    return LoginResponse.fromJson(
+      resp.data,
+    );
+  }
+
+  Future<LoginResponse> driverLogin({
+    required String code,
+  }) async {
+    final resp = await dio.post(
+      '$baseUrl/taxi/auth/login',
+      data: {
+        'code': code,
       },
     );
     return LoginResponse.fromJson(
@@ -41,7 +55,7 @@ class AuthRepository {
     required String number,
   }) async {
     final resp = await dio.post(
-      '$baseUrl/sms',
+      '$baseUrl/auth/sms',
       data: {
         'number': number,
       },
@@ -54,7 +68,7 @@ class AuthRepository {
     required String code,
   }) async {
     final resp = await dio.post(
-      '$baseUrl/sms/verify-code',
+      '$baseUrl/auth/sms/verify-code',
       data: {
         'number': number,
         'code': code,
@@ -76,7 +90,7 @@ class AuthRepository {
     required List<String> tripTypes,
   }) async {
     final resp = await dio.post(
-      '$baseUrl/sign-up',
+      '$baseUrl/auth/sign-up',
       data: {
         'number': number,
         'imgUrl': imgUrl,
@@ -101,7 +115,7 @@ class AuthRepository {
 
   Future<TokenResponse> token() async {
     final resp = await dio.post(
-      '$baseUrl/token/reissue',
+      '$baseUrl/auth/token/reissue',
       options: Options(
         headers: {
           'refreshToken': 'true',
