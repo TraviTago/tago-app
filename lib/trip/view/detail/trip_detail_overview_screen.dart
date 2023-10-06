@@ -267,8 +267,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 statusModel == TripStatus.upcomingSoon
-                    ? '여행에 참여하시겠어요?'
-                    : "이 여행은 얼마 안 남아서\n참여하면 취소가 어려워요",
+                    ? "이 여행은 얼마 안 남아서\n참여하면 취소가 어려워요"
+                    : '여행에 참여하시겠어요?',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15.0,
