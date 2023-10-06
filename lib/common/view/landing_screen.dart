@@ -89,7 +89,9 @@ class LandingScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push('/driverLogin');
+                            },
                             child: const Text(
                               '기사님으로 로그인하기',
                               style: TextStyle(
