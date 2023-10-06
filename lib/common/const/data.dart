@@ -3,6 +3,7 @@ import 'package:tago_app/common/utils/data_utils.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+const USER_TYPE_KEY = 'USER_TYPE';
 
 final S3URL = dotenv.env['S3URL'];
 
