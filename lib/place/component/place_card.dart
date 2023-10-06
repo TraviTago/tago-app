@@ -71,7 +71,7 @@ class PlaceCard extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               overflow: TextOverflow.ellipsis, // 이 부분을 추가합니다.
-              maxLines: 3, // 원하는 라인 수를 설정합니다. 필요에 따라 조절 가능합니다.
+              maxLines: 3,
             ),
           ],
         ),

@@ -112,6 +112,8 @@ class TripCard extends StatelessWidget {
                             ),
                             Text(
                               places.join(' · '),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 color: LABEL_TEXT_SUB_COLOR,
                                 fontSize: 11.0,
