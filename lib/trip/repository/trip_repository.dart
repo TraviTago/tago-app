@@ -15,7 +15,7 @@ part 'trip_repository.g.dart';
 
 final tripRepositoryProvider = Provider<TripRepository>((ref) {
   final dio = ref.watch(dioProvider);
-  final repository = TripRepository(dio, baseUrl: '$ip/api/v1/trips');
+  final repository = TripRepository(dio, baseUrl: '$ip/api/v1');
   return repository;
 });
 
@@ -23,7 +23,7 @@ final tripRepositoryProvider = Provider<TripRepository>((ref) {
 abstract class TripRepository {
   factory TripRepository(Dio dio, {String baseUrl}) = _TripRepository;
 
-  @GET('')
+  @GET('/trips')
   @Headers({
     'accessToken': 'true',
   })
@@ -31,7 +31,15 @@ abstract class TripRepository {
     @Queries() PaginationParams? paginationParams,
   });
 
-  @POST('')
+  @GET('/taxi/trips')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<CursorPagination<TripModel>> paginateDriverTrip({
+    @Queries() PaginationParams? paginationParams,
+  });
+
+  @POST('/trips')
   @Headers({
     'accessToken': 'true',
   })
@@ -39,13 +47,13 @@ abstract class TripRepository {
     @Body() Map<String, dynamic> tripData,
   );
 
-  @GET('/recommend')
+  @GET('/trips/recommend')
   @Headers({
     'accessToken': 'true',
   })
   Future<TripModel> getRecommendTrip();
 
-  @GET('/{tripId}')
+  @GET('/trips/{tripId}')
   @Headers({
     'accessToken': 'true',
   })
@@ -53,7 +61,15 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @GET('/{tripId}/status')
+  @GET('/taxi/trips/{tripId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripDetailModel> getDetailTripDriver({
+    @Path() required int tripId,
+  });
+
+  @GET('/trips/{tripId}/status')
   @Headers({
     'accessToken': 'true',
   })
@@ -61,7 +77,7 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @POST('/{tripId}/join')
+  @POST('/trips/{tripId}/join')
   @Headers({
     'accessToken': 'true',
   })
@@ -69,7 +85,7 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @DELETE('/{tripId}/leave')
+  @DELETE('/trips/{tripId}/leave')
   @Headers({
     'accessToken': 'true',
   })
@@ -77,7 +93,7 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @GET('/{tripId}/members')
+  @GET('/trips/{tripId}/members')
   @Headers({
     'accessToken': 'true',
   })
@@ -85,7 +101,7 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @GET('/me')
+  @GET('/trips/me')
   @Headers({
     'accessToken': 'true',
   })

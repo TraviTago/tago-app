@@ -35,7 +35,37 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '',
+              '/trips',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CursorPagination<TripModel>.fromJson(
+      _result.data!,
+      (json) => TripModel.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<CursorPagination<TripModel>> paginateDriverTrip(
+      {paginationParams}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginationParams?.toJson() ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CursorPagination<TripModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/taxi/trips',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -63,7 +93,7 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '',
+              '/trips',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -87,7 +117,7 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '/recommend',
+              '/trips/recommend',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -111,7 +141,31 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '/${tripId}',
+              '/trips/${tripId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TripDetailModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TripDetailModel> getDetailTripDriver({required tripId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TripDetailModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/taxi/trips/${tripId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -135,7 +189,7 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '/${tripId}/status',
+              '/trips/${tripId}/status',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -158,7 +212,7 @@ class _TripRepository implements TripRepository {
     )
         .compose(
           _dio.options,
-          '/${tripId}/join',
+          '/trips/${tripId}/join',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -180,7 +234,7 @@ class _TripRepository implements TripRepository {
     )
         .compose(
           _dio.options,
-          '/${tripId}/leave',
+          '/trips/${tripId}/leave',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -203,7 +257,7 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '/${tripId}/members',
+              '/trips/${tripId}/members',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -227,7 +281,7 @@ class _TripRepository implements TripRepository {
     )
             .compose(
               _dio.options,
-              '/me',
+              '/trips/me',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -109,6 +109,7 @@ class CustomInterceptor extends Interceptor {
 
       try {
         final resp = await dio.post(
+          //TOFIX: 기사님 케이스 분기
           '$ip/api/v1/auth/token/reissue',
           options: Options(
             headers: {
