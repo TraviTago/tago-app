@@ -44,92 +44,92 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        selectedItemColor: PRIMARY_COLOR,
-        unselectedItemColor: Colors.black,
-        iconSize: 28,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
+      bottomNavigationBar: SizedBox(
+        height: 90,
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          selectedItemColor: PRIMARY_COLOR,
+          unselectedItemColor: LABEL_TEXT_SUB_COLOR,
+          iconSize: 20.0,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          selectedLabelStyle: const TextStyle(
+            fontSize: 12,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 12,
+          ),
+          type: BottomNavigationBarType.fixed,
+          onTap: (int index) {
+            controller.animateTo(index);
+          },
+          currentIndex: index,
+          items: [
+            BottomNavigationBarItem(
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/home.png',
+                  width: 20,
+                  height: 20,
+                  color: PRIMARY_COLOR,
+                ),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/unselected_home.png',
+                  width: 20,
+                  height: 20,
+                  color: LABEL_TEXT_SUB_COLOR,
+                ),
+              ),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/map.png',
+                  width: 20,
+                  height: 20,
+                  color: PRIMARY_COLOR,
+                ),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/unselected_map.png',
+                  width: 20,
+                  height: 20,
+                  color: LABEL_TEXT_SUB_COLOR,
+                ),
+              ),
+              label: '내여행',
+            ),
+            BottomNavigationBarItem(
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/my.png',
+                  width: 20,
+                  height: 20,
+                  color: PRIMARY_COLOR,
+                ),
+              ),
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                child: Image.asset(
+                  'asset/img/menu/unselected_my.png',
+                  width: 20,
+                  height: 20,
+                  color: LABEL_TEXT_SUB_COLOR,
+                ),
+              ),
+              label: '마이페이지',
+            ),
+          ],
         ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-        ),
-        type: BottomNavigationBarType.fixed,
-        onTap: (int index) {
-          controller.animateTo(index);
-        },
-        currentIndex: index,
-        items: [
-          BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: Image.asset(
-                'asset/img/menu/home.png',
-                width: 28,
-                height: 28,
-                color: PRIMARY_COLOR,
-              ),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: Image.asset(
-                'asset/img/menu/home.png',
-                width: 28,
-                height: 28,
-                color: Colors.black,
-              ),
-            ),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 7.0),
-              child: Image.asset(
-                'asset/img/menu/map.png',
-                width: 26,
-                height: 26,
-                color: PRIMARY_COLOR,
-              ),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 7.0),
-              child: Image.asset(
-                'asset/img/menu/map.png',
-                width: 26,
-                height: 26,
-                color: Colors.black,
-              ),
-            ),
-            label: '내여행',
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: Image.asset(
-                'asset/img/menu/my.png',
-                width: 28,
-                height: 28,
-                color: PRIMARY_COLOR,
-              ),
-            ),
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: Image.asset(
-                'asset/img/menu/my.png',
-                width: 28,
-                height: 28,
-                color: Colors.black,
-              ),
-            ),
-            label: '마이페이지',
-          ),
-        ],
       ),
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
