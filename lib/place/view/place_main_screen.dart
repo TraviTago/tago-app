@@ -103,6 +103,9 @@ class _PlaceMainScreenState extends ConsumerState<PlaceMainScreen> {
                 ),
               Column(
                 children: [
+                  const SizedBox(
+                    height: 30.0,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30.0, vertical: 10.0),

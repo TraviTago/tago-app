@@ -148,17 +148,17 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '내 여행메이트 정보 보러가기 ',
+                                    '내 여행메이트 정보 보러가기',
                                     style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
                                   ),
                                   Icon(
                                     Icons.chevron_right_sharp,
                                     color: Colors.white,
-                                    size: 25.0,
+                                    size: 20.0,
                                   ),
                                 ],
                               ),
@@ -188,15 +188,15 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                     Text(
                                       '내 여행 취소하기',
                                       style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w500,
                                         color: LABEL_TEXT_SUB_COLOR,
                                       ),
                                     ),
                                     Icon(
                                       Icons.chevron_right_sharp,
                                       color: LABEL_TEXT_SUB_COLOR,
-                                      size: 25.0,
+                                      size: 20.0,
                                     )
                                   ],
                                 ),
@@ -224,15 +224,15 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                                   Text(
                                     '실시간 불편신고',
                                     style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w500,
                                       color: LABEL_TEXT_SUB_COLOR,
                                     ),
                                   ),
                                   Icon(
                                     Icons.chevron_right_sharp,
                                     color: LABEL_TEXT_SUB_COLOR,
-                                    size: 25.0,
+                                    size: 20.0,
                                   )
                                 ],
                               ),
