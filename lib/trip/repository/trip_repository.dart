@@ -106,4 +106,10 @@ abstract class TripRepository {
     'accessToken': 'true',
   })
   Future<MyTripResponseModel> getMyTrips();
+
+  @GET('/taxi/trips/me')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<MyTripResponseModel> getMyDriverTripS();
 }

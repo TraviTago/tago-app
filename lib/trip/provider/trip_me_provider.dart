@@ -30,6 +30,8 @@ class MyTripStateNotifer extends StateNotifier<MyTripResponseModel?> {
   Future<MyTripResponseModel?> getMyTrip() async {
     try {
       // 요청을 보내는 최소 조건은 AccessToken과 RefreshToken이 존재하는 것
+      final userType = await storage.read(key: USER_TYPE_KEY);
+
       final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
       final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
 
@@ -37,11 +39,19 @@ class MyTripStateNotifer extends StateNotifier<MyTripResponseModel?> {
         state = null;
       }
 
-      final resp = await repository.getMyTrips();
+      if (userType == "USER") {
+        final resp = await repository.getMyTrips();
 
-      state = resp;
+        state = resp;
 
-      return resp;
+        return resp;
+      } else {
+        final resp = await repository.getMyDriverTripS();
+
+        state = resp;
+
+        return resp;
+      }
     } catch (e) {
       print(e);
     }
