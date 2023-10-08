@@ -164,6 +164,40 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                               ),
                             ),
                           ),
+                        if (detailModel.isJoined && detailModel.isDispatched)
+                          MaterialButton(
+                            onPressed: () {
+                              context.push("/tripDetail/$tripId/drivers");
+                            },
+                            color: LABEL_BG_COLOR,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            elevation: 0,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '기사님 정보 보러가기',
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: LABEL_TEXT_SUB_COLOR,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.chevron_right_sharp,
+                                    color: LABEL_TEXT_SUB_COLOR,
+                                    size: 20.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         if (detailModel.isJoined == true &&
                             (tripStatus == TripStatus.upcoming ||
                                 tripStatus == TripStatus.upcomingSoon))
