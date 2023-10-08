@@ -12,6 +12,8 @@ class ButtonGroup extends StatefulWidget {
   final double crossAxisSpacing;
   final bool prefix;
   final bool isProfileStyle;
+  final double radius;
+  final bool isAdjacent;
 
   final Function(List<String>) onButtonSelected;
   final bool isModal;
@@ -25,7 +27,9 @@ class ButtonGroup extends StatefulWidget {
     required this.buttonTexts,
     required this.crossAxisCount,
     required this.childAspectRatio,
+    this.isAdjacent = false,
     this.prefix = false,
+    this.radius = 5.0,
     this.buttonImgs,
     this.isProfileStyle = false,
     this.isMultipleSelection = false,
@@ -49,6 +53,25 @@ class _ButtonGroupState extends State<ButtonGroup> {
     super.initState();
     selectedButtons = widget.initialSelectedIndexes ??
         []; // Initialize with selected indexes if they exist, else initialize with an empty list.
+  }
+
+  BorderRadius _getBorderRadius(int index) {
+    if (!widget.isAdjacent) return BorderRadius.circular(widget.radius);
+
+    if (index == 0) {
+      // 첫 번째 버튼 (왼쪽 버튼)
+      return BorderRadius.only(
+        topLeft: Radius.circular(widget.radius),
+        bottomLeft: Radius.circular(widget.radius),
+      );
+    } else if (index == widget.buttonCount - 1) {
+      // 마지막 버튼 (오른쪽 버튼)
+      return BorderRadius.only(
+        topRight: Radius.circular(widget.radius),
+        bottomRight: Radius.circular(widget.radius),
+      );
+    }
+    return BorderRadius.zero; // 중간 버튼에는 BorderRadius 적용하지 않음
   }
 
   @override
@@ -75,8 +98,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       // borderRadius 설정
-                      borderRadius:
-                          BorderRadius.circular(widget.isModal ? 10.0 : 5.0),
+                      borderRadius: _getBorderRadius(index),
                     )),
                   ),
                   child: Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/component/button_group.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/component/progress_bar.dart';
@@ -103,32 +104,102 @@ class _SecondFormScreenState extends State<SecondFormScreen> {
               const SizedBox(
                 height: 150,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildPickerButton("E/I", ["E", "I"], selectedEI, (value) {
-                    setState(() {
-                      selectedEI = value;
-                    });
-                  }),
-                  _buildPickerButton("N/S", ["N", "S"], selectedNS, (value) {
-                    setState(() {
-                      selectedNS = value;
-                    });
-                  }),
-                  _buildPickerButton("T/F", ["T", "F"], selectedTF, (value) {
-                    setState(() {
-                      selectedTF = value;
-                    });
-                  }),
-                  _buildPickerButton("J/P", ["J", "P"], selectedJP, (value) {
-                    setState(() {
-                      selectedJP = value;
-                    });
-                  }),
-                ],
+              Expanded(
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ButtonGroup(
+                          fontSize: 25.0,
+                          buttonCount: 2,
+                          mainAxisSpacing: 25.0,
+                          crossAxisSpacing: 15.0,
+                          radius: 10.0,
+                          buttonTexts: const [
+                            'E',
+                            'I',
+                          ],
+                          crossAxisCount: 1,
+                          childAspectRatio: 1,
+                          onButtonSelected: (selectedButtons) {
+                            selectedEI = selectedButtons[0];
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: ButtonGroup(
+                          fontSize: 25.0,
+                          buttonCount: 2,
+                          mainAxisSpacing: 25.0,
+                          crossAxisSpacing: 15.0,
+                          radius: 10.0,
+                          buttonTexts: const [
+                            'N',
+                            'S',
+                          ],
+                          crossAxisCount: 1,
+                          childAspectRatio: 1,
+                          onButtonSelected: (selectedButtons) {
+                            // 콜백 구현
+                            selectedNS = selectedButtons[0];
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: ButtonGroup(
+                          fontSize: 25.0,
+                          buttonCount: 2,
+                          mainAxisSpacing: 25.0,
+                          crossAxisSpacing: 15.0,
+                          radius: 10.0,
+                          buttonTexts: const [
+                            'F',
+                            'T',
+                          ],
+                          crossAxisCount: 1,
+                          childAspectRatio: 1,
+                          onButtonSelected: (selectedButtons) {
+                            // 콜백 구현
+                            selectedTF = selectedButtons[0];
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: ButtonGroup(
+                          fontSize: 25.0,
+                          buttonCount: 2,
+                          mainAxisSpacing: 25.0,
+                          crossAxisSpacing: 15.0,
+                          radius: 10.0,
+                          buttonTexts: const [
+                            'P',
+                            'J',
+                          ],
+                          crossAxisCount: 1,
+                          childAspectRatio: 1,
+                          onButtonSelected: (selectedButtons) {
+                            // 콜백 구현
+                            selectedJP = selectedButtons[0];
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: ElevatedButton(
