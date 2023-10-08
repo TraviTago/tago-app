@@ -6,12 +6,12 @@ part 'sign_up_response.g.dart';
 @JsonSerializable()
 class SignUpResponse {
   final int memberId;
-  final String authority;
+  final String role;
   final Tokens tokens;
 
   SignUpResponse({
     required this.memberId,
-    required this.authority,
+    required this.role,
     required this.tokens,
   });
 
