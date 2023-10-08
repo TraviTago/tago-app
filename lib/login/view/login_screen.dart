@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
@@ -68,16 +69,49 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 },
               ),
               if (showVerificationField)
-                PhoneNumberField(
-                  hintText: "인증번호 6자리 입력",
-                  isPhoneNumber: false,
-                  valid: true,
-                  errorText: errorText,
-                  onChanged: (phone) {
-                    setState(() {
-                      verificationCode = phone;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PinFieldAutoFill(
+                        keyboardType: TextInputType.number,
+                        decoration: UnderlineDecoration(
+                          gapSpace: 20.0,
+                          textStyle: const TextStyle(
+                            fontSize: 18,
+                            color: LABEL_TEXT_SUB_COLOR,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          colorBuilder: FixedColorBuilder(
+                              verificationCode.length == 6
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
+                        currentCode: verificationCode,
+                        onCodeChanged: (code) {
+                          setState(() {
+                            verificationCode = code!;
+                          });
+                        },
+                        codeLength: 6, // 인증번호의 길이를 설정합니다.
+                      ),
+                      if (errorText != null)
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                      if (errorText != null)
+                        SizedBox(
+                          child: Text(
+                            errorText!,
+                            style: const TextStyle(
+                              color: PRIMARY_COLOR,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               const SizedBox(
                 height: 30.0,
