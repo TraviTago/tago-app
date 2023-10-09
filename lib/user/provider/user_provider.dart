@@ -45,7 +45,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
 
     UserModelBase user;
 
-    if (refreshToken == null || accessToken == null) {
+    if (refreshToken == null || accessToken == null || userType == null) {
       state = null;
       return;
     }
