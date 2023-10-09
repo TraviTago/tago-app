@@ -26,10 +26,10 @@ class LandingScreen extends StatelessWidget {
                   child: _Logo(),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Expanded(
-                  flex: 1,
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Center(
                     child: Column(
                       children: [
