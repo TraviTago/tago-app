@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/repository/trip_repository.dart';

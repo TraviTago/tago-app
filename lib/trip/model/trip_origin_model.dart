@@ -21,10 +21,18 @@ class TagoTrips {
   final String name;
   @JsonKey(name: 'img_url')
   final String imgUrl;
+  final int? id;
+  final DateTime? dateTime;
+  final int? maxMember; //최대 인원
+  final int? currentMember; //현재 인원
 
   TagoTrips({
     required this.name,
     required this.imgUrl,
+    this.id,
+    this.dateTime,
+    this.maxMember,
+    this.currentMember,
   });
 
   factory TagoTrips.fromJson(Map<String, dynamic> json) =>

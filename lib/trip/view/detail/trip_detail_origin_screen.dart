@@ -9,6 +9,9 @@ class TripDetailOriginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const DefaultLayout(
+      titleComponet: Text(
+        '',
+      ),
       child: Center(
         child: Text("aaa"),
       ),

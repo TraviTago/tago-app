@@ -45,19 +45,16 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return DefaultLayout(
       bottomNavigationBar: SizedBox(
-        height: 90,
+        height: 76,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           selectedItemColor: PRIMARY_COLOR,
           unselectedItemColor: LABEL_TEXT_SUB_COLOR,
-          iconSize: 20.0,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
           selectedLabelStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 10,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 10,
           ),
           type: BottomNavigationBarType.fixed,
           onTap: (int index) {
@@ -66,65 +63,47 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
           currentIndex: index,
           items: [
             BottomNavigationBarItem(
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/home.png',
-                  width: 20,
-                  height: 20,
-                  color: PRIMARY_COLOR,
-                ),
+              activeIcon: Image.asset(
+                'asset/img/menu/home.png',
+                width: 20,
+                height: 20,
+                color: PRIMARY_COLOR,
               ),
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/unselected_home.png',
-                  width: 20,
-                  height: 20,
-                  color: LABEL_TEXT_SUB_COLOR,
-                ),
+              icon: Image.asset(
+                'asset/img/menu/unselected_home.png',
+                width: 20,
+                height: 20,
+                color: LABEL_TEXT_SUB_COLOR,
               ),
               label: '홈',
             ),
             BottomNavigationBarItem(
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/map.png',
-                  width: 20,
-                  height: 20,
-                  color: PRIMARY_COLOR,
-                ),
+              activeIcon: Image.asset(
+                'asset/img/menu/map.png',
+                width: 20,
+                height: 20,
+                color: PRIMARY_COLOR,
               ),
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/unselected_map.png',
-                  width: 20,
-                  height: 20,
-                  color: LABEL_TEXT_SUB_COLOR,
-                ),
+              icon: Image.asset(
+                'asset/img/menu/unselected_map.png',
+                width: 20,
+                height: 20,
+                color: LABEL_TEXT_SUB_COLOR,
               ),
               label: '내여행',
             ),
             BottomNavigationBarItem(
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/my.png',
-                  width: 20,
-                  height: 20,
-                  color: PRIMARY_COLOR,
-                ),
+              activeIcon: Image.asset(
+                'asset/img/menu/my.png',
+                width: 20,
+                height: 20,
+                color: PRIMARY_COLOR,
               ),
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                child: Image.asset(
-                  'asset/img/menu/unselected_my.png',
-                  width: 20,
-                  height: 20,
-                  color: LABEL_TEXT_SUB_COLOR,
-                ),
+              icon: Image.asset(
+                'asset/img/menu/unselected_my.png',
+                width: 20,
+                height: 20,
+                color: LABEL_TEXT_SUB_COLOR,
               ),
               label: '마이페이지',
             ),

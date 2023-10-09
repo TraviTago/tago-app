@@ -185,8 +185,8 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                             .width,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        context.go(
-                                                            '/tripDetailOrigin/${tripOriginData.tagotrips[index].name}');
+                                                        // context.go(
+                                                        //     '/tripDetailOrigin/${tripOriginData.tagotrips[index].name}');
                                                       },
                                                       child: ClipRRect(
                                                         child: Image.network(
