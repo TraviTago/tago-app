@@ -3,8 +3,12 @@ import 'package:tago_app/place/model/place_trip_model.dart';
 
 part 'trip_detail_model.g.dart';
 
+abstract class TripDetailBaseModel {}
+
+class TripDetailErrorModel extends TripDetailBaseModel {}
+
 @JsonSerializable()
-class TripDetailModel {
+class TripDetailModel extends TripDetailBaseModel {
   final String tripName;
   final int currentCnt;
   final int maxCnt;
@@ -25,4 +29,14 @@ class TripDetailModel {
       _$TripDetailModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TripDetailModelToJson(this);
+}
+
+class TripDetailModelWithType {
+  TripDetailBaseModel tripDetail;
+  String type;
+
+  TripDetailModelWithType({
+    required this.tripDetail,
+    required this.type,
+  });
 }

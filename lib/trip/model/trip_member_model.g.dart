@@ -27,6 +27,7 @@ TripMemberModel _$TripMemberModelFromJson(Map<String, dynamic> json) =>
       ageRange: json['ageRange'] as int,
       gender: json['gender'] as String,
       tripTypes: json['tripTypes'] as String,
+      phone_number: json['phone_number'] as String?,
     );
 
 Map<String, dynamic> _$TripMemberModelToJson(TripMemberModel instance) =>
@@ -38,4 +39,5 @@ Map<String, dynamic> _$TripMemberModelToJson(TripMemberModel instance) =>
       'ageRange': instance.ageRange,
       'gender': instance.gender,
       'tripTypes': instance.tripTypes,
+      'phone_number': instance.phone_number,
     };

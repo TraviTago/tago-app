@@ -24,6 +24,7 @@ class TripMemberModel {
   final int ageRange;
   final String gender;
   final String tripTypes;
+  final String? phone_number;
 
   TripMemberModel({
     required this.memberId,
@@ -33,6 +34,7 @@ class TripMemberModel {
     required this.ageRange,
     required this.gender,
     required this.tripTypes,
+    this.phone_number,
   });
 
   factory TripMemberModel.fromJson(Map<String, dynamic> json) =>
