@@ -10,109 +10,102 @@ class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),
-        child: SafeArea(
-          top: true,
-          bottom: true,
-          child: Column(
-            children: [
-              const Expanded(
-                flex: 3,
-                child: Center(
-                  child: _Logo(),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Center(
-                    child: Column(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 5.0,
+            ),
+            const Center(
+              child: _Logo(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            Size(MediaQuery.of(context).size.width, 45)),
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            MaterialStateProperty.all(PRIMARY_COLOR),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                      onPressed: () {
+                        context.push('/login');
+                      },
+                      child: const Text(
+                        '시작하기',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16.0),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            Size(MediaQuery.of(context).size.width, 45)),
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            MaterialStateProperty.all(LABEL_BG_COLOR),
+                      ),
+                      onPressed: () {
+                        context.push('/signup');
+                      },
+                      child: const Text(
+                        '회원가입',
+                        style: TextStyle(
+                            color: PRIMARY_COLOR,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
-                            minimumSize: MaterialStateProperty.all<Size>(
-                                Size(MediaQuery.of(context).size.width, 45)),
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor:
-                                MaterialStateProperty.all(PRIMARY_COLOR),
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                          ),
+                        TextButton(
                           onPressed: () {
-                            context.push('/login');
+                            context.push('/driverLogin');
                           },
                           child: const Text(
-                            '시작하기',
+                            '기사님으로 로그인하기',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.0),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
+                              color: LABEL_TEXT_SUB_COLOR,
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.w500,
                             ),
-                            minimumSize: MaterialStateProperty.all<Size>(
-                                Size(MediaQuery.of(context).size.width, 45)),
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor:
-                                MaterialStateProperty.all(LABEL_BG_COLOR),
                           ),
-                          onPressed: () {
-                            context.push('/signup');
-                          },
-                          child: const Text(
-                            '회원가입',
-                            style: TextStyle(
-                                color: PRIMARY_COLOR,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.0),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                context.push('/driverLogin');
-                              },
-                              child: const Text(
-                                '기사님으로 로그인하기',
-                                style: TextStyle(
-                                  color: LABEL_TEXT_SUB_COLOR,
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -143,8 +136,8 @@ class LandingSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 1.1,
-      height: MediaQuery.of(context).size.width * 1.1,
+      width: MediaQuery.of(context).size.width * 1.2,
+      height: MediaQuery.of(context).size.width * 1.2,
       child: Swiper(
         autoplay: true,
         loop: true,
