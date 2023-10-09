@@ -14,6 +14,7 @@ class TripRecommendCard extends StatelessWidget {
   final int maxMember;
   final int currentMember;
   final int totalTime;
+  final String type;
 
   const TripRecommendCard({
     required this.tripId,
@@ -24,10 +25,12 @@ class TripRecommendCard extends StatelessWidget {
     required this.maxMember,
     required this.currentMember,
     required this.totalTime,
+    this.type = "USER",
     Key? key,
   }) : super(key: key);
   factory TripRecommendCard.fromModel({
     required TripModel model,
+    required String type,
   }) {
     return TripRecommendCard(
       tripId: model.tripId,
@@ -38,6 +41,7 @@ class TripRecommendCard extends StatelessWidget {
       currentMember: model.currentMember,
       dateTime: model.dateTime,
       totalTime: model.totalTime,
+      type: type,
     );
   }
 
@@ -46,8 +50,13 @@ class TripRecommendCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width - 40;
     return GestureDetector(
       onTap: () {
-        context
-            .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        if (type == "USER") {
+          context
+              .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        } else {
+          context.go(
+              "/driver/tripDetailTabDriver/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        }
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.0),

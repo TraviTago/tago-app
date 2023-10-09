@@ -15,6 +15,7 @@ class TripCard extends StatelessWidget {
   final int currentMember; //현재 인원
   final int totalTime;
 
+  final String type;
   const TripCard({
     required this.tripId,
     required this.dateTime,
@@ -24,10 +25,12 @@ class TripCard extends StatelessWidget {
     required this.maxMember,
     required this.currentMember,
     required this.totalTime,
+    this.type = "USER",
     Key? key,
   }) : super(key: key);
 
   factory TripCard.fromModel({
+    required String type,
     required TripModel model,
   }) {
     return TripCard(
@@ -39,6 +42,7 @@ class TripCard extends StatelessWidget {
       maxMember: model.maxMember,
       currentMember: model.currentMember,
       totalTime: model.totalTime,
+      type: type,
     );
   }
 
@@ -46,8 +50,13 @@ class TripCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context
-            .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        if (type == "USER") {
+          context
+              .go("/tripDetail/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        } else {
+          context.go(
+              "/driver/tripDetailTabDriver/$tripId?tripDate=$dateTime&tripTime=$totalTime");
+        }
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
