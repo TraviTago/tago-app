@@ -59,7 +59,7 @@ class _DriverTripListScreenState extends ConsumerState<DriverTripListScreen> {
               )),
             if (contents is! CursorPaginationLoading)
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
