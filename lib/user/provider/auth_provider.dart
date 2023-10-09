@@ -17,6 +17,8 @@ import 'package:tago_app/trip/model/trip_edit_model.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_driver_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
+import 'package:tago_app/trip/view/driver/trip_detail_driver_members_screen.dart';
+import 'package:tago_app/trip/view/driver/trip_detail_driver_tab_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_edit_screen.dart';
 import 'package:tago_app/trip/view/form/trip_fifth_form_screen.dart';
@@ -119,6 +121,20 @@ class AuthProvider extends ChangeNotifier {
           path: '/driver',
           name: DriverRootTab.routeName,
           builder: (_, __) => const DriverRootTab(),
+          routes: [
+            GoRoute(
+              path: 'tripDetailTabDriver/:tripId',
+              name: TripDetailDriverTabScreen.routeName,
+              builder: (_, __) => const TripDetailDriverTabScreen(),
+              routes: [
+                GoRoute(
+                  path: 'driverMembers',
+                  name: TripDetailDriverMembersScreen.routeName,
+                  builder: (_, __) => const TripDetailDriverMembersScreen(),
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           path: '/',
@@ -248,7 +264,7 @@ class AuthProvider extends ChangeNotifier {
     }
 
     if (user is DriverUserModel) {
-      if (landing || logginIn || signingUp || splash) {
+      if (landing || logginIn || signingUp || splash || state.location == '/') {
         return '/driver';
       }
     }

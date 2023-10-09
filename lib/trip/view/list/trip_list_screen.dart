@@ -153,6 +153,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                   ? const TripRecommendShimmerCard()
                                   : (tripRecommendData is TripModel)
                                       ? TripRecommendCard.fromModel(
+                                          type: "USER",
                                           model: tripRecommendData)
                                       : Container(),
                               const SizedBox(height: 20.0),
@@ -189,11 +190,13 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                             ),
                             const SizedBox(height: 20.0),
                             TripCard.fromModel(
+                                type: "USER",
                                 model: (contents).contents[tripIndex]),
                           ],
                         );
                       } else {
                         return TripCard.fromModel(
+                            type: "USER",
                             model: (contents).contents[tripIndex]);
                       }
                     },
@@ -203,6 +206,11 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                   ),
                 ),
               ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 100.0,
+              ),
+            ),
           ],
         ),
       ),

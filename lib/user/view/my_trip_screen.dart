@@ -192,6 +192,7 @@ class TripsListComponent extends StatelessWidget {
                   return Column(
                     children: [
                       TripRecommendCard.fromModel(
+                        type: "USER",
                         model: trip,
                       ),
                       if (index == upcomingTrips.length - 1) ...[
@@ -241,6 +242,7 @@ class TripsListComponent extends StatelessWidget {
                   return Column(
                     children: [
                       TripRecommendCard.fromModel(
+                        type: "USER",
                         model: trip,
                       ),
                       if (index == pastTrips.length - 1)

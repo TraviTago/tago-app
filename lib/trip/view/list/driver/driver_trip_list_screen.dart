@@ -91,11 +91,13 @@ class _DriverTripListScreenState extends ConsumerState<DriverTripListScreen> {
                             ),
                             const SizedBox(height: 20.0),
                             TripCard.fromModel(
+                                type: "DRIVER",
                                 model: (contents).contents[tripIndex]),
                           ],
                         );
                       } else {
                         return TripCard.fromModel(
+                            type: "DRIVER",
                             model: (contents).contents[tripIndex]);
                       }
                     },
@@ -103,6 +105,11 @@ class _DriverTripListScreenState extends ConsumerState<DriverTripListScreen> {
                   ),
                 ),
               ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 100.0,
+              ),
+            ),
           ],
         ),
       ),

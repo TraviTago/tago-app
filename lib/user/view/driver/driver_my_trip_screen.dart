@@ -112,7 +112,7 @@ class EmptyTripsComponent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: const Text(
-                    '타고랑 여행하러가기',
+                    '여행 보러 가기',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
@@ -148,7 +148,7 @@ class TripsListComponent extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 30.0,
+            horizontal: 20.0,
             vertical: 10.0,
           ),
           child: Column(
@@ -184,6 +184,7 @@ class TripsListComponent extends StatelessWidget {
                   return Column(
                     children: [
                       TripRecommendCard.fromModel(
+                        type: "DRIVER",
                         model: trip,
                       ),
                       if (index == upcomingTrips.length - 1) ...[
@@ -233,6 +234,7 @@ class TripsListComponent extends StatelessWidget {
                   return Column(
                     children: [
                       TripRecommendCard.fromModel(
+                        type: "DRIVER",
                         model: trip,
                       ),
                       if (index == pastTrips.length - 1)

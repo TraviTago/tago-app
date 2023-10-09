@@ -92,6 +92,7 @@ class CustomInterceptor extends Interceptor {
     print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
 
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
+    final userType = await storage.read(key: USER_TYPE_KEY);
 
     // refreshToken 아예 없으면
     // 당연히 에러를 던진다
@@ -103,20 +104,32 @@ class CustomInterceptor extends Interceptor {
     final isStatus401 = err.response?.statusCode == 401;
     final isPathRefresh =
         err.requestOptions.path == 'api/v1/auth/token/reissue';
-
+    Response resp;
     if (isStatus401 && !isPathRefresh) {
       final dio = Dio();
 
       try {
-        final resp = await dio.post(
-          //TOFIX: 기사님 케이스 분기
-          '$ip/api/v1/auth/token/reissue',
-          options: Options(
-            headers: {
-              'authorization': 'Bearer $refreshToken',
-            },
-          ),
-        );
+        if (userType == "USER") {
+          resp = await dio.post(
+            //TOFIX: 기사님 케이스 분기
+            '$ip/api/v1/auth/token/reissue',
+            options: Options(
+              headers: {
+                'authorization': 'Bearer $refreshToken',
+              },
+            ),
+          );
+        } else {
+          resp = await dio.post(
+            //TOFIX: 기사님 케이스 분기
+            '$ip/api/v1/taxi/auth/token/reissue',
+            options: Options(
+              headers: {
+                'authorization': 'Bearer $refreshToken',
+              },
+            ),
+          );
+        }
 
         final accessToken = resp.data['accessToken'];
         print('[RES] 토큰 갱신');
@@ -136,6 +149,7 @@ class CustomInterceptor extends Interceptor {
         return handler.resolve(response);
       } on DioError catch (e) {
         ref.read(authProvider.notifier).logout();
+
         return handler.reject(e);
       }
     }

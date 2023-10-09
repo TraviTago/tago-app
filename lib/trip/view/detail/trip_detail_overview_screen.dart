@@ -39,6 +39,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                       tripStatus == TripStatus.upcomingSoon) &&
                   (detailModel.currentCnt < detailModel.maxCnt)
               ? MaterialButton(
+                  //TOFIX
                   onPressed: () {
                     try {
                       _showJoinDoubleCheckDialog(context, tripStatus, ref);
@@ -120,11 +121,6 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                     ),
                   SizedBox(
                     width: double.infinity,
-                    //TOFIX: 하단 버튼 출력 케이스
-                    //내 여행이 아닐 경우 하단 버튼 없음
-                    //내 여행일 경우:
-                    //현재 진행중인 여행일 경우 실시간 신고 버튼까지 출력
-                    //지나간 여행 또는 다가오는 여행일 경우 메이트 보기만 출력
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -135,7 +131,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                         if (detailModel.isJoined == true)
                           MaterialButton(
                             onPressed: () {
-                              context.push("/tripDetail/$tripId/members");
+                              context.push(
+                                "/tripDetail/$tripId/members",
+                              );
                             },
                             color: PRIMARY_COLOR,
                             shape: RoundedRectangleBorder(

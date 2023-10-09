@@ -6,7 +6,7 @@ import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
-import 'package:tago_app/trip/repository/trip_repository.dart';
+import 'package:tago_app/trip/provider/trip_detail_provider.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_map_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_overview_screen.dart';
 
@@ -30,6 +30,13 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    int tripId = int.parse(GoRouterState.of(context).pathParameters['tripId']!);
+    ref.read(tripDetailProvider.notifier).fetchDetailTrip(tripId, "USER");
+  }
+
+  @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
@@ -44,108 +51,112 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
         int.parse(GoRouterState.of(context).queryParameters['tripTime']!);
 
     TripStatus tripStatus = DataUtils.getTripStatus(tripDate, tripTime);
+    final tripDetailState = ref.watch(tripDetailProvider);
 
-    return FutureBuilder<TripDetailModel>(
-      future: ref.watch(tripRepositoryProvider).getDetailTrip(tripId: tripId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const DefaultLayout(
-            child: Center(
-              child: CircularProgressIndicator(color: PRIMARY_COLOR),
+    if (tripDetailState is TripDetailErrorModel) {
+      // 에러 처리를 여기서 하면 됩니다.
+      return const DefaultLayout(
+        child: Center(
+          child: Text('Error loading trip details.'),
+        ),
+      );
+    }
+    if (tripDetailState == null) {
+      return const DefaultLayout(
+        child: Center(
+          child: CircularProgressIndicator(color: PRIMARY_COLOR),
+        ),
+      );
+    }
+
+    final detailModel = tripDetailState as TripDetailModel;
+
+    return DefaultLayout(
+      titleComponet: Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              detailModel.tripName,
+              style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
             ),
-          );
-        }
-
-        final detailModel = snapshot.data as TripDetailModel;
-
-        return DefaultLayout(
-          titleComponet: Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  detailModel.tripName,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                ),
-                if (tripStatus != TripStatus.completed)
-                  _PersonLabel(
-                    curNum: detailModel.currentCnt,
-                    maxNum: detailModel.maxCnt,
-                  ),
-              ],
-            ),
-          ),
-          child: Container(
-            decoration: const BoxDecoration(
+            if (tripStatus != TripStatus.completed)
+              _PersonLabel(
+                curNum: detailModel.currentCnt,
+                maxNum: detailModel.maxCnt,
+              ),
+          ],
+        ),
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          children: <Widget>[
+            Material(
               color: Colors.white,
-            ),
-            child: Column(
-              children: <Widget>[
-                Material(
-                  color: Colors.white,
-                  elevation: 0,
-                  child: Container(
-                    height: 35,
-                    alignment: Alignment.centerLeft,
-                    child: TabBar(
-                      isScrollable: true,
-                      padding: const EdgeInsets.only(left: 10.0),
-                      controller: _tabController,
-                      labelColor: PRIMARY_COLOR,
-                      unselectedLabelStyle: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.0,
-                      ),
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.0,
-                      ),
-                      indicator: const UnderlineTabIndicator(
-                        insets: EdgeInsets.only(
-                          left: 10.0,
-                          right: 10.0,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(1.0)),
-                        borderSide: BorderSide(
-                          width: 3.0,
-                          color: PRIMARY_COLOR,
-                        ),
-                      ),
-                      tabs: const <Widget>[
-                        Tab(
-                          child: Text('코스보기'),
-                        ),
-                        Tab(
-                          child: Text('지도로보기'),
-                        ),
-                      ],
+              elevation: 0,
+              child: Container(
+                height: 35,
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  isScrollable: true,
+                  padding: const EdgeInsets.only(left: 10.0),
+                  controller: _tabController,
+                  labelColor: PRIMARY_COLOR,
+                  unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.0,
+                  ),
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18.0,
+                  ),
+                  indicator: const UnderlineTabIndicator(
+                    insets: EdgeInsets.only(
+                      left: 10.0,
+                      right: 10.0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(1.0)),
+                    borderSide: BorderSide(
+                      width: 3.0,
+                      color: PRIMARY_COLOR,
                     ),
                   ),
+                  tabs: const <Widget>[
+                    Tab(
+                      child: Text('코스보기'),
+                    ),
+                    Tab(
+                      child: Text('지도로보기'),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      TripDetailOverViewScreen(
-                          detailModel: detailModel,
-                          tripId: tripId,
-                          tripStatus: tripStatus),
-                      TripDetailMapScreen(
-                        detailModel: detailModel,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  TripDetailOverViewScreen(
+                      detailModel: detailModel,
+                      tripId: tripId,
+                      tripStatus: tripStatus),
+                  TripDetailMapScreen(
+                    detailModel: detailModel,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
