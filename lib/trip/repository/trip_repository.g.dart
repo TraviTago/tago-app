@@ -151,14 +151,14 @@ class _TripRepository implements TripRepository {
   }
 
   @override
-  Future<TripDetailModel> getDetailTripDriver({required tripId}) async {
+  Future<TripDetailDriverModel> getDetailTripDriver({required tripId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TripDetailModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TripDetailDriverModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -170,8 +170,33 @@ class _TripRepository implements TripRepository {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TripDetailModel.fromJson(_result.data!);
+    final value = TripDetailDriverModel.fromJson(_result.data!);
     return value;
+  }
+
+  @override
+  Future<void> postDetailTripDriver({
+    required tripId,
+    required state,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'state': state};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/taxi/trips/${tripId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
   }
 
   @override
@@ -258,6 +283,30 @@ class _TripRepository implements TripRepository {
             .compose(
               _dio.options,
               '/trips/${tripId}/members',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TripMembersList.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TripMembersList> getMembersTripDriver({required tripId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TripMembersList>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/taxi/trips/${tripId}/members',
               queryParameters: queryParameters,
               data: _data,
             )

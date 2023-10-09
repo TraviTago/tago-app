@@ -5,6 +5,7 @@ import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
+import 'package:tago_app/trip/model/trip_detail_driver_model.dart';
 import 'package:tago_app/trip/model/trip_driver_info_model.dart';
 import 'package:tago_app/trip/model/trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
@@ -66,8 +67,17 @@ abstract class TripRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<TripDetailModel> getDetailTripDriver({
+  Future<TripDetailDriverModel> getDetailTripDriver({
     @Path() required int tripId,
+  });
+
+  @POST('/taxi/trips/{tripId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<void> postDetailTripDriver({
+    @Path() required int tripId,
+    @Query('state') required String state,
   });
 
   @GET('/trips/{tripId}/status')
@@ -99,6 +109,14 @@ abstract class TripRepository {
     'accessToken': 'true',
   })
   Future<TripMembersList> getMembersTrip({
+    @Path() required int tripId,
+  });
+
+  @GET('/taxi/trips/{tripId}/members')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripMembersList> getMembersTripDriver({
     @Path() required int tripId,
   });
 
