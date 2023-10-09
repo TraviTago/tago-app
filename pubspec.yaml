@@ -83,6 +83,7 @@ flutter:
     - asset/img/
     - asset/img/menu/
     - asset/img/marker/
+    - asset/img/onBoarding/
     - asset/script/
     - .env
   # To add assets to your application, add an assets section, like this:
