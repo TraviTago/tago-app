@@ -75,6 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PinFieldAutoFill(
+                        autoFocus: true,
                         keyboardType: TextInputType.number,
                         decoration: UnderlineDecoration(
                           gapSpace: 20.0,
