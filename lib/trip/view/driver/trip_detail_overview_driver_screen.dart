@@ -444,14 +444,12 @@ class TripDetailOverviewDriverScreen extends ConsumerWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          title: Center(
+          title: const Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                tripStatus == TripStatus.upcomingSoon
-                    ? '이 여행은 취소가 불가능합니다!\n고객센터로 문의주세요!'
-                    : "기사님 이 코스운행을\n취소하시겠어요?",
-                style: const TextStyle(
+                "기사님 이 코스운행을\n취소하시겠어요?",
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 15.0,
                 ),
@@ -461,136 +459,77 @@ class TripDetailOverviewDriverScreen extends ConsumerWidget {
           ),
           actionsPadding: EdgeInsets.zero,
           actions: [
-            if (tripStatus == TripStatus.upcomingSoon)
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: LABEL_BG_COLOR,
-                      width: 2.0,
-                    ),
+            Container(
+              width: double.infinity,
+              height: 60.0,
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: LABEL_BG_COLOR,
+                    width: 2.0,
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: MaterialButton(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15.0)),
-                          ),
-                          child: const Text(
-                            '뒤로가기',
-                            style: TextStyle(
-                              color: LABEL_TEXT_SUB_COLOR,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          onPressed: () {
-                            context.pop();
-                          }),
-                    ),
-                    const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
-                    ),
-                    Expanded(
-                      child: MaterialButton(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15.0)),
-                          ),
-                          child: const Text(
-                            '확인',
-                            style: TextStyle(
-                              color: PRIMARY_COLOR,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          onPressed: () {
-                            context.pop();
-                          }),
-                    ),
-                  ],
                 ),
               ),
-            if (tripStatus == TripStatus.upcoming)
-              Container(
-                width: double.infinity,
-                height: 60.0,
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: LABEL_BG_COLOR,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: MaterialButton(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(15.0)),
-                        ),
-                        child: const Text(
-                          '네',
-                          style: TextStyle(
-                            color: LABEL_TEXT_SUB_COLOR,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        onPressed: () async {
-                          try {
-                            await ref
-                                .read(tripRepositoryProvider)
-                                .postDetailTripDriver(
-                                    tripId: tripId, state: "CANCEL");
-
-                            await ref.read(tripProvider.notifier).paginate();
-
-                            context.pop();
-                            _showAfterDialog(context, false, ref);
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MaterialButton(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(15.0)),
                       ),
-                    ),
-                    const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
-                    ),
-                    Expanded(
-                      child: MaterialButton(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(15.0)),
+                      child: const Text(
+                        '네',
+                        style: TextStyle(
+                          color: LABEL_TEXT_SUB_COLOR,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500,
                         ),
-                        child: const Text(
-                          '아니오',
-                          style: TextStyle(
-                            color: PRIMARY_COLOR,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onPressed: () {
+                      ),
+                      onPressed: () async {
+                        try {
+                          await ref
+                              .read(tripRepositoryProvider)
+                              .postDetailTripDriver(
+                                  tripId: tripId, state: "CANCEL");
+
+                          await ref.read(tripProvider.notifier).paginate();
+
                           context.pop();
-                        },
-                      ),
+                          _showAfterDialog(context, false, ref);
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                  const VerticalDivider(
+                    color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
+                    width: 2.0, // 세로 줄의 너비
+                    thickness: 2.0, // 세로 줄의 두께
+                  ),
+                  Expanded(
+                    child: MaterialButton(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(15.0)),
+                      ),
+                      child: const Text(
+                        '아니오',
+                        style: TextStyle(
+                          color: PRIMARY_COLOR,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      onPressed: () {
+                        context.pop();
+                      },
+                    ),
+                  ),
+                ],
               ),
+            ),
           ],
         );
       },
