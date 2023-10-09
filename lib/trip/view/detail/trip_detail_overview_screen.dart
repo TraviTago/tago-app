@@ -94,6 +94,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
           itemCount: detailModel.places.length + 1, // 1을 추가
           itemBuilder: (context, index) {
             if (index < detailModel.places.length) {
+              print(detailModel.isDispatched);
+
               final place = detailModel.places[index];
               return PlaceCard(place: place, index: index);
             } else {
@@ -167,7 +169,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                         if (detailModel.isJoined && detailModel.isDispatched)
                           MaterialButton(
                             onPressed: () {
-                              context.push("/tripDetail/$tripId/drivers");
+                              context.push("/tripDetail/$tripId/driver");
                             },
                             color: LABEL_BG_COLOR,
                             shape: RoundedRectangleBorder(

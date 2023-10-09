@@ -14,6 +14,7 @@ import 'package:tago_app/place/view/place_search_screen.dart';
 import 'package:tago_app/signup/view/profile_image_select_screen.dart';
 import 'package:tago_app/signup/view/profile_signup_screen.dart';
 import 'package:tago_app/trip/model/trip_edit_model.dart';
+import 'package:tago_app/trip/view/detail/trip_detail_driver_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_members_screen.dart';
 import 'package:tago_app/trip/view/detail/trip_detail_screen.dart';
 import 'package:tago_app/trip/view/form/trip_complete_screen.dart';
@@ -133,6 +134,11 @@ class AuthProvider extends ChangeNotifier {
                     path: 'members',
                     name: TripDetailMembersScreen.routeName,
                     builder: (_, __) => const TripDetailMembersScreen(),
+                  ),
+                  GoRoute(
+                    path: 'driver',
+                    name: TripDetailDriversScreen.routeName,
+                    builder: (_, __) => const TripDetailDriversScreen(),
                   ),
                 ]),
             GoRoute(
