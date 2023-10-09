@@ -46,7 +46,7 @@ class MyTripStateNotifer extends StateNotifier<MyTripResponseModel?> {
 
         return resp;
       } else {
-        final resp = await repository.getMyDriverTripS();
+        final resp = await repository.getMyDriverTrips();
 
         state = resp;
 
