@@ -7,6 +7,7 @@ import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/model/pagination_params.dart';
 import 'package:tago_app/trip/model/trip_detail_driver_model.dart';
 import 'package:tago_app/trip/model/trip_driver_info_model.dart';
+import 'package:tago_app/trip/model/trip_origin_model.dart';
 import 'package:tago_app/trip/model/trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
 import 'package:tago_app/trip/model/trip_member_model.dart';
@@ -139,4 +140,10 @@ abstract class TripRepository {
     'accessToken': 'true',
   })
   Future<MyTripResponseModel> getMyDriverTrips();
+
+  @GET('/trips/origin')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<TripOriginModel> getTagoOriginTrips();
 }
