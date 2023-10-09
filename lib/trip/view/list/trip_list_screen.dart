@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,8 @@ import 'package:tago_app/trip/component/trip_list_skeleton.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
 import 'package:tago_app/trip/component/trip_recommend_shimmer_card.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
+import 'package:tago_app/trip/model/trip_origin_model.dart';
+import 'package:tago_app/trip/provider/trip_origin_provider.dart';
 import 'package:tago_app/trip/provider/trip_provider.dart';
 import 'package:tago_app/trip/provider/trip_recommend_provider.dart';
 
@@ -51,6 +54,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
     super.initState();
     controller.addListener(scrollListener);
     ref.read(recommendProvider.notifier).fetchRecommendTrip();
+    ref.read(originProvider.notifier).fetchOriginTrips();
   }
 
   @override
@@ -130,32 +134,149 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
               )),
             if (contents is! CursorPaginationLoading)
               SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       if (showRecommendation && index == 0) {
                         final tripRecommendData = ref.watch(recommendProvider);
+                        final tripOriginData = ref.watch(originProvider);
                         return Center(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                '당신에게 딱 맞는 여행!',
-                                style: TextStyle(
-                                  fontSize: 19.0,
-                                  fontWeight: FontWeight.w700,
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                child: Text(
+                                  '타고가 제안하는\n지금 떠나기 좋은 여행',
+                                  style: TextStyle(
+                                    height: 1.5,
+                                    fontSize: 19.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              tripOriginData == null
+                                  ? Container(
+                                      child: const Text("NO DATA"),
+                                    )
+                                  : (tripOriginData is TripOriginModel)
+                                      ? SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.width,
+                                          child: Swiper(
+                                            autoplay: true,
+                                            loop: true,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Stack(
+                                                children: [
+                                                  SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        context.go(
+                                                            '/tripDetailOrigin/${tripOriginData.tagotrips[index].name}');
+                                                      },
+                                                      child: ClipRRect(
+                                                        child: Image.network(
+                                                          tripOriginData
+                                                              .tagotrips[index]
+                                                              .imgUrl,
+                                                          fit: BoxFit.fitWidth,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    left: 20,
+                                                    bottom: 50,
+                                                    child: Text(
+                                                      tripOriginData
+                                                          .tagotrips[index]
+                                                          .name,
+                                                      style: const TextStyle(
+                                                        shadows: [
+                                                          Shadow(
+                                                            blurRadius: 5.0,
+                                                            color:
+                                                                Colors.black45,
+                                                            offset: Offset(
+                                                                2.0, 2.0),
+                                                          ),
+                                                        ],
+                                                        color: Colors.white,
+                                                        fontSize: 22.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                            indicatorLayout:
+                                                PageIndicatorLayout.SCALE,
+                                            pagination: SwiperPagination(
+                                              builder:
+                                                  DotSwiperPaginationBuilder(
+                                                size: 10,
+                                                activeColor: Colors.white
+                                                    .withOpacity(0.9),
+                                                color: Colors.black
+                                                    .withOpacity(0.5),
+                                              ),
+                                            ),
+                                            itemCount: 3,
+                                            scale: 1,
+                                          ),
+                                        )
+                                      : Container(
+                                          child: const Text("NO DATA"),
+                                        ),
+                              const SizedBox(
+                                height: 30.0,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                child: Text(
+                                  '당신에게 딱 맞는 여행!',
+                                  style: TextStyle(
+                                    fontSize: 19.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 20.0),
                               tripRecommendData == null
-                                  ? const TripRecommendShimmerCard()
+                                  ? const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: TripRecommendShimmerCard(),
+                                    )
                                   : (tripRecommendData is TripModel)
-                                      ? TripRecommendCard.fromModel(
-                                          type: "USER",
-                                          model: tripRecommendData)
-                                      : Container(),
+                                      ? Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20.0),
+                                          child: TripRecommendCard.fromModel(
+                                              type: "USER",
+                                              model: tripRecommendData),
+                                        )
+                                      : const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20.0),
+                                          child: TripRecommendShimmerCard(),
+                                        ),
                               const SizedBox(height: 20.0),
                             ],
                           ),
@@ -174,30 +295,36 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                               (contents).contents[tripIndex].dateTime);
 
                       if (shouldShowDate) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              DataUtils.formatDate(
-                                  (contents).contents[tripIndex].dateTime),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 10.0,
                               ),
-                            ),
-                            const SizedBox(height: 20.0),
-                            TripCard.fromModel(
-                                type: "USER",
-                                model: (contents).contents[tripIndex]),
-                          ],
+                              Text(
+                                DataUtils.formatDate(
+                                    (contents).contents[tripIndex].dateTime),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              TripCard.fromModel(
+                                  type: "USER",
+                                  model: (contents).contents[tripIndex]),
+                            ],
+                          ),
                         );
                       } else {
-                        return TripCard.fromModel(
-                            type: "USER",
-                            model: (contents).contents[tripIndex]);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TripCard.fromModel(
+                              type: "USER",
+                              model: (contents).contents[tripIndex]),
+                        );
                       }
                     },
                     childCount: showRecommendation
