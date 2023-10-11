@@ -20,10 +20,21 @@ class TripDetailOriginScreen extends ConsumerStatefulWidget {
 class _TripDetailOriginScreenState
     extends ConsumerState<TripDetailOriginScreen> {
   int selectedIndex = 0;
+  int? selectedTripId;
+  DateTime? selectedTripDate;
+  String? source;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void _updateSelectedTripId(int index, TripDetailOriginModel model) {
+    setState(() {
+      selectedIndex = index;
+      selectedTripId = model.tagotrips[selectedIndex].id!;
+      selectedTripDate = model.tagotrips[selectedIndex].dateTime!;
+    });
   }
 
   @override
@@ -33,25 +44,6 @@ class _TripDetailOriginScreenState
     String originImgUrl =
         GoRouterState.of(context).queryParameters['originImgUrl']!;
     return DefaultLayout(
-      floatingActionButton: MaterialButton(
-        onPressed: () {},
-        color: PRIMARY_COLOR,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 0,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-          child: Text(
-            '참여하기',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
       titleComponet: const Text(
         '',
       ),
@@ -110,61 +102,59 @@ class _TripDetailOriginScreenState
                     return const Center(child: Text('데이터가 없습니다.'));
                   } else {
                     final originModel = snapshot.data!;
-
+                    selectedTripId = originModel.tagotrips[selectedIndex].id!;
+                    selectedTripDate =
+                        originModel.tagotrips[selectedIndex].dateTime!;
+                    source = originModel.source;
                     return Column(
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 30,
-                          child: Expanded(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: originModel.tagotrips.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: (index == 0) ? 0 : 10.0),
-                                    child: SizedBox(
-                                      width: 80,
-                                      height: 30,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            // 선택 상태를 토글
-                                            selectedIndex = index;
-                                          });
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: selectedIndex == index
-                                                ? PRIMARY_COLOR
-                                                : LABEL_BG_COLOR,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: originModel.tagotrips.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: (index == 0) ? 0 : 10.0),
+                                  child: SizedBox(
+                                    width: 80,
+                                    height: 30,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _updateSelectedTripId(
+                                            index, originModel);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: selectedIndex == index
+                                              ? PRIMARY_COLOR
+                                              : LABEL_BG_COLOR,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(20),
                                           ),
-                                          child: Text(
-                                            DataUtils.formatDate(originModel
-                                                .tagotrips[0].dateTime!),
-                                            style: TextStyle(
-                                              fontSize: 13.0,
-                                              color: selectedIndex == index
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                              fontWeight: selectedIndex == index
-                                                  ? FontWeight.w700
-                                                  : FontWeight.w500,
-                                            ),
+                                        ),
+                                        child: Text(
+                                          DataUtils.formatDate(originModel
+                                              .tagotrips[0].dateTime!),
+                                          style: TextStyle(
+                                            fontSize: 13.0,
+                                            color: selectedIndex == index
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: selectedIndex == index
+                                                ? FontWeight.w700
+                                                : FontWeight.w500,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                }),
-                          ),
+                                  ),
+                                );
+                              }),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -177,27 +167,85 @@ class _TripDetailOriginScreenState
                                 Radius.circular(10),
                               ),
                             ),
-                            child: Center(
-                                child: Text(
-                                    '현재인원 (${originModel.tagotrips[selectedIndex].currentMember}/${originModel.tagotrips[selectedIndex].maxMember})')),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  '현재인원 ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const Text(
+                                  '(',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  '${originModel.tagotrips[selectedIndex].currentMember}',
+                                  style: const TextStyle(
+                                    color: PRIMARY_COLOR,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  '/${originModel.tagotrips[selectedIndex].maxMember})',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const Text(
-                          "부산에는 많은 바다가 있지만 그 중에서도 다대포만은 특별한 매력을 지니고 있습니다. 낙동강과 남해안이 만나는 이곳은 희고 고운 모래사장으로 유명합니다. 수심이 얕고 수온이 쾌적하여 맨발로 산책하며 바닷가를 즐길 수 있습니다. 특히 해가 지는 시간에는 부산에서 가장 아름다운 낙조를 만날 수 있어요. 바다 앞의 사람들의 검은 실루엣이 마치 하나의 그림 같아요.\n",
-                          style: TextStyle(
+                        Text(
+                          originModel.overview,
+                          style: const TextStyle(
                             fontSize: 13.0,
-                            height: 1.7,
-                          ),
-                        ),
-                        const Text(
-                          "이 특별한 순간을 함께 즐기기 좋은 방법 중 하나는 시원한 바닷바람을 맞으며 마시는 따뜻한 커피입니다. 기사님이 준비한 보온병에 담긴 커피를 모래사장에 앉아 나누면서 노을을 감상해보세요.\n",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            height: 1.7,
+                            height: 1.8,
+                            color: LABEL_TEXT_SUB_COLOR,
                           ),
                         ),
                         const SizedBox(
-                          height: 120,
+                          height: 40,
+                        ),
+                        MaterialButton(
+                          onPressed: () {
+                            context.push(
+                                "/tripDetail/$selectedTripId?tripDate=$selectedTripDate&tripTime=480");
+                          },
+                          color: PRIMARY_COLOR,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 0,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '여행 참여하러 가기',
+                                  style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.chevron_right_sharp,
+                                  color: Colors.white,
+                                  size: 20.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50,
                         ),
                       ],
                     );
