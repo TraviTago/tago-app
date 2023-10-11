@@ -108,7 +108,7 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
                     final places = state.contents as List<PlaceModel>;
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 0.0),
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
