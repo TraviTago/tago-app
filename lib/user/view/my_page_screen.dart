@@ -244,16 +244,14 @@ class _Information extends StatelessWidget {
           },
           () async {
             const url =
-                'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';
-
+                'https://aquamarine-green-f8d.notion.site/_-adbbda6aaed842af984e2cfcb6264a4f';
             if (await canLaunchUrl(Uri.parse(url))) {
               await launchUrl(Uri.parse(url));
             } else {}
           },
           () async {
             const url =
-                'https://aquamarine-green-f8d.notion.site/_-aa5116fda674427d833923196b5da6f4';
-
+                'https://aquamarine-green-f8d.notion.site/_-f34052cfc4d84649aa2fb9e082d17335';
             if (await canLaunchUrl(Uri.parse(url))) {
               await launchUrl(Uri.parse(url));
             } else {}
