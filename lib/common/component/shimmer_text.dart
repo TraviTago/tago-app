@@ -20,7 +20,10 @@ class ShimmerText extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          color: Colors.white,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0),
+            color: Colors.white,
+          ),
         ),
       ),
     );

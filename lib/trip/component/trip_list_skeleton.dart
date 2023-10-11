@@ -14,37 +14,71 @@ class TripListSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (_, index) {
-                if (index == 0 && isRecommend) {
-                  // First item is similar to the TripRecommendCard
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const ShimmerText(width: 150, height: 20),
-                      const SizedBox(height: 10.0),
-                      // Adding the Shimmer effect for the TripRecommendCard
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.width - 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.white,
-                          ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, index) {
+              if (index == 0 && isRecommend) {
+                // First item is similar to the TripRecommendCard
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ShimmerText(width: 100, height: 20),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ShimmerText(width: 150, height: 20),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 20.0),
-                    ],
-                  );
-                }
-                // Other items are similar to the TripCard
-                return Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const ShimmerText(width: 150, height: 20),
+                          const SizedBox(height: 10.0),
+                          // Adding the Shimmer effect for the TripRecommendCard
+                          Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.width - 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+              // Other items are similar to the TripCard
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (index == 1 || index == 0)
@@ -103,10 +137,10 @@ class TripListSkeleton extends StatelessWidget {
                       ),
                     ),
                   ],
-                );
-              },
-              childCount: 5,
-            ),
+                ),
+              );
+            },
+            childCount: 5,
           ),
         ),
       ],

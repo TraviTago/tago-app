@@ -160,9 +160,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                 height: 20.0,
                               ),
                               tripOriginData == null
-                                  ? Container(
-                                      child: const Text("NO DATA"),
-                                    )
+                                  ? Container()
                                   : (tripOriginData is TripOriginModel)
                                       ? SizedBox(
                                           height:
