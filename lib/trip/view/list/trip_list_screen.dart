@@ -185,14 +185,30 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                             .width,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // context.go(
-                                                        //     '/tripDetailOrigin/${tripOriginData.tagotrips[index].name}');
+                                                        context.push(
+                                                          Uri(
+                                                            path:
+                                                                '/tripDetailOrigin',
+                                                            queryParameters: {
+                                                              'originName':
+                                                                  tripOriginData
+                                                                      .tagotrips[
+                                                                          index]
+                                                                      .name,
+                                                              'originImgUrl':
+                                                                  tripOriginData
+                                                                      .tagotrips[
+                                                                          index]
+                                                                      .imgUrl,
+                                                            },
+                                                          ).toString(),
+                                                        );
                                                       },
                                                       child: ClipRRect(
                                                         child: Image.network(
                                                           tripOriginData
                                                               .tagotrips[index]
-                                                              .imgUrl,
+                                                              .imgUrl!,
                                                           fit: BoxFit.fitWidth,
                                                         ),
                                                       ),
@@ -204,7 +220,7 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                     child: Text(
                                                       tripOriginData
                                                           .tagotrips[index]
-                                                          .name,
+                                                          .name!,
                                                       style: const TextStyle(
                                                         shadows: [
                                                           Shadow(

@@ -143,7 +143,7 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, __) => const RootTab(),
           routes: [
             GoRoute(
-              path: 'tripDetailOrigin/:originName',
+              path: 'tripDetailOrigin',
               name: TripDetailOriginScreen.routeName,
               builder: (_, __) => const TripDetailOriginScreen(),
             ),
