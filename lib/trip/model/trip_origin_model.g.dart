@@ -19,8 +19,8 @@ Map<String, dynamic> _$TripOriginModelToJson(TripOriginModel instance) =>
     };
 
 TagoTrips _$TagoTripsFromJson(Map<String, dynamic> json) => TagoTrips(
-      name: json['name'] as String,
-      imgUrl: json['img_url'] as String,
+      name: json['name'] as String?,
+      imgUrl: json['img_url'] as String?,
       id: json['id'] as int?,
       dateTime: json['dateTime'] == null
           ? null

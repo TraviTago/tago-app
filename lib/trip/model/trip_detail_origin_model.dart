@@ -7,9 +7,11 @@ part 'trip_detail_origin_model.g.dart';
 @JsonSerializable()
 class TripDetailOriginModel extends TripBaseModel {
   final List<TagoTrips> tagotrips;
+  final String source;
 
   TripDetailOriginModel({
     required this.tagotrips,
+    required this.source,
   });
   factory TripDetailOriginModel.fromJson(Map<String, dynamic> json) =>
       _$TripDetailOriginModelFromJson(json);
