@@ -255,6 +255,7 @@ class InfoRow extends StatelessWidget {
                   color: LABEL_TEXT_SUB_COLOR,
                   fontWeight: FontWeight.w600,
                   fontSize: 15.0,
+                  height: 1.7,
                 ),
               ),
             ),
@@ -263,6 +264,7 @@ class InfoRow extends StatelessWidget {
                 value,
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
+                  height: 1.7,
                   fontSize: 15.0,
                 ),
                 softWrap: true,
