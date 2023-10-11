@@ -416,7 +416,7 @@ class FilterBar extends StatelessWidget {
                 ),
               ),
               child: Text(
-                isPetSelected ? "좋아요!" : '반려동물',
+                isPetSelected ? "싫어요!" : '반려동물',
                 style: TextStyle(
                   fontSize: 13.0,
                   color: isPetSelected ? Colors.white : Colors.black,
