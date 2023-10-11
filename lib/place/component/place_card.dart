@@ -69,6 +69,7 @@ class PlaceCard extends StatelessWidget {
                 color: Colors.black,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
+                height: 1.5,
               ),
               overflow: TextOverflow.ellipsis, // 이 부분을 추가합니다.
               maxLines: 3,

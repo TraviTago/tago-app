@@ -95,7 +95,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                             DataUtils.cleanOverview(detailModel.overview, true),
                             style: const TextStyle(
                               fontSize: 13.0,
-                              height: 1.5,
+                              height: 1.8,
                               color: Colors.black,
                             ),
                           ),
