@@ -228,7 +228,7 @@ class _TripDetailOriginScreenState
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  '여행 참여하러 가기',
+                                  '코스 세부 내용 보러가기',
                                   style: TextStyle(
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/common/component/space_container.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
@@ -344,6 +345,10 @@ class InfoRow extends StatelessWidget {
           Expanded(
             child: Text(
               text,
+              style: const TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -378,25 +383,32 @@ class DetailInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 15.0,
+                height: 20.0,
               ),
-              if (detailModel.telephone != null)
+              if (detailModel.telephone != null &&
+                  DataUtils.preprocessTelephone(detailModel.telephone!) != "")
                 InfoRow(
                     assetName: 'asset/img/phone.png',
-                    text: detailModel.telephone!),
-              if (detailModel.homepage != null)
+                    text:
+                        DataUtils.preprocessTelephone(detailModel.telephone!)),
+              if (detailModel.homepage != null &&
+                  DataUtils.cleanHomepage(detailModel.homepage!) != "")
                 InfoRow(
                     assetName: 'asset/img/globe.png',
                     text: DataUtils.cleanHomepage(detailModel.homepage!)),
-              if (detailModel.restDate != null)
+              if (detailModel.restDate != null &&
+                  detailModel.restDate != "" &&
+                  DataUtils.preprocessRestDate(detailModel.restDate!) != "")
                 InfoRow(
                     assetName: 'asset/img/calendar.png',
                     text: DataUtils.preprocessRestDate(detailModel.restDate!)),
-              if (detailModel.openTime != null)
+              if (detailModel.openTime != null &&
+                  DataUtils.preprocessOpenTime(detailModel.openTime!) != "")
                 InfoRow(
                     assetName: 'asset/img/clock.png',
                     text: DataUtils.preprocessOpenTime(detailModel.openTime!)),
-              if (detailModel.parking != null)
+              if (detailModel.parking != null &&
+                  DataUtils.preprocessParking(detailModel.parking!) != "")
                 InfoRow(
                     assetName: 'asset/img/car.png',
                     text: DataUtils.preprocessParking(detailModel.parking!)),

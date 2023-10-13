@@ -143,8 +143,17 @@ class DataUtils {
     final Match? match = regExp.firstMatch(input);
 
     if (match != null) {
-      if (match.group(1) != null) return match.group(1)!;
-      if (match.group(2) != null) return match.group(2)!;
+      String? result;
+      if (match.group(1) != null) {
+        result = match.group(1)!;
+      } else if (match.group(2) != null) {
+        result = match.group(2)!;
+      }
+
+      if (result != null) {
+        // Remove any backslashes from the result
+        return result.replaceAll(r'\', '');
+      }
     }
 
     return "";
@@ -162,6 +171,17 @@ class DataUtils {
     } else {
       return "$input 휴무";
     }
+  }
+
+  static String preprocessTelephone(String text) {
+    text = text.replaceAll(
+        RegExp(r'<br\s*/?>\s*<br\s*/?>', caseSensitive: false), '\n');
+
+    text = text.replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
+
+    String cleanText = text.replaceAll(RegExp('<[^>]+>'), '').trim();
+
+    return cleanText;
   }
 
   static String preprocessOpenTime(String text) {
