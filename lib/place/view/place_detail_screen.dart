@@ -8,6 +8,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/model/page_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/place/component/place_detail_skeleton.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
 import 'package:tago_app/place/repository/place_repository.dart';
 import 'package:tago_app/search/model/kakao_blog_search_model.dart';
@@ -65,8 +66,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                   .getDetailPlace(placeId: placeId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child: CircularProgressIndicator(color: PRIMARY_COLOR));
+                  return const Center(child: PlaceDetailSkeleton());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('오류: ${snapshot.error}'));
                 } else if (!snapshot.hasData) {
@@ -379,6 +379,7 @@ class DetailInfo extends StatelessWidget {
                 '상세정보',
                 style: TextStyle(
                   fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
               ),
