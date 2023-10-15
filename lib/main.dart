@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -17,6 +18,9 @@ Future main() async {
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY'],
   );
+  final token = await FirebaseMessaging.instance.getToken();
+
+  print("token : ${token ?? 'token NULL!'}");
   initializeDateFormatting().then(
     (_) => runApp(
       const ProviderScope(
