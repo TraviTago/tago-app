@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166053533505",
+    "project_id": "tago-f50ee",
+    "storage_bucket": "tago-f50ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166053533505:android:3c187dad220884b01673c0",
+        "android_client_info": {
+          "package_name": "com.travi.tago_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD968FgoD8eiDd46tOJ6gsxW-OrCupL9kQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
