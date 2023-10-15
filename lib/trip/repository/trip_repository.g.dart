@@ -196,7 +196,7 @@ class _TripRepository implements TripRepository {
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return null;
+    return;
   }
 
   @override
@@ -224,9 +224,12 @@ class _TripRepository implements TripRepository {
   }
 
   @override
-  Future<void> joinTrip({required tripId}) async {
+  Future<void> postDetailTrip({
+    required tripId,
+    required state,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'state': state};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -237,34 +240,12 @@ class _TripRepository implements TripRepository {
     )
         .compose(
           _dio.options,
-          '/trips/${tripId}/join',
+          '/trips/${tripId}',
           queryParameters: queryParameters,
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return null;
-  }
-
-  @override
-  Future<void> leaveTrip({required tripId}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    await _dio.fetch<void>(_setStreamType<void>(Options(
-      method: 'DELETE',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/trips/${tripId}/leave',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return null;
+    return;
   }
 
   @override

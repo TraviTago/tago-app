@@ -486,7 +486,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                         onPressed: () async {
                           await ref
                               .read(tripRepositoryProvider)
-                              .joinTrip(tripId: tripId);
+                              .postDetailTrip(tripId: tripId, state: "ACCEPT");
                           await ref
                               .read(recommendProvider.notifier)
                               .fetchRecommendTrip();
@@ -623,7 +623,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                           try {
                             await ref
                                 .read(tripRepositoryProvider)
-                                .leaveTrip(tripId: tripId);
+                                .postDetailTrip(
+                                    tripId: tripId, state: "CANCEL");
 
                             context.pop();
                             _showAfterDialog(context, false, ref);

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/dio/dio.dart';
 import 'package:tago_app/login/model/login_response.dart';
@@ -30,6 +31,7 @@ class AuthRepository {
       '$baseUrl/auth/login',
       data: {
         'number': number,
+        'firebaseToken': await FirebaseMessaging.instance.getToken(),
       },
     );
     return LoginResponse.fromJson(
@@ -100,6 +102,7 @@ class AuthRepository {
         'mbti': mbti,
         'favorites': favorites,
         'tripTypes': tripTypes,
+        'firebaseToken': await FirebaseMessaging.instance.getToken(),
       },
       options: Options(
         headers: {

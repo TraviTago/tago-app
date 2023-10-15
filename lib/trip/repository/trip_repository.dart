@@ -90,20 +90,13 @@ abstract class TripRepository {
     @Path() required int tripId,
   });
 
-  @POST('/trips/{tripId}/join')
+  @POST('/trips/{tripId}')
   @Headers({
     'accessToken': 'true',
   })
-  Future<void> joinTrip({
+  Future<void> postDetailTrip({
     @Path() required int tripId,
-  });
-
-  @DELETE('/trips/{tripId}/leave')
-  @Headers({
-    'accessToken': 'true',
-  })
-  Future<void> leaveTrip({
-    @Path() required int tripId,
+    @Query('state') required String state,
   });
 
   @GET('/trips/{tripId}/members')
