@@ -4,6 +4,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
+import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
 
@@ -23,6 +24,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool showVerificationField = false;
   bool isVerifyMode = false;
   String? errorText;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -157,15 +159,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         : MaterialStateProperty.all(LABEL_BG_COLOR),
                   ),
                   onPressed: handleSmsVerify,
-                  child: Text(
-                    '다음',
-                    style: TextStyle(
-                        color: verificationCode.length == 6
-                            ? Colors.white
-                            : LABEL_TEXT_COLOR,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0),
-                  ),
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                          strokeWidth: 2.0,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white.withOpacity(0.8)))
+                      : Text(
+                          '다음',
+                          style: TextStyle(
+                              color: verificationCode.length == 6
+                                  ? Colors.white
+                                  : LABEL_TEXT_COLOR,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.0),
+                        ),
                 ),
             ],
           ),
@@ -210,15 +217,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         }
       } else {
         try {
+          setState(() {
+            isLoading = true;
+          });
           final smsVerify = await ref
               .read(authRepositoryProvider)
               .smsVerify(number: formattedNumber, code: verificationCode);
           if (smsVerify.verify) {
-            await ref
+            final userModelBase = await ref
                 .read(userProvider.notifier)
                 .login(number: phoneNumber, userType: "USER");
+            setState(() {
+              isLoading = false;
+            });
+            if (userModelBase is UserModelError) {
+              errorText = "가입되지 않은 번호입니다";
+            }
           }
         } catch (e) {
+          setState(() {
+            isLoading = false;
+          });
           //1. 인증번호 틀렸을 경우
           errorText = "인증번호를 다시 입력해주세요";
           setState(() {});
