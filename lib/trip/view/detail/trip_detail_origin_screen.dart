@@ -43,6 +43,8 @@ class _TripDetailOriginScreenState
         GoRouterState.of(context).queryParameters['originName']!;
     String originImgUrl =
         GoRouterState.of(context).queryParameters['originImgUrl']!;
+    String originSource =
+        GoRouterState.of(context).queryParameters['originSource']!;
     return DefaultLayout(
       titleComponet: const Text(
         '',
@@ -61,11 +63,28 @@ class _TripDetailOriginScreenState
               ),
             ),
             Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 5.0,
+                horizontal: 10.0,
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  textAlign: TextAlign.end,
+                  '출처 $originSource',
+                  style: const TextStyle(
+                    fontSize: 10.0,
+                    color: LABEL_TEXT_COLOR,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(
                 left: 20.0,
-                right: 20.0,
-                top: 20.0,
-                bottom: 10.0,
+                top: 5.0,
+                bottom: 20.0,
               ),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -105,7 +124,6 @@ class _TripDetailOriginScreenState
                     selectedTripId = originModel.tagotrips[selectedIndex].id!;
                     selectedTripDate =
                         originModel.tagotrips[selectedIndex].dateTime!;
-                    source = originModel.source;
                     return Column(
                       children: [
                         SizedBox(

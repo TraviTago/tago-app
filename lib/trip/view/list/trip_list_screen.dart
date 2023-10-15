@@ -198,6 +198,11 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                                       .tagotrips[
                                                                           index]
                                                                       .imgUrl,
+                                                              'originSource':
+                                                                  tripOriginData
+                                                                      .tagotrips[
+                                                                          index]
+                                                                      .source,
                                                             },
                                                           ).toString(),
                                                         );
