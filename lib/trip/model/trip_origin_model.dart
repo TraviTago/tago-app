@@ -19,6 +19,7 @@ class TripOriginModel extends TripBaseModel {
 @JsonSerializable()
 class TagoTrips {
   final String? name;
+  final String? source;
   @JsonKey(name: 'img_url')
   final String? imgUrl;
   final int? id;
@@ -29,6 +30,7 @@ class TagoTrips {
   TagoTrips({
     this.name,
     this.imgUrl,
+    this.source,
     this.id,
     this.dateTime,
     this.maxMember,

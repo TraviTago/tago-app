@@ -12,7 +12,6 @@ TripDetailOriginModel _$TripDetailOriginModelFromJson(
       tagotrips: (json['tagotrips'] as List<dynamic>)
           .map((e) => TagoTrips.fromJson(e as Map<String, dynamic>))
           .toList(),
-      source: json['source'] as String,
       overview: json['overview'] as String,
     );
 
@@ -20,6 +19,5 @@ Map<String, dynamic> _$TripDetailOriginModelToJson(
         TripDetailOriginModel instance) =>
     <String, dynamic>{
       'tagotrips': instance.tagotrips,
-      'source': instance.source,
       'overview': instance.overview,
     };

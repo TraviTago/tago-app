@@ -21,6 +21,7 @@ Map<String, dynamic> _$TripOriginModelToJson(TripOriginModel instance) =>
 TagoTrips _$TagoTripsFromJson(Map<String, dynamic> json) => TagoTrips(
       name: json['name'] as String?,
       imgUrl: json['img_url'] as String?,
+      source: json['source'] as String?,
       id: json['id'] as int?,
       dateTime: json['dateTime'] == null
           ? null
@@ -31,6 +32,7 @@ TagoTrips _$TagoTripsFromJson(Map<String, dynamic> json) => TagoTrips(
 
 Map<String, dynamic> _$TagoTripsToJson(TagoTrips instance) => <String, dynamic>{
       'name': instance.name,
+      'source': instance.source,
       'img_url': instance.imgUrl,
       'id': instance.id,
       'dateTime': instance.dateTime?.toIso8601String(),
