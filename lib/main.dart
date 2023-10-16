@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/rotuer/go_router.dart';
 
@@ -12,9 +11,40 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tago_app/firebase_options.dart';
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print('Handling a background message ${message.messageId}');
+
+  final localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  // channel을 로컬 변수로 선언 및 초기화
+  const localChannel = AndroidNotificationChannel(
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
+    importance: Importance.high,
+  );
+
+  var initializationSettingsAndroid =
+      const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: null); // 백그라운드에서는 iOS 설정이 필요 없음
+
+  await localNotificationsPlugin.initialize(initializationSettings);
+
+  await localNotificationsPlugin.show(
+    0,
+    message.data['title'],
+    message.data['content'],
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        localChannel.id,
+        localChannel.name,
+      ),
+    ),
+  );
 }
 
 late AndroidNotificationChannel channel;
@@ -22,18 +52,15 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future main() async {
   await dotenv.load(fileName: ".env");
-  KakaoSdk.init(
-    nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY'],
-  );
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
     importance: Importance.high,
   );
 
@@ -65,6 +92,22 @@ Future main() async {
     badge: true,
     sound: true,
   );
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      message.data['title'],
+      message.data['content'],
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+        ),
+      ),
+    );
+
+    if (message.notification != null) {}
+  });
 
   initializeDateFormatting().then(
     (_) => runApp(
