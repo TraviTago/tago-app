@@ -6,7 +6,7 @@
         </intent>
     </queries>
     <application
-        android:label="tago_app"
+        android:label="같이타고"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
