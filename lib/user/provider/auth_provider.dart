@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/view/chatting_screen.dart';
 import 'package:tago_app/common/view/driver/driver_root_tab.dart';
 import 'package:tago_app/common/view/landing_screen.dart';
 import 'package:tago_app/common/view/root_tab.dart';
@@ -72,6 +73,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/landing',
           name: LandingScreen.routeName,
           builder: (_, __) => const LandingScreen(),
+        ),
+        GoRoute(
+          path: '/chatting',
+          name: ChattingScreen.routeName,
+          builder: (_, __) => const ChattingScreen(),
         ),
         GoRoute(
           path: '/driverLogin',
