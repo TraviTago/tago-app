@@ -135,8 +135,7 @@ class _TripDetailOriginScreenState
                               itemCount: originModel.tagotrips.length,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: (index == 0) ? 0 : 10.0),
+                                  padding: const EdgeInsets.only(right: 10.0),
                                   child: SizedBox(
                                     width: 80,
                                     height: 30,
@@ -157,7 +156,7 @@ class _TripDetailOriginScreenState
                                         ),
                                         child: Text(
                                           DataUtils.formatDate(originModel
-                                              .tagotrips[0].dateTime!),
+                                              .tagotrips[index].dateTime!),
                                           style: TextStyle(
                                             fontSize: 13.0,
                                             color: selectedIndex == index
