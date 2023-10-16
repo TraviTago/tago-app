@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
@@ -79,3 +82,52 @@ final markerImages = [
   DataUtils.loadAssetAsBase64('asset/img/marker/8.png'),
   DataUtils.loadAssetAsBase64('asset/img/marker/9.png'),
 ];
+
+final List<InfoData> infoData = [
+  InfoData(
+    title: "어딜가야할지\n잘 모르겠을땐?",
+    body: "타고챗",
+    img: "asset/img/info/chat.png",
+    onTap: () {},
+  ),
+  InfoData(
+    title: "택시투어가\n궁금하다면?",
+    body: "택시이용설명서",
+    img: "asset/img/info/explain.png",
+    onTap: () async {
+      const url =
+          'https://aquamarine-green-f8d.notion.site/af8ffc59bb3a4a368702513e32ca1b25?pvs=4';
+
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {}
+    },
+  ),
+  InfoData(
+    title: "같이타고는\n이런 서비스에요!",
+    body: "타고소개",
+    img: "asset/img/info/introduce.png",
+    onTap: () async {
+      const url =
+          'https://aquamarine-green-f8d.notion.site/4e971784c48c4be19ba73743436afb53';
+
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {}
+    },
+  )
+];
+
+class InfoData {
+  final String title;
+  final String body;
+  final String img;
+  final VoidCallback onTap;
+
+  InfoData({
+    required this.title,
+    required this.body,
+    required this.img,
+    required this.onTap,
+  });
+}
