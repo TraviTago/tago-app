@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/component/trip_card.dart';
@@ -264,7 +265,146 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                           child: const Text("NO DATA"),
                                         ),
                               const SizedBox(
-                                height: 30.0,
+                                height: 20.0,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: 120,
+                                child: Swiper(
+                                  indicatorLayout: PageIndicatorLayout.SLIDE,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final List<InfoData> datas = infoData;
+                                    return Row(
+                                      children: [
+                                        for (int i = 0; i < 2; i++)
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0, right: 10.0),
+                                              child: index * 2 + i < 3
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 20),
+                                                      child: InkWell(
+                                                        onTap: index * 2 + i ==
+                                                                0
+                                                            ? () {
+                                                                context.push(
+                                                                    '/chatting');
+                                                              }
+                                                            : datas[index * 2 +
+                                                                    i]
+                                                                .onTap,
+                                                        child: Container(
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color:
+                                                                LABEL_BG_COLOR,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  15),
+                                                            ),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .black12,
+                                                                offset: Offset(
+                                                                    0, 2),
+                                                                blurRadius: 6.0,
+                                                                spreadRadius:
+                                                                    1.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                              horizontal: 20.0,
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  datas[index *
+                                                                              2 +
+                                                                          i]
+                                                                      .title,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        12.0,
+                                                                    height: 1.4,
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 1.0,
+                                                                ),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      datas[index * 2 +
+                                                                              i]
+                                                                          .body,
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontSize:
+                                                                            15.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                      ),
+                                                                    ),
+                                                                    Image.asset(
+                                                                      datas[index * 2 +
+                                                                              i]
+                                                                          .img,
+                                                                      width:
+                                                                          30.0,
+                                                                      height:
+                                                                          30.0,
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Container(), // if there's no item left, add an empty container
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                  loop: false,
+                                  pagination: const SwiperPagination(
+                                    margin: EdgeInsets.only(
+                                      top: 60,
+                                    ),
+                                    builder: DotSwiperPaginationBuilder(
+                                      size: 0,
+                                      activeSize: 7,
+                                      activeColor: PRIMARY_COLOR,
+                                      color: SELECTED_BOX_BG_COLOR,
+                                    ),
+                                  ),
+                                  itemCount: 2,
+                                  viewportFraction: 0.9,
+                                  scale: 1,
+                                ),
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
