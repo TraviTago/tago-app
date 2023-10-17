@@ -473,7 +473,9 @@ class _TimePickerModalState extends State<_TimePickerModal> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height - widget.offset.dy,
+        maxHeight: (MediaQuery.of(context).size.height - widget.offset.dy < 300)
+            ? 300
+            : MediaQuery.of(context).size.height - widget.offset.dy,
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -575,7 +577,9 @@ class _PlaceModalState extends State<_PlaceModal> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height - widget.offset.dy,
+        maxHeight: (MediaQuery.of(context).size.height - widget.offset.dy < 300)
+            ? 300
+            : MediaQuery.of(context).size.height - widget.offset.dy,
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(
