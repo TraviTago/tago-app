@@ -18,6 +18,15 @@ class DataUtils {
     return int.parse(replacedData.trim());
   }
 
+  static String changeBotMessage(String jsonMessage) {
+    try {
+      final Map<String, dynamic> data = json.decode(jsonMessage);
+      return data['message'] ?? ''; // message 값을 반환하거나, 없으면 빈 문자열 반환
+    } catch (e) {
+      return 'Error processing message.'; // 오류가 발생하면 오류 메시지 반환
+    }
+  }
+
   static List<Map<String, dynamic>> convertPlaces(List<PlaceTripModel> places) {
     return places.asMap().entries.map((entry) {
       int order = entry.key;
