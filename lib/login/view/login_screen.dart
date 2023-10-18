@@ -161,7 +161,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onPressed: handleSmsVerify,
                   child: isLoading
                       ? CircularProgressIndicator(
-                          strokeWidth: 2.0,
+                          strokeWidth: 3.0,
                           valueColor: AlwaysStoppedAnimation<Color>(
                               Colors.white.withOpacity(0.8)))
                       : Text(
@@ -211,6 +211,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       //TOFIX: DEMO 아이디
       if (formattedNumber == "01011111111") {
         if (verificationCode == "000000") {
+          setState(() {
+            isLoading = true;
+          });
           await ref
               .read(userProvider.notifier)
               .login(number: phoneNumber, userType: "USER");
@@ -223,14 +226,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           final smsVerify = await ref
               .read(authRepositoryProvider)
               .smsVerify(number: formattedNumber, code: verificationCode);
-          if (smsVerify.verify) {
-            final userModelBase = await ref
-                .read(userProvider.notifier)
-                .login(number: phoneNumber, userType: "USER");
-            setState(() {
-              isLoading = false;
-            });
-            if (userModelBase is UserModelError) {
+          if (smsVerify.isVerify) {
+            if (smsVerify.isSignUp) {
+              await ref
+                  .read(userProvider.notifier)
+                  .login(number: phoneNumber, userType: "USER");
+              setState(() {
+                isLoading = false;
+              });
+            } else {
               errorText = "가입되지 않은 번호입니다";
             }
           }

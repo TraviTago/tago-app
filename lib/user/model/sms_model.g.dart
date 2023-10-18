@@ -8,10 +8,12 @@ part of 'sms_model.dart';
 
 SmsVerifyResponse _$SmsVerifyResponseFromJson(Map<String, dynamic> json) =>
     SmsVerifyResponse(
-      verify: json['verify'] as bool,
+      isVerify: json['isVerify'] as bool,
+      isSignUp: json['isSignUp'] as bool,
     );
 
 Map<String, dynamic> _$SmsVerifyResponseToJson(SmsVerifyResponse instance) =>
     <String, dynamic>{
-      'verify': instance.verify,
+      'isVerify': instance.isVerify,
+      'isSignUp': instance.isSignUp,
     };

@@ -4,10 +4,12 @@ part 'sms_model.g.dart';
 
 @JsonSerializable()
 class SmsVerifyResponse {
-  final bool verify;
+  final bool isVerify;
+  final bool isSignUp;
 
   SmsVerifyResponse({
-    required this.verify,
+    required this.isVerify,
+    required this.isSignUp,
   });
 
   factory SmsVerifyResponse.fromJson(Map<String, dynamic> json) =>

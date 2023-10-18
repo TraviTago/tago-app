@@ -5,6 +5,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
+import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,6 +81,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PinFieldAutoFill(
+                        autoFocus: true,
+
                         keyboardType: TextInputType.number,
                         decoration: UnderlineDecoration(
                           gapSpace: 20.0,
@@ -227,9 +230,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         final smsVerify = await ref
             .read(authRepositoryProvider)
             .smsVerify(number: formattedNumber, code: verificationCode);
-        if (smsVerify.verify) {
-          //문자 인증 성공일 경우
-          _checkPolicy();
+        if (smsVerify.isVerify) {
+          if (smsVerify.isSignUp) {
+            await ref
+                .read(userProvider.notifier)
+                .login(number: phoneNumber, userType: "USER");
+          } else {
+            _checkPolicy();
+          }
         }
       } catch (e) {
         //1. 인증번호 틀렸을 경우
