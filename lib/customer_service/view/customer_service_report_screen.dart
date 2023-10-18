@@ -32,6 +32,7 @@ class _CustomerServiceReportScreenState
         ),
       ),
       child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
