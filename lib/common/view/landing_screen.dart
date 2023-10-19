@@ -136,8 +136,8 @@ class LandingSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 1.2,
-      height: MediaQuery.of(context).size.width * 1.2,
+      width: MediaQuery.of(context).size.width * 1.0,
+      height: MediaQuery.of(context).size.width * 1.0,
       child: Swiper(
         autoplay: true,
         loop: true,
