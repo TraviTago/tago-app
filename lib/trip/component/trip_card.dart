@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/trip/component/imageShimmer/trip_card_image_shimmer.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class TripCard extends StatelessWidget {
@@ -76,8 +78,10 @@ class TripCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           15.0,
                         ),
-                        child: Image.network(
-                          imageUrl,
+                        child: CachedNetworkImage(
+                          placeholder: (context, url) =>
+                              const TripCardImageShimmer(), // 로딩 미리보기
+                          imageUrl: imageUrl,
                           fit: BoxFit.fill,
                         ),
                       ),

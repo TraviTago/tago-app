@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/place/component/imageShimmer/place_recccomend_image_shimmer.dart';
 import 'package:tago_app/place/model/place_model.dart';
 
 class PlaecRecommendCard extends StatelessWidget {
@@ -36,7 +38,7 @@ class PlaecRecommendCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width - 60;
     return GestureDetector(
       onTap: () {
-        context.push("/placeDetail/$id?title=$title");
+        context.push("/placeDetail/$id?title=$title&imgUrl=$imageUrl");
       },
       child: Material(
         // Material 위젯 추가
@@ -46,8 +48,10 @@ class PlaecRecommendCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           child: Stack(
             children: <Widget>[
-              Image.network(
-                imageUrl,
+              CachedNetworkImage(
+                placeholder: (context, url) =>
+                    const PlaceRecommendImageShimmer(), // 로딩 미리보기
+                imageUrl: imageUrl,
                 width: screenWidth,
                 height: screenWidth,
                 fit: BoxFit.cover,

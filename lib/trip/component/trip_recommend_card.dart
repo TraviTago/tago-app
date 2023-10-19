@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/trip/component/trip_recommend_shimmer_card.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 
 class TripRecommendCard extends StatelessWidget {
@@ -62,8 +64,9 @@ class TripRecommendCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         child: Stack(
           children: <Widget>[
-            Image.network(
-              imageUrl,
+            CachedNetworkImage(
+              placeholder: (context, url) => const TripRecommendShimmerCard(),
+              imageUrl: imageUrl,
               width: screenWidth,
               height: screenWidth,
               fit: BoxFit.cover,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -122,18 +123,15 @@ class _ProfileCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: Image.network(
-              userModel.imgUrl,
+            child: CachedNetworkImage(
+              placeholder: (context, url) => const ShimmerBox(
+                width: 90,
+                height: 90,
+              ),
+              imageUrl: userModel.imgUrl,
               fit: BoxFit.cover,
               width: 90,
               height: 90,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return const ShimmerBox(width: 90.0, height: 90.0);
-              },
             ),
           ),
           const SizedBox(width: 20),

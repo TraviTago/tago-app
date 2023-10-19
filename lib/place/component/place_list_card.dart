@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/place/component/place_popular_shimmer_card.dart';
 import 'package:tago_app/place/model/place_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class PlaceListCard extends StatelessWidget {
   final int id;
@@ -36,7 +38,7 @@ class PlaceListCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width / 5 * 2;
     return GestureDetector(
       onTap: () {
-        context.push("/placeDetail/$id?title=$title");
+        context.push("/placeDetail/$id?title=$title&imgUrl=$imageUrl");
       },
       child: Material(
         // Material 위젯 추가
@@ -46,8 +48,9 @@ class PlaceListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           child: Stack(
             children: <Widget>[
-              Image.network(
-                imageUrl,
+              CachedNetworkImage(
+                placeholder: (context, url) => const PlacePopularShimmerCard(),
+                imageUrl: imageUrl,
                 width: screenWidth,
                 height: screenWidth,
                 fit: BoxFit.cover,

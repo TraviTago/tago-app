@@ -20,7 +20,7 @@ class TripCompleteScreen extends ConsumerStatefulWidget {
 
 class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
   bool isCheckedTrip = false;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     CourseResponseModel? courseState = ref.watch(courseProvider);
@@ -124,6 +124,9 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                   onPressed: !isCheckedTrip
                       ? null
                       : () async {
+                          setState(() {
+                            isLoading = true;
+                          });
                           await ref.read(tripRepositoryProvider).createTrip({
                             "name": GoRouterState.of(context)
                                 .queryParameters['name'],
@@ -147,20 +150,28 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
                             "places":
                                 DataUtils.convertPlaces(courseState.places),
                           });
+                          setState(() {
+                            isLoading = false;
+                          });
                           _showTripCompletionDialog(context);
                         },
-                  child: Text(
-                    '내 여행으로 추가하기',
-                    style: !isCheckedTrip
-                        ? const TextStyle(
-                            color: LABEL_TEXT_SUB_COLOR,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.0)
-                        : const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16.0),
-                  ),
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                          strokeWidth: 3.0,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white.withOpacity(0.8)))
+                      : Text(
+                          '내 여행으로 추가하기',
+                          style: !isCheckedTrip
+                              ? const TextStyle(
+                                  color: LABEL_TEXT_SUB_COLOR,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.0)
+                              : const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0),
+                        ),
                 ),
               ),
             ],
@@ -173,9 +184,11 @@ class _TripCompleteScreenState extends ConsumerState<TripCompleteScreen> {
 
 void _showTripCompletionDialog(BuildContext context) {
   showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: const Color(0xFFF1F1F1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
@@ -199,8 +212,8 @@ void _showTripCompletionDialog(BuildContext context) {
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: LABEL_BG_COLOR,
-                    width: 2.0,
+                    color: Color(0xFFD9D9D9),
+                    width: 1.5, // 세로 줄의 너비
                   ),
                 ),
               ),

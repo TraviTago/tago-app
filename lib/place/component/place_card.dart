@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/place/component/imageShimmer/place_detail_image_shimmer.dart';
 import 'package:tago_app/place/model/place_model.dart';
 
 class PlaceCard extends StatelessWidget {
@@ -14,7 +16,8 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push("/placeDetail/${place.id}?title=${place.title}");
+        context.push(
+            "/placeDetail/${place.id}?title=${place.title}&imgUrl=${place.imageUrl}");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -50,21 +53,25 @@ class PlaceCard extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                place.imageUrl,
-                width: double.infinity,
-                height: 150,
-                fit: BoxFit.cover,
+            Hero(
+              tag: ObjectKey(place.id),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: CachedNetworkImage(
+                  placeholder: (context, url) =>
+                      const PlaceDetailImageShimmer(),
+                  imageUrl: place.imageUrl,
+                  width: double.infinity,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(
               height: 20.0,
             ),
             Text(
-              DataUtils.cleanOverview(place.overview,
-                  false), // Assuming overview property exists in PlaceModel
+              DataUtils.cleanOverview(place.overview, false),
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 14,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/place/model/place_model.dart';
@@ -103,8 +104,8 @@ class PlaceEditCard extends StatelessWidget {
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                place.imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: place.imageUrl,
                 width: double.infinity,
                 height: 150,
                 fit: BoxFit.cover,

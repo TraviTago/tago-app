@@ -29,7 +29,7 @@ class PlaceRecommendShimmerCard extends StatelessWidget {
                   height: (width) / 5 * 2,
                   decoration: BoxDecoration(
                     color: Colors.grey[
-                        400]!, // A neutral background color for the shimmer.
+                        300]!, // A neutral background color for the shimmer.
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

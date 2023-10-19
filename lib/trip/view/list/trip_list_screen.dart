@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,8 +7,9 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
+import 'package:tago_app/trip/component/imageShimmer/origin_image_shimemr.dart';
 import 'package:tago_app/trip/component/trip_card.dart';
-import 'package:tago_app/trip/component/trip_list_skeleton.dart';
+import 'package:tago_app/trip/component/pageShimmer/trip_list_skeleton.dart';
 import 'package:tago_app/trip/component/trip_recommend_card.dart';
 import 'package:tago_app/trip/component/trip_recommend_shimmer_card.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
@@ -184,6 +186,9 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                             .width,
                                                     child: GestureDetector(
                                                       onTap: () {
+                                                        print(tripOriginData
+                                                            .tagotrips[index]
+                                                            .name);
                                                         context.push(
                                                           Uri(
                                                             path:
@@ -204,16 +209,30 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                                       .tagotrips[
                                                                           index]
                                                                       .source,
+                                                              'heroKey': (10000 +
+                                                                      index)
+                                                                  .toString()
                                                             },
                                                           ).toString(),
                                                         );
                                                       },
-                                                      child: ClipRRect(
-                                                        child: Image.network(
-                                                          tripOriginData
-                                                              .tagotrips[index]
-                                                              .imgUrl!,
-                                                          fit: BoxFit.fitWidth,
+                                                      child: Hero(
+                                                        tag: ObjectKey(
+                                                            10000 + index),
+                                                        child: ClipRRect(
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                const OriginImageShimmer(),
+                                                            imageUrl:
+                                                                tripOriginData
+                                                                    .tagotrips[
+                                                                        index]
+                                                                    .imgUrl!,
+                                                            fit:
+                                                                BoxFit.fitWidth,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,6 +47,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
     int placeId =
         int.parse(GoRouterState.of(context).pathParameters['placeId']!);
     String placeName = GoRouterState.of(context).queryParameters['title']!;
+    String imgUrl = GoRouterState.of(context).queryParameters['imgUrl']!;
 
     return DefaultLayout(
       titleComponet: Text(
@@ -59,6 +61,12 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
       child: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 30.0,
+              ),
+              child: DetailImage(imageUrl: imgUrl, id: placeId),
+            ),
             FutureBuilder<PlaceDetailModel>(
               future: ref
                   .read(placeRepositoryProvider)
@@ -81,7 +89,6 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DetailImage(imageUrl: detailModel.imageUrl),
                           const SizedBox(height: 20.0),
                           Text(
                             detailModel.address!,
@@ -243,7 +250,6 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                                                                       exception,
                                                                   StackTrace?
                                                                       stackTrace) {
-                                                            // 이미지 로딩에 실패하면 빈 컨테이너 반환
                                                             return Image.asset(
                                                               'asset/img/loading.png',
                                                             );
@@ -305,18 +311,21 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
 
 class DetailImage extends StatelessWidget {
   final String imageUrl;
+  final int id;
 
-  const DetailImage({super.key, required this.imageUrl});
+  const DetailImage({super.key, required this.imageUrl, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Image.network(
-        imageUrl,
-        width: double.infinity,
-        height: 150,
-        fit: BoxFit.cover,
+    return Hero(
+      tag: ObjectKey(id),
+      child: ClipRRect(
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          width: double.infinity,
+          height: 150,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

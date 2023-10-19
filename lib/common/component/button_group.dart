@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tago_app/common/const/colors.dart';
 
@@ -196,8 +197,8 @@ class _ButtonGroupState extends State<ButtonGroup> {
                             opacity:
                                 selectedButtons.contains(index) ? 1.0 : 0.5,
                             child: widget.prefix
-                                ? Image.network(
-                                    widget.buttonImgs![index],
+                                ? CachedNetworkImage(
+                                    imageUrl: widget.buttonImgs![index],
                                   )
                                 : Image.asset(
                                     'asset/img/${widget.buttonImgs![index]}.png',
@@ -209,8 +210,8 @@ class _ButtonGroupState extends State<ButtonGroup> {
                           Stack(
                             children: [
                               if (widget.prefix)
-                                Image.network(
-                                  widget.buttonImgs![index],
+                                CachedNetworkImage(
+                                  imageUrl: widget.buttonImgs![index],
                                 ),
                               if (!widget.prefix)
                                 Image.asset(

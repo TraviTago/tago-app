@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/trip/component/trip_card.dart';
-import 'package:tago_app/trip/component/trip_list_skeleton.dart';
+import 'package:tago_app/trip/component/pageShimmer/trip_list_skeleton.dart';
 import 'package:tago_app/trip/provider/trip_provider.dart';
 
 class DriverTripListScreen extends ConsumerStatefulWidget {

@@ -6,6 +6,7 @@ import 'package:tago_app/trip/component/trip_recommend_card.dart';
 import 'package:tago_app/trip/model/trip_response_model.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
 import 'package:tago_app/trip/provider/trip_me_provider.dart';
+import 'package:tago_app/user/component/%08pageShimmer/my_trip_skeleton.dart';
 
 class MyTripScreen extends ConsumerWidget {
   const MyTripScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class MyTripScreen extends ConsumerWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(color: PRIMARY_COLOR),
+              child: MyTripSkeleton(),
             ); // show loading indicator
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/trip/component/detail/trip_member_card.dart';
+import 'package:tago_app/trip/component/pageShimmer/%08trip_member_skeleton.dart';
 import 'package:tago_app/trip/model/trip_detail_model.dart';
 import 'package:tago_app/place/component/place_card.dart';
 import 'package:tago_app/trip/model/trip_model.dart';
@@ -114,8 +115,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                           final statusModelData = snapshot.data;
                           return TripMemberCard(statusModel: statusModelData!);
                         } else {
-                          return const CircularProgressIndicator(
-                              color: PRIMARY_COLOR);
+                          return const TripMemberSkeleton();
                         }
                       },
                     ),
@@ -296,6 +296,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
+          backgroundColor: const Color(0xFFF1F1F1),
           title: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -319,8 +320,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: LABEL_BG_COLOR,
-                    width: 2.0,
+                    color: Color(0xFFD9D9D9),
+                    width: 1.5,
                   ),
                 ),
               ),
@@ -346,9 +347,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                     ),
                   ),
                   const VerticalDivider(
-                    color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                    width: 2.0, // 세로 줄의 너비
-                    thickness: 2.0, // 세로 줄의 두께
+                    color: Color(0xFFD9D9D9),
+                    width: 1.5, // 세로 줄의 너비
+                    thickness: 1.5, // 세로 줄의 두께
                   ),
                   Expanded(
                     child: MaterialButton(
@@ -390,6 +391,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: const Color(0xFFF1F1F1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -448,9 +450,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                       ),
                     ),
                     const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5, // 세로 줄의 너비
+                      thickness: 1.5, // 세로 줄의 두께
                     ),
                   ],
                 ),
@@ -462,8 +464,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: LABEL_BG_COLOR,
-                      width: 2.0,
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5, // 세로 줄의 너비
                     ),
                   ),
                 ),
@@ -512,6 +514,7 @@ class TripDetailOverViewScreen extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: const Color(0xFFF1F1F1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -539,8 +542,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: LABEL_BG_COLOR,
-                      width: 2.0,
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5,
                     ),
                   ),
                 ),
@@ -565,9 +568,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                           }),
                     ),
                     const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5,
+                      thickness: 1.5, // 세로 줄의 두께
                     ),
                     Expanded(
                       child: MaterialButton(
@@ -598,8 +601,8 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                 decoration: const BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: LABEL_BG_COLOR,
-                      width: 2.0,
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5,
                     ),
                   ),
                 ),
@@ -635,9 +638,9 @@ class TripDetailOverViewScreen extends ConsumerWidget {
                       ),
                     ),
                     const VerticalDivider(
-                      color: LABEL_BG_COLOR, // 버튼이 만나는 지점의 세로 줄 색상
-                      width: 2.0, // 세로 줄의 너비
-                      thickness: 2.0, // 세로 줄의 두께
+                      color: Color(0xFFD9D9D9),
+                      width: 1.5,
+                      thickness: 1.5, // 세로 줄의 두께
                     ),
                     Expanded(
                       child: MaterialButton(

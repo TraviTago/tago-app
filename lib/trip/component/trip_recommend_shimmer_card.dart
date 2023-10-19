@@ -6,7 +6,7 @@ class TripRecommendShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width - 60;
+    double width = MediaQuery.of(context).size.width - 40;
     double height = width; // Assuming a square-shaped card
 
     return Material(

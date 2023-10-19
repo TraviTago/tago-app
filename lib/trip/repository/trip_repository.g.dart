@@ -196,7 +196,7 @@ class _TripRepository implements TripRepository {
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return;
+    return null;
   }
 
   @override
@@ -245,7 +245,7 @@ class _TripRepository implements TripRepository {
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    return;
+    return null;
   }
 
   @override

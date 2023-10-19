@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -102,8 +103,8 @@ class _ProfileBox extends ConsumerWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(
-                  userModel.imgUrl,
+                child: CachedNetworkImage(
+                  imageUrl: userModel.imgUrl,
                   fit: BoxFit.cover,
                   width: 150,
                   height: 150,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -45,6 +46,9 @@ class _TripDetailOriginScreenState
         GoRouterState.of(context).queryParameters['originImgUrl']!;
     String originSource =
         GoRouterState.of(context).queryParameters['originSource']!;
+    int heroKey =
+        int.parse(GoRouterState.of(context).queryParameters['heroKey']!);
+
     return DefaultLayout(
       titleComponet: const Text(
         '',
@@ -55,10 +59,13 @@ class _TripDetailOriginScreenState
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width,
-              child: ClipRRect(
-                child: Image.network(
-                  originImgUrl,
-                  fit: BoxFit.fitWidth,
+              child: Hero(
+                tag: ObjectKey(heroKey),
+                child: ClipRRect(
+                  child: CachedNetworkImage(
+                    imageUrl: originImgUrl,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/model/cursor_pagination_model.dart';
+import 'package:tago_app/place/component/pageShimmer/place_search_skeleton.dart';
 import 'package:tago_app/place/component/place_list_card.dart';
 import 'package:tago_app/place/model/place_model.dart';
 import 'package:tago_app/place/provider/place_provider.dart';
@@ -100,8 +101,7 @@ class _PlaceSearchScreenState extends ConsumerState<PlaceSearchScreen> {
                   final state = ref.watch(placeProvider);
 
                   if (state is CursorPaginationLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator(color: PRIMARY_COLOR));
+                    return const Center(child: PlaceSearchSkeleton());
                   } else if (state is CursorPaginationError) {
                     return Text('Error: ${state.message}');
                   } else if (state is CursorPagination) {
