@@ -77,18 +77,25 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              detailModel.tripName,
-              style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
+            Expanded(
+              flex: 5,
+              child: Text(
+                detailModel.tripName,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             if (tripStatus != TripStatus.completed)
-              _PersonLabel(
-                curNum: detailModel.currentCnt,
-                maxNum: detailModel.maxCnt,
+              Expanded(
+                flex: 1,
+                child: _PersonLabel(
+                  curNum: detailModel.currentCnt,
+                  maxNum: detailModel.maxCnt,
+                ),
               ),
           ],
         ),
