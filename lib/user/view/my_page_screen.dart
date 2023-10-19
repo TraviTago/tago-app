@@ -66,9 +66,7 @@ class MyPageScreen extends ConsumerWidget {
               ),
             ),
             InkWell(
-              onTap: () => {
-                //TOFIX: 탈퇴하기
-              },
+              onTap: () => {context.push('/withdraw')},
               child: const Text(
                 '탈퇴하기',
                 style: TextStyle(
@@ -78,6 +76,9 @@ class MyPageScreen extends ConsumerWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 30,
             ),
           ],
         ),
