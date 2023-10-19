@@ -159,10 +159,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   onPressed: handleSmsVerify,
                   child: isLoading
-                      ? CircularProgressIndicator(
-                          strokeWidth: 3.0,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white.withOpacity(0.8)))
+                      ? SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 3.0,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white.withOpacity(0.8))),
+                        )
                       : Text(
                           '다음',
                           style: TextStyle(

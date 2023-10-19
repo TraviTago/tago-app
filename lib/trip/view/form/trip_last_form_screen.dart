@@ -17,6 +17,7 @@ class TripLastFormScreen extends ConsumerStatefulWidget {
 
 class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
   int tripNameCount = 0;
+  bool isLoading = false;
   final textController = TextEditingController();
 
   @override
@@ -140,6 +141,9 @@ class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
                           final List<String> parsedTripTags =
                               DataUtils.stringToList(GoRouterState.of(context)
                                   .queryParameters['types']);
+                          setState(() {
+                            isLoading = true;
+                          });
                           await ref
                               .read(courseProvider.notifier)
                               .recommendCourse(
@@ -170,13 +174,22 @@ class _TripLastFormScreenState extends ConsumerState<TripLastFormScreen> {
                             },
                           ).toString());
                         },
-                  child: const Text(
-                    '완료',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.0),
-                  ),
+                  child: isLoading
+                      ? SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 3.0,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white.withOpacity(0.8))),
+                        )
+                      : const Text(
+                          '완료',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.0),
+                        ),
                 ),
               ],
             ),
