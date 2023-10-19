@@ -4,7 +4,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
-import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
 
@@ -231,9 +230,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               await ref
                   .read(userProvider.notifier)
                   .login(number: phoneNumber, userType: "USER");
-              setState(() {
-                isLoading = false;
-              });
             } else {
               errorText = "가입되지 않은 번호입니다";
             }
