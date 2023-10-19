@@ -8,7 +8,7 @@ import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/model/page_pagination_model.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
-import 'package:tago_app/place/component/place_detail_skeleton.dart';
+import 'package:tago_app/place/component/pageShimmer/place_detail_skeleton.dart';
 import 'package:tago_app/place/model/place_detail_model.dart';
 import 'package:tago_app/place/repository/place_repository.dart';
 import 'package:tago_app/search/model/kakao_blog_search_model.dart';

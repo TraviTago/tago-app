@@ -98,7 +98,7 @@ class TripListSkeleton extends StatelessWidget {
                                 highlightColor: Colors.grey[100]!,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                     color: Colors.white,
                                   ),
                                 ),
@@ -108,7 +108,7 @@ class TripListSkeleton extends StatelessWidget {
                           const Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 15.0),
+                              padding: EdgeInsets.only(left: 15.0, top: 15),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -120,7 +120,7 @@ class TripListSkeleton extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          ShimmerText(width: 60, height: 10),
+                                          ShimmerText(width: 60, height: 15),
                                           ShimmerText(width: 80, height: 10),
                                         ],
                                       ),

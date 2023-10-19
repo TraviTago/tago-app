@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:tago_app/common/component/shimmer_text.dart';
 
 class PlaceDetailSkeleton extends StatelessWidget {
