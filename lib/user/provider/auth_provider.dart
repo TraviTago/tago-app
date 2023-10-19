@@ -39,6 +39,7 @@ import 'package:tago_app/user/model/user_model.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/login/view/login_screen.dart';
 import 'package:tago_app/user/view/my_profile_screen.dart';
+import 'package:tago_app/user/view/withdraw_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
   return AuthProvider(ref: ref);
@@ -74,6 +75,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/landing',
           name: LandingScreen.routeName,
           builder: (_, __) => const LandingScreen(),
+        ),
+        GoRoute(
+          path: '/withdraw',
+          name: WithdrawScreen.routeName,
+          builder: (_, __) => const WithdrawScreen(),
         ),
         GoRoute(
           path: '/chatting',
@@ -251,6 +257,9 @@ class AuthProvider extends ChangeNotifier {
     ref.read(userProvider.notifier).logout();
   }
 
+  withdraw() {
+    ref.read(userProvider.notifier).withdraw();
+  }
   // 앱을 처음 시작했을 때 토큰 존재 확인
   // 로그인 스크린 or 홈스크린으로 보내줄지 확인하는 과정
 

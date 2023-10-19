@@ -177,6 +177,19 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     }
   }
 
+  Future<void> withdraw() async {
+    await authRepository.withdraw();
+
+    // 가장 먼저 state을 null로 만들어서
+    // 로그인 페이지로 보낸다.
+    state = null;
+    await Future.wait([
+      storage.delete(key: REFRESH_TOKEN_KEY),
+      storage.delete(key: ACCESS_TOKEN_KEY),
+      storage.delete(key: USER_TYPE_KEY),
+    ]);
+  }
+
   Future<void> logout() async {
     // 가장 먼저 state을 null로 만들어서
     // 로그인 페이지로 보낸다.

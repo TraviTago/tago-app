@@ -39,6 +39,17 @@ class AuthRepository {
     );
   }
 
+  Future<void> withdraw() async {
+    await dio.delete(
+      '$baseUrl/auth/withdraw',
+      options: Options(
+        headers: {
+          'accessToken': 'true',
+        },
+      ),
+    );
+  }
+
   Future<LoginResponse> driverLogin({
     required String code,
   }) async {
