@@ -354,26 +354,30 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                                       MainAxisAlignment
                                                                           .spaceBetween,
                                                                   children: [
-                                                                    Text(
-                                                                      datas[index * 2 +
-                                                                              i]
-                                                                          .body,
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
+                                                                    Expanded(
+                                                                      flex: 4,
+                                                                      child:
+                                                                          Text(
+                                                                        datas[index * 2 +
+                                                                                i]
+                                                                            .body,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              14.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w700,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                    Image.asset(
-                                                                      datas[index * 2 +
-                                                                              i]
-                                                                          .img,
-                                                                      width:
-                                                                          30.0,
-                                                                      height:
-                                                                          30.0,
+                                                                    Expanded(
+                                                                      flex: 1,
+                                                                      child: Image
+                                                                          .asset(
+                                                                        datas[index * 2 +
+                                                                                i]
+                                                                            .img,
+                                                                      ),
                                                                     ),
                                                                   ],
                                                                 )

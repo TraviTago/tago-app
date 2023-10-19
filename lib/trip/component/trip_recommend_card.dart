@@ -89,15 +89,21 @@ class TripRecommendCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _DateAndName(
-                            date: dateTime,
-                            name: name,
-                            duration: totalTime,
+                          Expanded(
+                            flex: 5,
+                            child: _DateAndName(
+                              date: dateTime,
+                              name: name,
+                              duration: totalTime,
+                            ),
                           ),
                           if (!DateTime.now().isAfter(
                               dateTime.add(Duration(minutes: totalTime))))
-                            _PersonLabel(
-                                curNum: currentMember, maxNum: maxMember)
+                            Expanded(
+                              flex: 1,
+                              child: _PersonLabel(
+                                  curNum: currentMember, maxNum: maxMember),
+                            )
                         ],
                       ),
                       Text(
@@ -177,6 +183,7 @@ class _DateAndName extends StatelessWidget {
             fontSize: 15,
             color: Colors.white,
             fontWeight: FontWeight.w700,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         const SizedBox(
