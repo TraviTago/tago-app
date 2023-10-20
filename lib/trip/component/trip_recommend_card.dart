@@ -153,9 +153,9 @@ class _PersonLabel extends StatelessWidget {
         ),
       ),
       child: Text(
-        '$curNum/$maxNum',
+        '$curNum/$maxNum 명',
         style: const TextStyle(
-          fontSize: 13.0,
+          fontSize: 12.0,
           color: Colors.black,
           fontWeight: FontWeight.w700,
         ),

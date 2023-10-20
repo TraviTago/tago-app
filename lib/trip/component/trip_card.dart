@@ -163,7 +163,7 @@ class _PersonLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: 40,
+      width: 50,
       height: 20,
       decoration: const BoxDecoration(
         color: LABEL_BG_COLOR,
@@ -174,9 +174,9 @@ class _PersonLabel extends StatelessWidget {
         ),
       ),
       child: Text(
-        '$curNum/$maxNum',
+        '$curNum/$maxNum 명',
         style: const TextStyle(
-          fontSize: 12.0,
+          fontSize: 11.0,
           color: Colors.black,
           fontWeight: FontWeight.w500,
         ),
