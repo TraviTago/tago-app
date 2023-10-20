@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/common/view/chatting_screen.dart';
 import 'package:tago_app/common/view/driver/driver_root_tab.dart';
 import 'package:tago_app/common/view/landing_screen.dart';
 import 'package:tago_app/common/view/root_tab.dart';
 import 'package:tago_app/common/view/splash_screen.dart';
+import 'package:tago_app/common/view/tutorial_landing_screen.dart';
 import 'package:tago_app/common/view/tutorial_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_center_screen.dart';
 import 'package:tago_app/customer_service/view/customer_service_report_screen.dart';
@@ -85,6 +87,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/chatting',
           name: ChattingScreen.routeName,
           builder: (_, __) => const ChattingScreen(),
+        ),
+        GoRoute(
+          path: '/tutorialLanding',
+          name: TutorialLandingScreen.routeName,
+          builder: (_, __) => const TutorialLandingScreen(),
         ),
         GoRoute(
           path: '/tutorial',
@@ -298,7 +305,11 @@ class AuthProvider extends ChangeNotifier {
     //유저 정보가 있을 때
     if (user is UserModel) {
       if (landing && user.number == "010-1111-1111") {
-        return '/tutorial';
+        if (user.isTutorial == false) {
+          return '/tutorialLanding';
+        } else {
+          return '/';
+        }
       }
       if (landing ||
           logginIn ||
