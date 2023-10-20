@@ -11,6 +11,7 @@ class PlaceSearchSkeleton extends StatelessWidget {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
+          childAspectRatio: 1.05,
         ),
         itemCount: 8,
         itemBuilder: (context, index) {

@@ -301,21 +301,27 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 5.0, right: 10.0),
-                                              child: index * 2 + i < 3
+                                              child: index * 2 + i < 4
                                                   ? Padding(
                                                       padding:
                                                           const EdgeInsets.only(
                                                               bottom: 20),
                                                       child: InkWell(
-                                                        onTap: index * 2 + i ==
-                                                                0
-                                                            ? () {
-                                                                context.push(
-                                                                    '/chatting');
-                                                              }
-                                                            : datas[index * 2 +
-                                                                    i]
-                                                                .onTap,
+                                                        onTap: () {
+                                                          if (index * 2 + i ==
+                                                              0) {
+                                                            context.push(
+                                                                '/chatting');
+                                                          } else if (index * 2 +
+                                                                  i ==
+                                                              1) {
+                                                            context.push(
+                                                                '/tutorial');
+                                                          } else {
+                                                            datas[index * 2 + i]
+                                                                .onTap;
+                                                          }
+                                                        },
                                                         child: Container(
                                                           decoration:
                                                               const BoxDecoration(

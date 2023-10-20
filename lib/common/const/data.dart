@@ -91,6 +91,12 @@ final List<InfoData> infoData = [
     onTap: () {},
   ),
   InfoData(
+    title: "눌러서 같이타고에\n대해 알아봐요",
+    body: "튜토리얼 시작",
+    img: "asset/img/info/tutorial.png",
+    onTap: () {},
+  ),
+  InfoData(
     title: "택시투어가\n궁금하다면?",
     body: "택시이용설명서",
     img: "asset/img/info/explain.png",
@@ -115,7 +121,7 @@ final List<InfoData> infoData = [
         await launchUrl(Uri.parse(url));
       } else {}
     },
-  )
+  ),
 ];
 
 class InfoData {
