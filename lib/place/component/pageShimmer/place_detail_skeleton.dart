@@ -11,7 +11,6 @@ class PlaceDetailSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20.0),
           const ShimmerText(width: 180, height: 20),
           ShimmerText(width: MediaQuery.of(context).size.width, height: 12),
           ShimmerText(width: MediaQuery.of(context).size.width, height: 12),

@@ -89,7 +89,6 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 20.0),
                           Text(
                             detailModel.address!,
                             style: const TextStyle(
@@ -147,8 +146,7 @@ class _PlaceDetailScreenState extends ConsumerState<PlaceDetailScreen>
                     .paginate(query: '$placeName 후기'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(color: PRIMARY_COLOR));
+                    return const PlaceDetailSkeleton();
                   } else if (snapshot.hasError) {
                     return Center(child: Text('오류: ${snapshot.error}'));
                   } else if (!snapshot.hasData) {
