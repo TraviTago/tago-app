@@ -12,7 +12,7 @@ class PlaceSearchImageShimmer extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[300],
+        color: Colors.grey[200],
       ),
     );
   }
