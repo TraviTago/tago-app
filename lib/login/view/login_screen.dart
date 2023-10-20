@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
 import 'package:tago_app/user/provider/user_provider.dart';
 import 'package:tago_app/user/repository/auth_repository.dart';
@@ -217,9 +218,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           setState(() {
             isLoading = true;
           });
+          final storage = ref.watch(secureStorageProvider);
+
+          bool tutorial = (await storage.read(key: "TUTORIAL_KEY") == "true");
+
           await ref
               .read(userProvider.notifier)
-              .login(number: phoneNumber, userType: "USER");
+              .login(number: phoneNumber, userType: "USER", tutorial: tutorial);
         }
       } else {
         try {
@@ -231,9 +236,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               .smsVerify(number: formattedNumber, code: verificationCode);
           if (smsVerify.isVerify) {
             if (smsVerify.isSignUp) {
-              await ref
-                  .read(userProvider.notifier)
-                  .login(number: phoneNumber, userType: "USER");
+              await ref.read(userProvider.notifier).login(
+                    number: phoneNumber,
+                    userType: "USER",
+                  );
             } else {
               errorText = "가입되지 않은 번호입니다";
             }

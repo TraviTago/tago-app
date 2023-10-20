@@ -28,6 +28,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   bool isAllChecked = false;
   bool isServiceChecked = false;
   bool isInfoChecked = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -227,15 +228,22 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (verificationCode.length == 6) {
       String formattedNumber = phoneNumber.replaceAll('-', '');
       try {
+        setState(() {
+          isLoading = true;
+        });
         final smsVerify = await ref
             .read(authRepositoryProvider)
             .smsVerify(number: formattedNumber, code: verificationCode);
         if (smsVerify.isVerify) {
           if (smsVerify.isSignUp) {
-            await ref
-                .read(userProvider.notifier)
-                .login(number: phoneNumber, userType: "USER");
+            await ref.read(userProvider.notifier).login(
+                  number: phoneNumber,
+                  userType: "USER",
+                );
           } else {
+            setState(() {
+              isLoading = false;
+            });
             _checkPolicy();
           }
         }

@@ -21,6 +21,7 @@ class UserModel extends UserModelBase {
   final String mbti;
   List<String> favorites;
   List<String> tripTypes;
+  bool? isTutorial;
 
   UserModel({
     required this.number,
@@ -31,6 +32,7 @@ class UserModel extends UserModelBase {
     required this.mbti,
     required this.favorites,
     required this.tripTypes,
+    this.isTutorial,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

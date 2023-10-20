@@ -136,6 +136,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
   Future<UserModelBase> login({
     required String number,
     required String userType,
+    bool? tutorial,
   }) async {
     try {
       state = UserModelLoading();
@@ -156,6 +157,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
       await storage.write(
           key: ACCESS_TOKEN_KEY, value: resp.tokens.accessToken);
       await storage.write(key: USER_TYPE_KEY, value: userType);
+      await storage.write(key: "TUTORIAL_KEY", value: "true");
       // 로그인 후 토큰에 대한 사용자 저장 + 토큰 유효성 검증
 
       if (userType == "USER") {
@@ -164,7 +166,11 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
         user = await repository.getDriverMe();
       }
 
-      state = user;
+      if (user is UserModel) {
+        user.isTutorial = tutorial;
+        state = user;
+      }
+
       print('로그인 성공');
       return user;
     } catch (e) {

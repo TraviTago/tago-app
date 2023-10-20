@@ -17,6 +17,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           (json['favorites'] as List<dynamic>).map((e) => e as String).toList(),
       tripTypes:
           (json['tripTypes'] as List<dynamic>).map((e) => e as String).toList(),
+      isTutorial: json['isTutorial'] as bool?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'mbti': instance.mbti,
       'favorites': instance.favorites,
       'tripTypes': instance.tripTypes,
+      'isTutorial': instance.isTutorial,
     };
