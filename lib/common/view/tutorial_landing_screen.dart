@@ -179,9 +179,11 @@ class _TutorialLandingScreenState extends State<TutorialLandingScreen>
           Positioned.fill(
               child: GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () {
-              context.go("/tutorial");
-            },
+            onTap: !_showInitialTextAnimation
+                ? () {
+                    context.go("/tutorial");
+                  }
+                : null,
           )),
           if (!_showInitialTextAnimation)
             Positioned(
