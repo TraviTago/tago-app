@@ -186,9 +186,6 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                             .width,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        print(tripOriginData
-                                                            .tagotrips[index]
-                                                            .name);
                                                         context.push(
                                                           Uri(
                                                             path:
@@ -307,21 +304,27 @@ class _TripListScreenState extends ConsumerState<TripListScreen> {
                                                           const EdgeInsets.only(
                                                               bottom: 20),
                                                       child: InkWell(
-                                                        onTap: () {
-                                                          if (index * 2 + i ==
-                                                              0) {
-                                                            context.push(
-                                                                '/chatting');
-                                                          } else if (index * 2 +
-                                                                  i ==
-                                                              1) {
-                                                            context.push(
-                                                                '/tutorial');
-                                                          } else {
-                                                            datas[index * 2 + i]
-                                                                .onTap;
-                                                          }
-                                                        },
+                                                        onTap: (index * 2 + i ==
+                                                                    0 ||
+                                                                index * 2 + i ==
+                                                                    1)
+                                                            ? () {
+                                                                if (index * 2 +
+                                                                        i ==
+                                                                    0) {
+                                                                  context.push(
+                                                                      '/chatting');
+                                                                } else if (index *
+                                                                            2 +
+                                                                        i ==
+                                                                    1) {
+                                                                  context.push(
+                                                                      '/tutorial');
+                                                                }
+                                                              }
+                                                            : datas[index * 2 +
+                                                                    i]
+                                                                .onTap,
                                                         child: Container(
                                                           decoration:
                                                               const BoxDecoration(
