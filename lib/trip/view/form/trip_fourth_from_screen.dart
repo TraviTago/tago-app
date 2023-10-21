@@ -463,7 +463,7 @@ class _TimePickerModalState extends State<_TimePickerModal> {
   void initState() {
     super.initState();
     if (widget.selectedTime == null) {
-      selectedTime = DateTime.now();
+      selectedTime = DateTime.now().add(const Duration(hours: 1));
     } else {
       selectedTime = widget.selectedTime!;
     }

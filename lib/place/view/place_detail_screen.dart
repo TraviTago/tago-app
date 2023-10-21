@@ -321,7 +321,7 @@ class DetailImage extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: imageUrl,
           width: double.infinity,
-          height: 150,
+          height: 250,
           fit: BoxFit.cover,
         ),
       ),
