@@ -23,7 +23,7 @@ class _WithdrawScreenState extends ConsumerState<WithdrawScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20.0,
-          vertical: 20.0,
+          vertical: 40.0,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +105,7 @@ class _WithdrawScreenState extends ConsumerState<WithdrawScreen> {
                     '탈퇴하기',
                     style: TextStyle(
                         color: isChecked ? Colors.white : LABEL_TEXT_COLOR,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         fontSize: 16.0),
                   ),
                 ),
