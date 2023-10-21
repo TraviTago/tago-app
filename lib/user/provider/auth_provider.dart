@@ -304,14 +304,9 @@ class AuthProvider extends ChangeNotifier {
     }
     //유저 정보가 있을 때
     if (user is UserModel) {
-      if (landing && user.number == "010-1111-1111") {
-        if (user.isTutorial == false) {
-          return '/tutorialLanding';
-        } else {
-          return '/';
-        }
-      }
-      if (landing ||
+      if (landing && user.isTutorial == false) {
+        return '/tutorialLanding';
+      } else if (landing ||
           logginIn ||
           signingUp ||
           splash ||

@@ -165,15 +165,24 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         : MaterialStateProperty.all(LABEL_BG_COLOR),
                   ),
                   onPressed: handleSmsVerify,
-                  child: Text(
-                    '다음',
-                    style: TextStyle(
-                        color: verificationCode.length == 6
-                            ? Colors.white
-                            : LABEL_TEXT_COLOR,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0),
-                  ),
+                  child: isLoading
+                      ? SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 3.0,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white.withOpacity(0.8))),
+                        )
+                      : Text(
+                          '다음',
+                          style: TextStyle(
+                              color: verificationCode.length == 6
+                                  ? Colors.white
+                                  : LABEL_TEXT_COLOR,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.0),
+                        ),
                 ),
             ],
           ),

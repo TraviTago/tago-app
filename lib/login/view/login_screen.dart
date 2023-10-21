@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
 import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/login/component/phone_number_field.dart';
@@ -212,25 +213,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // 인증 번호를 확인합니다.
     if (verificationCode.length == 6) {
       String formattedNumber = phoneNumber.replaceAll('-', '');
+
+      final storage = ref.watch(secureStorageProvider);
+
+      bool tutorial = (await storage.read(key: TUTORIAL_KEY) == "true");
+
+      setState(() {
+        isLoading = true;
+      });
       //TOFIX: DEMO 아이디
       if (formattedNumber == "01011111111") {
         if (verificationCode == "000000") {
-          setState(() {
-            isLoading = true;
-          });
-          final storage = ref.watch(secureStorageProvider);
-
-          bool tutorial = (await storage.read(key: "TUTORIAL_KEY") == "true");
-
           await ref
               .read(userProvider.notifier)
               .login(number: phoneNumber, userType: "USER", tutorial: tutorial);
+          setState(() {
+            isLoading = false;
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+          //1. 인증번호 틀렸을 경우
+          errorText = "올바른 테스트 계정 비밀번호를 입력해주세요";
         }
       } else {
         try {
-          setState(() {
-            isLoading = true;
-          });
           final smsVerify = await ref
               .read(authRepositoryProvider)
               .smsVerify(number: formattedNumber, code: verificationCode);
@@ -239,6 +247,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               await ref.read(userProvider.notifier).login(
                     number: phoneNumber,
                     userType: "USER",
+                    tutorial: tutorial,
                   );
             } else {
               errorText = "가입되지 않은 번호입니다";

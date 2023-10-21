@@ -22,6 +22,7 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
   String selectedTripType2 = "";
   String selectedTripType3 = "";
   final List<String> _selectedTripTypes = [];
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -208,14 +209,23 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                               GoRouterState.of(context).queryParameters;
 
                           if (isPatching) {
+                            setState(() {
+                              isLoading = true;
+                            });
                             await ref.read(userProvider.notifier).patchProfile(
                                   mbti: queryParams['mbti']!,
                                   favorites:
                                       queryParams['favorites']!.split(','),
                                   tripTypes: _selectedTripTypes,
                                 );
+                            setState(() {
+                              isLoading = false;
+                            });
                             context.go('/profile');
                           } else {
+                            setState(() {
+                              isLoading = true;
+                            });
                             await ref.read(userProvider.notifier).signUp(
                                   ageRange:
                                       int.tryParse(queryParams['ageRange']!)!,
@@ -228,15 +238,27 @@ class _LastFormScreenState extends ConsumerState<LastFormScreen> {
                                   imgUrl: queryParams['imagePath']!,
                                   tripTypes: _selectedTripTypes,
                                 );
+                            setState(() {
+                              isLoading = false;
+                            });
                           }
                         },
-                  child: Text(
-                    isPatching ? '수정하기' : '저장하기',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.0),
-                  ),
+                  child: isLoading
+                      ? SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 3.0,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white.withOpacity(0.8))),
+                        )
+                      : Text(
+                          isPatching ? '수정하기' : '저장하기',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.0),
+                        ),
                 ),
               )
             ],

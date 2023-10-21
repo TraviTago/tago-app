@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:tago_app/common/component/shimmer_box.dart';
 import 'package:tago_app/common/component/space_container.dart';
 import 'package:tago_app/common/const/colors.dart';
+import 'package:tago_app/common/const/data.dart';
 import 'package:tago_app/common/layout/default_layout.dart';
+import 'package:tago_app/common/storage/secure_storage.dart';
 import 'package:tago_app/common/utils/data_utils.dart';
 import 'package:tago_app/user/component/menu_list.dart';
 import 'package:tago_app/user/model/user_model.dart';
@@ -77,6 +79,28 @@ class MyPageScreen extends ConsumerWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () async {
+                    final storage = ref.watch(secureStorageProvider);
+                    await storage.delete(key: TUTORIAL_KEY);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 30.0, right: 20.0),
+                    child: Text(
+                      'Remove Alert',
+                      style: TextStyle(
+                        color: Colors.transparent,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 30,

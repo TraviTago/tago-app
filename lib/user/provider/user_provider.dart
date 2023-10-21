@@ -124,9 +124,13 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
     await storage.write(
         key: ACCESS_TOKEN_KEY, value: response.tokens.accessToken);
     await storage.write(key: USER_TYPE_KEY, value: "USER");
+    await storage.write(key: TUTORIAL_KEY, value: "true");
 
     final userResp = await repository.getMe();
+
+    userResp.isTutorial = false;
     state = userResp;
+
     print('회원가입 성공');
 
     return response;
@@ -157,7 +161,7 @@ class UserStateNotifer extends StateNotifier<UserModelBase?> {
       await storage.write(
           key: ACCESS_TOKEN_KEY, value: resp.tokens.accessToken);
       await storage.write(key: USER_TYPE_KEY, value: userType);
-      await storage.write(key: "TUTORIAL_KEY", value: "true");
+      await storage.write(key: TUTORIAL_KEY, value: "true");
       // 로그인 후 토큰에 대한 사용자 저장 + 토큰 유효성 검증
 
       if (userType == "USER") {
